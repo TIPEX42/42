@@ -27,10 +27,11 @@ char	*ft_strdup(const char *s1)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
+	printf("%c\n", src[0]);
 	size_t	i;
 
 	i = 0;
-	while (i < dstsize - 1)
+	while (i + 1 < dstsize)
 	{
 		dst[i] = src[i];
 		i++;

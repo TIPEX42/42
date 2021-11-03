@@ -2,9 +2,9 @@
 
 int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	size_t			i;
-	unsigned char	*s1cpy;
-	unsigned char	*s2cpy;
+	size_t				i;
+	const unsigned char	*s1cpy;
+	const unsigned char	*s2cpy;
 
 	s1cpy = s1;
 	s2cpy = s2;
@@ -31,8 +31,8 @@ void	*ft_memset(void *b, int c, size_t len)
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*scpy;
+	size_t				i;
+	const unsigned char	*scpy;
 
 	scpy = s;
 	i = 0;
@@ -45,9 +45,9 @@ void	*ft_memchr(const void *s, int c, size_t n)
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t			i;
-	unsigned char	*dstcpy;
-	unsigned char	*srccpy;
+	size_t				i;
+	unsigned char		*dstcpy;
+	const unsigned char	*srccpy;
 
 	dstcpy = dst;
 	srccpy = src;
