@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory2.c                                          :+:      :+:    :+:   */
+/*   str5.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 13:52:25 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 13:52:25 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/04 13:52:07 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/04 13:52:08 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	ft_memset(s, 0, n);
-}
+	char	*new;
+	size_t	i;
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*new;
-
-	new = malloc(count * size);
+	new = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!new)
 		return (NULL);
-	ft_memset(new, 0, count * size);
+	i = 0;
+	while (s[i])
+	{
+		new[i] = f(i, s[i]);
+		i++;
+	}
+	new[i] = 0;
 	return (new);
+}
+
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }

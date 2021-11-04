@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/02 15:45:48 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 13:52:29 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define LIBFT_H
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -45,6 +46,16 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 //str4.c
 char	**ft_split(char const *s, char c);
+
+//str5.c
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+
+//io.c
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
 
 //memory1.c
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory2.c                                          :+:      :+:    :+:   */
+/*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 13:52:25 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 13:52:25 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/04 13:52:33 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/04 13:52:33 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_putchar_fd(char c, int fd)
 {
-	ft_memset(s, 0, n);
+	write(fd, &c, 1);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+void	ft_putstr_fd(char *s, int fd)
 {
-	void	*new;
+	write(fd, s, ft_strlen(s));
+}
 
-	new = malloc(count * size);
-	if (!new)
-		return (NULL);
-	ft_memset(new, 0, count * size);
-	return (new);
+void	ft_putendl_fd(char *s, int fd)
+{
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	*s;
+
+	s = ft_itoa(n);
+	ft_putstr_fd(s, fd);
+	free(s);
 }
