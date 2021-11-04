@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:25:27 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 14:25:34 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 17:56:20 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*newstr;
 
-	newstr = malloc((ft_strlen(s1) + 1) * sizeof(s1));
+	newstr = malloc((ft_strlen(s1) + 1) * sizeof(char));
 	if (!newstr)
 		return (NULL);
 	ft_strlcpy(newstr, s1, ft_strlen(s1) + 1);

@@ -6,11 +6,22 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:21:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 14:21:48 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 18:00:39 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static	int	ft_check(long long nb, int signe)
+{
+	if (nb > 2147483648 || nb < -2147483649)
+	{
+		if (signe == 1)
+			return (-1);
+		return (0);
+	}
+	return ((int)nb * signe);
+}
 
 static int	ft_isspace(int c)
 {
@@ -24,7 +35,7 @@ static int	ft_isspace(int c)
 int	ft_atoi(const char *str)
 {
 	int	negative;
-	int	result;
+	long long	result;
 	int	i;
 
 	i = 0;
@@ -43,5 +54,5 @@ int	ft_atoi(const char *str)
 		result = result * 10 + str[i] - '0';
 		i++;
 	}
-	return (result * negative);
+	return (ft_check(result, negative));
 }
