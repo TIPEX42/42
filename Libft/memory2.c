@@ -9,7 +9,7 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*new;
 
-	new = malloc(size * sizeof(char));
+	new = malloc(count * size);
 	if (!new)
 		return (NULL);
 	ft_memset(new, 0, size);

@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 //testing.c
 int		ft_isalpha(int c);
@@ -38,7 +39,12 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //str3.c
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+//str4.c
+char	**ft_split(char const *s, char c);
 
 //memory1.c
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -52,6 +58,7 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
 //numbers.c
-int		atoi(const char *str);
+int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 
 #endif
