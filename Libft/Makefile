@@ -1,0 +1,23 @@
+NAME		=		libft.a
+CC			=		gcc
+CFLAGS		=		-Wall -Werror -Wextra
+DEPS		=		libft.h
+SRCS		=		$(wildcard *.c)
+OBJS		=		$(SRCS:.c=.o)
+
+%.o:		%.c $(DEPS)
+			$(CC) -c $< $(CFLAGS)
+
+$(NAME):	$(OBJS)
+			ar -rcs libft.a *.o
+			ranlib $(NAME)
+
+all:		$(NAME)
+
+clean:
+			rm -f $(OBJS)
+
+fclean: clean
+			rm -f $(NAME)
+
+re: fclean all
