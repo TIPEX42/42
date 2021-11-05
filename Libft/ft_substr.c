@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:27:03 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 14:24:53 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/05 17:29:38 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		start = start - ft_strlen(s);
-	if (len > ft_strlen(s))
-		len = len - ft_strlen(s);
+	{
+		new = malloc(sizeof(char));
+		if (!new)
+			return (NULL);
+		new[0] = 0;
+		return (new);
+	}
 	new = malloc((ft_min(ft_strlen(s) - start, len) + 1) * sizeof(char));
 	if (!new)
 		return (NULL);

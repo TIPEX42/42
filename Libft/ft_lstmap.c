@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:41:10 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 13:39:02 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/05 16:42:12 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*first;
 	t_list	*last;
 	t_list	*next;
-	
+
 	if (!lst)
 		return (NULL);
 	first = ft_lstnew(f(lst->content));

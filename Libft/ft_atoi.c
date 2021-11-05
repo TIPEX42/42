@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:21:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 18:00:39 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/05 16:43:43 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static int	ft_isspace(int c)
 
 int	ft_atoi(const char *str)
 {
-	int	negative;
+	int			i;
+	int			negative;
 	long long	result;
-	int	i;
 
 	i = 0;
 	result = 0;

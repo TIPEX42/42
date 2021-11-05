@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 11:25:15 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 16:41:44 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/05 16:45:30 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/05 16:52:45 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_lstadd_front(t_list **alst, t_list *new)
+char	*get_next_line(int fd)
 {
-	new->next = *alst;
-	*alst = new;
+	char		buffer[BUFFER_SIZE];
+	static char	*file_read;
+
+	
 }

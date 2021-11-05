@@ -12,17 +12,19 @@ OBJSB		=		$(SRCSB:.c=.o)
 			$(CC) -c $< $(CFLAGS)
 
 $(NAME):	$(OBJSA)
+			rm -f libft.a
 			ar -rcs libft.a $(OBJSA)
 			ranlib $(NAME)
 
 all:		$(NAME)
 
-bonus:		$(OBJSB) fclean
+bonus:		$(OBJSA) $(OBJSB)
+			rm -f libft.a
 			ar -rcs libft.a *.o
 			ranlib $(NAME)
 
 clean:
-			rm -f $(OBJS)
+			rm -f *.o
 
 fclean: clean
 			rm -f $(NAME)
