@@ -4,18 +4,22 @@ CFLAGS		=		-Wall -Werror -Wextra
 DEPS		=		libft.h
 SRCS		=		$(wildcard *.c)
 SRCSB		=		$(wildcard *lst*.c)
-OBJS		=		$(SRCS:.c=.o)
+SRCSA 		=		$(filter-out $(SRCSB), $(SRCS))
+OBJSA		=		$(SRCSA:.c=.o)
+OBJSB		=		$(SRCSB:.c=.o)
 
 %.o:		%.c $(DEPS)
 			$(CC) -c $< $(CFLAGS)
 
-$(NAME):	$(OBJS)
-			ar -rcs libft.a *.o
+$(NAME):	$(OBJSA)
+			ar -rcs libft.a $(OBJSA)
 			ranlib $(NAME)
 
 all:		$(NAME)
 
-bonus:		$(NAME)
+bonus:		$(OBJSB) fclean
+			ar -rcs libft.a *.o
+			ranlib $(NAME)
 
 clean:
 			rm -f $(OBJS)
