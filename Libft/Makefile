@@ -3,6 +3,7 @@ CC			=		gcc
 CFLAGS		=		-Wall -Werror -Wextra
 DEPS		=		libft.h
 SRCS		=		$(wildcard *.c)
+SRCSB		=		$(wildcard *lst*.c)
 OBJS		=		$(SRCS:.c=.o)
 
 %.o:		%.c $(DEPS)

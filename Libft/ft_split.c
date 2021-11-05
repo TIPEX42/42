@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:52:10 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 14:34:42 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/05 15:21:48 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,5 @@ char	**ft_split(char const *s, char c)
 	ft_chop(sdup, c);
 	if (!ft_get_words(sdup, ft_count_words(s, c), tab))
 		return (NULL);
-	free(sdup);
 	return (tab);
 }
