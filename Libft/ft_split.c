@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:52:10 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 14:27:39 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/05 14:34:42 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	**ft_split(char const *s, char c)
 	char	*sdup;
 	char	**tab;
 
+	if (!s)
+		return (NULL);
 	tab = malloc((ft_count_words(s, c) + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
