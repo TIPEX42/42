@@ -18,8 +18,8 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	const unsigned char	*s1cpy;
 	const unsigned char	*s2cpy;
 
-	s1cpy = s1;
-	s2cpy = s2;
+	s1cpy = (unsigned char *)s1;
+	s2cpy = (unsigned char *)s2;
 	i = 0;
 	if (n == 0)
 		return (0);
