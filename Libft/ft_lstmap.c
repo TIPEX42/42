@@ -6,13 +6,13 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:41:10 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/09 17:04:35 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 17:08:34 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	*ft_clearall(t_list **first, void (*del)(void *), t_list *lst)
+static void	*ft_clearall(t_list **first, void (*del)(void *))
 {
 	ft_lstclear(first, del);
 	return (NULL);
@@ -35,7 +35,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		lst = lst->next;
 		next = ft_lstnew(f(lst->content));
 		if (!next)
-			return (ft_clearall(&first, del, lst));
+			return (ft_clearall(&first, del));
 		ft_lstadd_back(&last, next);
 		last = next;
 	}
