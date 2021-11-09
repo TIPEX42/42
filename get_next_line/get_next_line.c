@@ -6,14 +6,14 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:45:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 16:52:45 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 14:57:09 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE];
-	static char	*file_read;
+	static char	*read_chars;
 
 	
 }
