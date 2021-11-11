@@ -16,6 +16,26 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
+void	ft_print(char c)
+{
+	char	*base;
+
+	base = "0123456789abcdef";
+	write(1, "\\", 1);
+	write(1, &base[c / 16], 1);
+	write(1, &base[c % 16], 1);
+}
+
+void	print_buffer(char *buff, int size)
+{
+	int i = 0;
+	while (i < size)
+	{
+		ft_print(buff[i]);
+		i++;
+	}
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*fileRead;
@@ -47,6 +67,7 @@ char	*find_line(int fd, char **fileRead)
 	int		bytesRead;
 
 	bytesRead = read(fd, buffer, BUFFER_SIZE);
+	print_buffer(buffer, BUFFER_SIZE);
 	if (bytesRead == 0 && ft_strlen(*fileRead) > 0)
 		return (ft_cut_line(fileRead));
 	else if (bytesRead == 0)
