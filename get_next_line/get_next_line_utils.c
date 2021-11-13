@@ -67,3 +67,22 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		dstcpy[len] = srccpy[len];
 	return (dst);
 }
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*dstcpy;
+	const unsigned char	*srccpy;
+
+	if (!dst && !src)
+		return (NULL);
+	dstcpy = dst;
+	srccpy = src;
+	i = 0;
+	while (i < n)
+	{
+		dstcpy[i] = srccpy[i];
+		i++;
+	}
+	return (dst);
+}

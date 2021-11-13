@@ -39,49 +39,63 @@ char	*find_line(int fd, char *buffer, char **line)
 	int		bytesRead;
 	int		addLineResult;
 
-	bytesRead = read(fd, buffer, BUFFER_SIZE);
+	if (ft_strlen(buffer) == 0)
+	{
+		bytesRead = read(fd, buffer, BUFFER_SIZE);
+		if (ft_strlen(*line) > 0 && bytesRead == 0)
+			return (*line);
+		if (bytesRead <= 0)
+		{
+			free(*line);
+			return (NULL);
+		}
+	}
+	else
+		bytesRead = ft_strlen(buffer);
 	addLineResult = ft_add_to_line(line, buffer, bytesRead);
 	if (addLineResult == -1)
 	{
 		free(*line);
 		return (NULL);
 	}
-	if (addLineResult == 0)
+	else if (addLineResult == 0)
 		return (find_line(fd, buffer, line));
-	if (addLineResult == 1)
+	else
 		return (*line);
-
 }
 
-int	ft_get_line_length(char *buffer, int bytesRead)
+int	ft_get_line_length(char *line, int bytesRead)
 {
 	int i;
 
 	i = 0;
 	while (i < bytesRead && line[i] != '\n' && line[i] != EOF)
 		i++;
-	if (line[i] == '\n')
+	if (i < bytesRead && line[i] == '\n')
 		i++;
 	return (i);
 }
 
 int	ft_add_to_line(char **line, char *buffer, int bytesRead)
 {
+	int		newLength;
 	char	*newLine;
-	size_t	newLength;
 
-	newLength = ft_get_line_length(buffer, bufferSize);
+	newLength = ft_get_line_length(buffer, bytesRead);
 	newLine = malloc((ft_strlen(*line) + newLength + 1) * sizeof(char));
 	if (!newLine)
 		return (-1);
-	ft_strlcpy(newLine, *line, ft_strlen(*line));
-	ft_strlcpy(&newLine[ft_strlen(*line)], buffer, newLength);
+	ft_memmove(newLine, *line, ft_strlen(*line));
+	ft_memmove(&newLine[ft_strlen(*line)], buffer, newLength);
+	newLine[ft_strlen(*line) + newLength] = 0;
 	free(*line);
 	*line = newLine;
-	if (newLength < bytesRead)
+	if (newLength < bytesRead || buffer[newLength - 1] == '\n')
 	{
 		ft_memmove(buffer, &buffer[newLength], bytesRead - newLength);
+		buffer[bytesRead - newLength] = 0;
 		return (1);
 	}
+	buffer[0] = 0;
 	return (0);
 }

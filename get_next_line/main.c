@@ -7,12 +7,12 @@
 
 int main(void)
 {
-	//int fd = open("file.txt", O_RDWR);
-	char *line = get_next_line(stdin->_file);
+	int fd = open("file.txt", O_RDWR);
+	char *line = get_next_line(fd);
 	while (line)
 	{
 		printf("Line : %s", line);
 		free(line);
-		line = get_next_line(stdin->_file);
+		line = get_next_line(fd);
 	}
 }
