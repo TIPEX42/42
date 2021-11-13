@@ -16,13 +16,13 @@
 #include <stddef.h>
 
 int		ft_strlen(char *s);
-char	*ft_strchr(const char *s, int c);
+void	*ft_memset(void *b, int c, size_t len);
+void	*ft_memmove(void *dst, const void *src, size_t len)
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
-int		read_new_file(char **fileRead);
-int	ft_concat(char **fileRead, char *buffer, size_t bytesRead);
 char	*get_next_line(int fd);
-char	*find_line(int fd, char **fileRead);
-char	*ft_cut_line(char **fileRead);
+char	*find_line(int fd, char *buffer, char **line);
+int		ft_get_line_length(char *buffer, int bytesRead);
+int		ft_add_to_line(char **line, char *buffer, int bytesRead);
 
 #endif

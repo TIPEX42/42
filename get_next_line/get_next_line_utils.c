@@ -22,18 +22,6 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != (char)c)
-		i++;
-	if (s[i] == (char)c)
-		return ((char *)(s + i));
-	return (NULL);
-}
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
@@ -47,4 +35,35 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	if (dstsize > 0)
 		dst[i] = 0;
 	return (ft_strlen((char *)src));
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*bcpy;
+
+	bcpy = b;
+	i = 0;
+	while (i < len)
+	{
+		bcpy[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned char	*dstcpy;
+	unsigned char	*srccpy;
+
+	if (!dst && !src)
+		return (dst);
+	dstcpy = (unsigned char *)dst;
+	srccpy = (unsigned char *)src;
+	if (dst < src)
+		return (ft_memcpy(dst, src, len));
+	while (len-- > 0)
+		dstcpy[len] = srccpy[len];
+	return (dst);
 }

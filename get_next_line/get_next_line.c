@@ -16,148 +16,72 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-void	ft_print(char c)
-{
-	char	*base;
-
-	base = "0123456789abcdef";
-	write(1, "\\", 1);
-	write(1, &base[c / 16], 1);
-	write(1, &base[c % 16], 1);
-}
-
-void	print_buffer(char *buff, int size)
-{
-	int i = 0;
-	while (i < size)
-	{
-		ft_print(buff[i]);
-		i++;
-	}
-}
-
 char	*get_next_line(int fd)
 {
-	static char	*fileRead;
+	static char	buffer[BUFFER_SIZE];
 	static int	oldFd;
+	char		*line;
 
 	if (fd != oldFd)
 	{
 		oldFd = fd;
-		if (!read_new_file(&fileRead))
-			return (NULL);
+		ft_memset(buffer, 0, BUFFER_SIZE);
 	}
-	return (find_line(fd, &fileRead));
+	line = malloc(1 * sizeof(char));
+	if (!line)
+		return (NULL);
+	line[0] = 0;
+	return (find_line(fd, buffer, &line));
 }
 
-int	read_new_file(char **fileRead)
+char	*find_line(int fd, char *buffer, char **line)
 {
-	if (*fileRead)
-		free(*fileRead);
-	*fileRead = malloc(1 * sizeof(char));
-	if (!*fileRead)
-		return (0);
-	(*fileRead)[0] = 0;
-	return (1);
-}
-
-char	*find_line(int fd, char **fileRead)
-{
-	char	buffer[BUFFER_SIZE];
 	int		bytesRead;
+	int		addLineResult;
 
 	bytesRead = read(fd, buffer, BUFFER_SIZE);
-	print_buffer(buffer, BUFFER_SIZE);
-	if (bytesRead == 0 && ft_strlen(*fileRead) > 0)
-		return (ft_cut_line(fileRead));
-	else if (bytesRead == 0)
+	addLineResult = ft_add_to_line(line, buffer, bytesRead);
+	if (addLineResult == -1)
 	{
-		free(*fileRead);
+		free(*line);
 		return (NULL);
 	}
-	if (!ft_concat(fileRead, buffer, bytesRead))
-		return (NULL);
-	if (ft_strchr(*fileRead, '\n') || ft_strchr(*fileRead, EOF))
-		return (ft_cut_line(fileRead));
-	else
-		return (find_line(fd, fileRead));
+	if (addLineResult == 0)
+		return (find_line(fd, buffer, line));
+	if (addLineResult == 1)
+		return (*line);
+
 }
 
-int	ft_get_line_length(char *line)
+int	ft_get_line_length(char *buffer, int bytesRead)
 {
 	int i;
 
 	i = 0;
-	while (line[i] && line[i] != '\n' && line[i] != EOF)
-	{
+	while (i < bytesRead && line[i] != '\n' && line[i] != EOF)
 		i++;
-	}
 	if (line[i] == '\n')
 		i++;
 	return (i);
 }
 
-char	*ft_cut_line(char **fileRead)
+int	ft_add_to_line(char **line, char *buffer, int bytesRead)
 {
-	int		i;
-	int		size;
-	int		buffer_size;
-	char	*new;
-	char	*newTwo;
+	char	*newLine;
+	size_t	newLength;
 
-	size = ft_get_line_length(*fileRead);
-	new = malloc((size + 1) * sizeof(char));
-	i = 0;
-	while (i < size)
+	newLength = ft_get_line_length(buffer, bufferSize);
+	newLine = malloc((ft_strlen(*line) + newLength + 1) * sizeof(char));
+	if (!newLine)
+		return (-1);
+	ft_strlcpy(newLine, *line, ft_strlen(*line));
+	ft_strlcpy(&newLine[ft_strlen(*line)], buffer, newLength);
+	free(*line);
+	*line = newLine;
+	if (newLength < bytesRead)
 	{
-		new[i] = (*fileRead)[i];
-		i++;
+		ft_memmove(buffer, &buffer[newLength], bytesRead - newLength);
+		return (1);
 	}
-	new[i] = 0;
-	buffer_size = ft_strlen(&((*fileRead)[i]));
-	newTwo = malloc((buffer_size + 1) * sizeof(char));
-	if (newTwo)
-	{
-		while ((*fileRead)[i])
-		{
-			*newTwo = (*fileRead)[i];
-			newTwo++;
-			i++;
-		}
-		*newTwo = 0;
-		newTwo = &newTwo[-buffer_size];
-	}
-	if (*fileRead)
-		free(*fileRead);
-	*fileRead = newTwo;
-	return (new);
-}
-
-int	ft_concat(char **fileRead, char *buffer, size_t bytesRead)
-{
-	char	*new;
-	size_t	i;
-	size_t	oldSize;
-
-	oldSize = ft_strlen(*fileRead);
-	new = malloc((oldSize + bytesRead + 1) * sizeof(char));
-	if (!new)
-		return (0);
-	i = 0;
-	while ((*fileRead)[i])
-	{
-		new[i] = (*fileRead)[i];
-		i++;
-	}
-	while (i < oldSize + bytesRead)
-	{
-		new[i] = *buffer;
-		i++;
-		buffer++;
-	}
-	new[i] = 0;
-	if (*fileRead)
-		free(*fileRead);
-	*fileRead = new;
-	return (1);
+	return (0);
 }
