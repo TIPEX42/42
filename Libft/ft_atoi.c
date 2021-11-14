@@ -49,7 +49,7 @@ int	ft_atoi(const char *str)
 			negative = -1;
 		i++;
 	}
-	while (ft_isdigit(str[i]) && str[i])
+	while (str[i] && ft_isdigit(str[i]))
 	{
 		result = result * 10 + str[i] - '0';
 		i++;
