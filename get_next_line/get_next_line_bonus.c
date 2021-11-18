@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:45:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/18 13:45:46 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/15 14:49:31 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[OPEN_MAX][BUFFER_SIZE + 1];
+	static char	buffer[OPEN_MAX][BUFFER_SIZE];
 	char		*line;
 
 	if (fd < 0 || fd >= OPEN_MAX)
@@ -32,8 +32,8 @@ char	*get_next_line(int fd)
 
 char	*find_line(int fd, char *buffer, char **line)
 {
-	int	bytes_read;
-	int	add_line_result;
+	int		bytes_read;
+	int		add_line_result;
 
 	if (ft_strlen(buffer) == 0)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
