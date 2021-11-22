@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 14:19:37 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/18 19:13:41 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/22 17:19:21 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,12 +193,4 @@ void	ft_print_decimal(va_list *parameters_infos)
 	ft_putnbr_base(integer_part, "0123456789");
 	write(1, ".", 1);
 	ft_putnbr_base(decimal_part, "0123456789");
-}
-
-int main()
-{
-	const char *s = "hey comment ca va ?";
-	ft_printf("hey comment ca va ?\n %s \n%d\n%x\n%p\n", s, 193, 255, s);
-	printf("hey comment ca va ?\n %s \n%d\n%x\n%p\n", s, 193, 255, s);
-	return (0);
 }
