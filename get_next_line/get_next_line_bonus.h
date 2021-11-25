@@ -6,12 +6,12 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:45:26 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/14 17:48:41 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/18 13:58:57 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stddef.h>
 

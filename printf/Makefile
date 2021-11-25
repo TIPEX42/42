@@ -1,8 +1,20 @@
 NAME		=		libftprintf.a
 CC			=		gcc
 CFLAGS		=		-Wall -Werror -Wextra
-DEPS		=		libft.h libft.a
-SRCS		=		$(wildcard *.c)
+DEPS		=		ft_printf.h Makefile
+SRCS		=							\
+					ft_printf.c			\
+					ft_print_char.c		\
+					ft_print_hex.c		\
+					ft_print_hex_big.c	\
+					ft_print_integer.c	\
+					ft_print_uinteger.c	\
+					ft_putnbr_base.c	\
+					ft_print_ptr.c		\
+					ft_print_str.c		\
+					ft_strlen.c			\
+					ft_putnbr_fd.c		\
+
 OBJS		=		$(SRCS:.c=.o)
 
 %.o:		%.c $(DEPS)
@@ -11,7 +23,6 @@ OBJS		=		$(SRCS:.c=.o)
 $(NAME):	$(OBJS)
 			rm -f $(NAME)
 			ar -rcs $(NAME) $(OBJS)
-			ranlib $(NAME)
 
 all:		$(NAME)
 
