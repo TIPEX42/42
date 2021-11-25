@@ -6,18 +6,18 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:40:55 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/24 15:44:28 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 17:37:58 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdlib.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stddef.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stddef.h>
 
 int		ft_printf(const char *str, ...);
 
