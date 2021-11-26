@@ -9,6 +9,9 @@ int main(int argc, char **argv)
 	stack_print(stackA);
 	pop(stackA);
 	stack_print(stackA);
+
+	getchar();
+
 	push(stackA, 10);
 	push(stackA, 9);
 	push(stackA, 8);
@@ -21,9 +24,13 @@ int main(int argc, char **argv)
 	push(stackA, 1);
 	stack_print(stackA);
 
+	getchar();
+
 	push(stackA, 22);
 	stack_print(stackA);
 
+	getchar();
+
 	rotate(stackA);
 	stack_print(stackA);
 	rotate(stackA);
@@ -44,6 +51,8 @@ int main(int argc, char **argv)
 	stack_print(stackA);
 	rotate(stackA);
 	stack_print(stackA);
+
+	getchar();
 
 	reverse_rotate(stackA);
 	stack_print(stackA);
@@ -66,10 +75,14 @@ int main(int argc, char **argv)
 	reverse_rotate(stackA);
 	stack_print(stackA);
 
+	getchar();
+
 	swap(stackA);
 	stack_print(stackA);
 	swap(stackA);
 	stack_print(stackA);
+
+	stack_destroy(stackA);
 	return (0);
 }
 

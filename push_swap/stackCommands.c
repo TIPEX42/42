@@ -37,7 +37,7 @@ void	swap(t_stack *stack)
 	stack->items[stack->top - 2] = temp_item;
 }
 
-void	rotate(t_stack *stack)
+void	reverse_rotate(t_stack *stack)
 {
 	int i;
 	int	temp_last_item;
@@ -47,11 +47,12 @@ void	rotate(t_stack *stack)
 	while (i < stack->top - 1)
 	{
 		stack->items[i] = stack->items[i + 1];
+		i++;
 	}
 	stack->items[stack->top - 1] = temp_last_item;
 }
 
-void	reverse_rotate(t_stack *stack)
+void	rotate(t_stack *stack)
 {
 	int i;
 	int	temp_first_item;
@@ -61,6 +62,7 @@ void	reverse_rotate(t_stack *stack)
 	while (i > 0)
 	{
 		stack->items[i] = stack->items[i - 1];
+		i--;
 	}
 	stack->items[0] = temp_first_item;
 }

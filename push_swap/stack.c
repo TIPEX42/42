@@ -24,12 +24,12 @@ void	stack_print(t_stack *stack)
 
 	if (!stack)
 		return ;
-	i = 0;
+	i = stack->top - 1;
 	printf("Stack has %d elements\n", stack->top);
-	while (i < stack->top)
+	while (i >= 0)
 	{
 		printf("Stack[%d] = %d\n", i,  stack->items[i]);
-		i++;
+		i--;
 	}
 }
 
