@@ -13,12 +13,14 @@ OBJS		=			$(SRCS:.c=.o)
 			@$(CC) -c $< $(CFLAGS)
 
 $(NAME):	$(OBJS)
-			@make libft/Makefile
+			@$(MAKE) -C libft
 			@$(CC) libft/libft.a $(OBJS) -o $(NAME)
 
 all:		$(NAME)
 
 clean:
+			@rm -f libft/*.o
+			@rm -f libft/libft.a
 			@rm -f *.o
 
 fclean:		clean
