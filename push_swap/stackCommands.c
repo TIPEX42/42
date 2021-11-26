@@ -13,7 +13,7 @@ void	push(t_stack *stack, int item)
     stack->top++;
 }
 
-int	pop(t_stack *stack, int item)
+int	pop(t_stack *stack)
 {
     if (!stack)
         return (0);

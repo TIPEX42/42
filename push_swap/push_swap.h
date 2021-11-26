@@ -24,7 +24,7 @@ void	stack_destroy(t_stack *stack);
 
 //stackCommands.c
 void	push(t_stack *stack, int item);
-int		pop(t_stack *stack, int item);
+int		pop(t_stack *stack);
 void	swap(t_stack *stack);
 void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
