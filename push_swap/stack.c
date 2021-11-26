@@ -18,32 +18,6 @@ t_stack	*create_stack(int capacity)
 	return (new_stack);
 }
 
-void	push(t_stack *stack, int item)
-{
-	if (!stack)
-		return ;
-	if (stack->top == stack->size)
-	{
-		ft_putstr_fd("Stack overflow\n", 1);
-		return ;
-	}
-	stack->items[stack->top] = item;
-	stack->top++;
-}
-
-int	pop(t_stack *stack, int item)
-{
-	if (!stack)
-		return (0);
-	if (stack->top == 0)
-	{
-		ft_putstr_fd("Stack underflow\n", 1);
-		return (0);
-	}
-	stack->top--;
-	return (stack->items[stack->top]);
-}
-
 void	stack_print(t_stack *stack)
 {
 	int	i;
