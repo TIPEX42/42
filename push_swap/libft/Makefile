@@ -12,14 +12,12 @@ OBJSB		=		$(SRCSB:.c=.o)
 			@$(CC) -c $< $(CFLAGS)
 
 $(NAME):	$(OBJSA)
-			@rm -f libft.a
 			@ar -rcs libft.a $(OBJSA)
 			@ranlib $(NAME)
 
 all:		$(NAME)
 
 bonus:		$(OBJSA) $(OBJSB)
-			@rm -f libft.a
 			@ar -rcs libft.a *.o
 			@ranlib $(NAME)
 

@@ -31,14 +31,14 @@ void	push(t_stack *stack, int item)
 	stack->top++;
 }
 
-void	pop(t_stack *stack, int item)
+int	pop(t_stack *stack, int item)
 {
 	if (!stack)
-		return ;
+		return (0);
 	if (stack->top == 0)
 	{
 		ft_putstr_fd("Stack underflow\n", 1);
-		return ;
+		return (0);
 	}
 	stack->top--;
 	return (stack->items[stack->top]);
