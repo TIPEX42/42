@@ -3,9 +3,11 @@ CC			=			gcc
 CFLAGS		=			-Wall -Werror -Wextra
 DEPS		=			push_swap.h
 
-SRCS		=						\
-						main.c		\
-						checking.c	\
+SRCS		=							\
+						main.c			\
+						checking.c		\
+						stack.c			\
+						stackCommands.c	\
 
 OBJS		=			$(SRCS:.c=.o)
 
