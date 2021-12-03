@@ -1,4 +1,4 @@
 #!/bin/sh
 
+make
 ./push_swap "$@"
-make clean

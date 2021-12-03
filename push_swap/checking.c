@@ -19,8 +19,6 @@ void	check_args(int argc, char **argv)
 	int	i;
 
 	i = 1;
-	if (argc < 2)
-		print_error_and_exit();
 	while (i < argc)
 	{
 		if (!is_number(argv[i]))

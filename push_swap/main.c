@@ -2,87 +2,45 @@
 
 void	print_error_and_exit();
 
+void	populate_stack(t_stack *stack, int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (i < argc)
+	{
+		push(stack, ft_atol(argv[i]));
+		i++;
+	}
+}
+
+int	check_edges(t_stack *stack_a, t_stack *stack_b)
+{
+	int	max_a;
+	int	max_b;
+
+	return (0);
+}
+
+void	sort(t_stack *stack_a, t_stack *stack_b)
+{
+	while (check_edges(stack_a, stack_b))
+		check_edges(stack_a, stack_b);
+}
+
 int main(int argc, char **argv)
 {
 	check_args(argc, argv);
-	t_stack *stackA = create_stack(10);
-	stack_print(stackA);
-	pop(stackA);
-	stack_print(stackA);
+	t_stack *stack_a = create_stack(10);
+	t_stack *stack_b = create_stack(10);
+	populate_stack(stack_a, argc, argv);
+	stack_print("A", stack_a);
+	stack_print("B", stack_b);
 
-	getchar();
+	sort(stack_a, stack_b);
 
-	push(stackA, 10);
-	push(stackA, 9);
-	push(stackA, 8);
-	push(stackA, 7);
-	push(stackA, 6);
-	push(stackA, 5);
-	push(stackA, 4);
-	push(stackA, 3);
-	push(stackA, 2);
-	push(stackA, 1);
-	stack_print(stackA);
-
-	getchar();
-
-	push(stackA, 22);
-	stack_print(stackA);
-
-	getchar();
-
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-	rotate(stackA);
-	stack_print(stackA);
-
-	getchar();
-
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-	reverse_rotate(stackA);
-	stack_print(stackA);
-
-	getchar();
-
-	swap(stackA);
-	stack_print(stackA);
-	swap(stackA);
-	stack_print(stackA);
-
-	stack_destroy(stackA);
+	stack_destroy(stack_a);
+	stack_destroy(stack_b);
 	return (0);
 }
 

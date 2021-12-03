@@ -3,11 +3,15 @@ CC			=			gcc
 CFLAGS		=			-Wall -Werror -Wextra
 DEPS		=			push_swap.h
 
-SRCS		=							\
-						main.c			\
-						checking.c		\
-						stack.c			\
-						stackCommands.c	\
+SRCS		=									\
+						main.c					\
+						checking.c				\
+						stack.c					\
+						stack_commands.c		\
+						stack_commands2.c		\
+						allowed_commands.c		\
+						allowed_commands2.c		\
+						allowed_commands3.c		\
 
 OBJS		=			$(SRCS:.c=.o)
 
@@ -15,7 +19,7 @@ OBJS		=			$(SRCS:.c=.o)
 			@$(CC) -c $< $(CFLAGS)
 
 $(NAME):	$(OBJS)
-			@$(MAKE) bonus -C libft
+			@make bonus -C libft
 			@cp libft/libft.a libft.a
 			@$(CC) libft.a $(OBJS) -o $(NAME)
 
@@ -30,5 +34,8 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
+
+test:		$(NAME)
+			./$(NAME) 1 2 3 4 5 6
 
 .SILENT: clean fclean

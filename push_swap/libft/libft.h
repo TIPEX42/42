@@ -64,6 +64,7 @@ void	*ft_calloc(size_t count, size_t size);
 
 //numbers
 int		ft_atoi(const char *str);
+long	ft_atol(const char *str);
 char	*ft_itoa(int n);
 
 //lists
