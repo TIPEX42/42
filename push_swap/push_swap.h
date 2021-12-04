@@ -3,6 +3,7 @@
 
 # include "libft/libft.h"
 # include <stdio.h>
+# include <limits.h>
 
 typedef struct	s_stack
 {
@@ -38,8 +39,8 @@ int		is_stack_sorted_dsc(t_stack *stack);
 void	sa(t_stack *stack);
 void	sb(t_stack *stack);
 void	ss(t_stack *stack_a, t_stack *stack_b);
-void	pa(t_stack *stack, int value);
-void	pb(t_stack *stack, int value);
+void	pa(t_stack *stack_a, t_stack *stack_b);
+void	pb(t_stack *stack_a, t_stack *stack_b);
 
 //allowed_commands2.c
 void	ra(t_stack *stack);

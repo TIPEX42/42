@@ -19,14 +19,14 @@ void	ss(t_stack *stack_a, t_stack *stack_b)
 	printf("ss\n");
 }
 
-void	pa(t_stack *stack, int value)
+void	pa(t_stack *stack_a, t_stack *stack_b)
 {
-	push(stack, value);
+	push(stack_a, pop(stack_b));
 	printf("pa\n");
 }
 
-void	pb(t_stack *stack, int value)
+void	pb(t_stack *stack_a, t_stack *stack_b)
 {
-	push(stack, value);
+	push(stack_b, pop(stack_a));
 	printf("pb\n");
 }
