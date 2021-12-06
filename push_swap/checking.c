@@ -11,6 +11,8 @@ static int	is_number(char *str)
 			return (0);
 		i++;
 	}
+	if (atol(str) > INT_MAX || atol(str) < INT_MIN)
+		return (0);
 	return (1);
 }
 

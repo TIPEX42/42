@@ -1,6 +1,6 @@
 NAME		=			push_swap
 CC			=			gcc
-CFLAGS		=			-Wall -Werror -Wextra
+CFLAGS		=			-Wall -Werror -Wextra -fsanitize=address
 DEPS		=			push_swap.h
 
 SRCS		=									\
@@ -9,9 +9,12 @@ SRCS		=									\
 						stack.c					\
 						stack_commands.c		\
 						stack_commands2.c		\
+						stack_commands3.c		\
 						allowed_commands.c		\
 						allowed_commands2.c		\
 						allowed_commands3.c		\
+						insert.c				\
+						costs.c					\
 
 OBJS		=			$(SRCS:.c=.o)
 
@@ -21,7 +24,7 @@ OBJS		=			$(SRCS:.c=.o)
 $(NAME):	$(OBJS)
 			@make bonus -C libft
 			@cp libft/libft.a libft.a
-			@$(CC) libft.a $(OBJS) -o $(NAME)
+			@$(CC) libft.a $(OBJS) -o $(NAME) $(CFLAGS)
 
 all:		$(NAME)
 

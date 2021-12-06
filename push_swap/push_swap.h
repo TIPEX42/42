@@ -14,6 +14,11 @@ typedef struct	s_stack
 
 //main.c
 void	print_error_and_exit();
+int		s_get_max_value(t_stack *stack);
+int		s_get_min_value(t_stack *stack);
+int		get_item_index(t_stack *stack, int item);
+int		s_next_value(t_stack *stack, int value);
+int		s_last_value(t_stack *stack, int value);
 
 //checking.c
 void	check_args(int argc, char **argv);
@@ -37,6 +42,11 @@ int		peek(t_stack *stack);
 int		bpeek(t_stack *stack);
 int		is_empty(t_stack *stack);
 
+//stack_commands3.c
+int		s_top(t_stack *stack);
+int		s_get(t_stack *stack, int index);
+int		s_size(t_stack *stack);
+
 //allowed_commands.c
 void	sa(t_stack *stack);
 void	sb(t_stack *stack);
@@ -54,5 +64,18 @@ void	rr(t_stack *stack_a, t_stack *stack_b);
 void	rra(t_stack *stack);
 void	rrb(t_stack *stack);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
+
+//insert.c
+void	insert_top_top(t_stack *stack_a, t_stack *stack_b);
+void	insert_top_bot(t_stack *stack_a, t_stack *stack_b);
+void	insert_bot_top(t_stack *stack_a, t_stack *stack_b);
+void	insert_bot_bot(t_stack *stack_a, t_stack *stack_b);
+
+//costs.c
+int	get_cost_top_top(t_stack *stack_a, t_stack *stack_b);
+int	get_cost_top_bot(t_stack *stack_a, t_stack *stack_b);
+int	get_cost_bot_top(t_stack *stack_a, t_stack *stack_b);
+int	get_cost_bot_bot(t_stack *stack_a, t_stack *stack_b);
+int	get_best_cost(t_stack *stack_a, t_stack *stack_b);
 
 #endif

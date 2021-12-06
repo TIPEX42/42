@@ -14,23 +14,23 @@ void	populate_stack(t_stack *stack, int argc, char **argv)
 	}
 }
 
-int	get_max_value_in_stack(t_stack *stack)
+int	s_get_max_value(t_stack *stack)
 {
 	int	i;
 	int	max;
 
 	i = 0;
 	max = INT_MIN;
-	while (i < stack->top)
+	while (i < s_size(stack))
 	{
-		if (stack->items[i] > max)
-			max = stack->items[i];
+		if (s_get(stack, i) > max)
+			max = s_get(stack, i);
 		i++;
 	}
 	return (max);
 }
 
-int	get_min_value_in_stack(t_stack *stack)
+int	s_get_min_value(t_stack *stack)
 {
 	int	i;
 	int	min;
@@ -56,99 +56,95 @@ int	get_item_index(t_stack *stack, int item)
 	return (index);
 }
 
-void	send_item_up(t_stack *stack_a, t_stack *stack_b, int index, int amount)
+int	s_next_value(t_stack *stack, int value)
 {
 	int	i;
-	int	item;
+	int	next;
 
-	if (index + amount >= stack_a->top)
+	next = s_get_max_value(stack);
+	if (next < value)
+		return (s_get_min_value(stack));
+	i = 1;
+	while (i < s_size(stack))
 	{
-		printf("(send_item_up) : sending too much up in stack_a\n");
-		return ;
+		if (s_get(stack, i) >= value && s_get(stack, i) < next)
+			next = s_get(stack, i);
+		i++;
 	}
-	if (index == stack_a->top - 2)
-		return (sa(stack_a));
-	item = stack_a->items[index];
-	i = stack_a->top;
-	while (i-- > index)
-		pb(stack_a, stack_b);
-	i = 0;
-	rb(stack_b);
-	while (i++ < amount)
-		pa(stack_a, stack_b);
-	rrb(stack_b);
-	while (stack_b->top)
-		pa(stack_a, stack_b);
+	return (next);
 }
 
-void	sort(t_stack *stack_a, t_stack *stack_b)
+int	s_last_value(t_stack *stack, int value)
 {
-	int	temp;
-	int	c;
+	int	i;
+	int	last;
 
-	while (stack_a->top)
+	last = s_get_min_value(stack);
+	if (last < value)
+		return (s_get_max_value(stack));
+	i = 1;
+	while (i < s_size(stack))
 	{
-		c = 0;
-		temp = stack_a->items[stack_a->top - 1];
-		if (stack_b->top && temp < stack_b->items[stack_b->top - 1])
-		{
-			c = 1;
-			pb(stack_a, stack_b);
-			rb(stack_b);
-		}
-		while (stack_b->top && temp < stack_b->items[stack_b->top - 1])
-		{
-			pa(stack_a, stack_b);
-		}
-		if (c)
-			rrb(stack_b);
-		pb(stack_a, stack_b);
+		if (s_get(stack, i) <= value && s_get(stack, i) > last)
+			last = s_get(stack, i);
+		i++;
 	}
+	return (last);
 }
 
-int	get_cost_to_move_top(t_stack *stack_a, t_stack *stack_b)
+void	send_back(t_stack *stack_a, t_stack *stack_b)
 {
-	int	cost_bottom;
-	int	cost_top;
-
-	if (bpeek(stack_b) > peek(stack_a) || peek(stack_b) < peek(stack_a))
-		return (1);
-	cost_bottom = 0;
-	while (stack_a->items[cost_bottom])
-}
-
-int	get_cost_to_move_bot(t_stack *stack_a, t_stack *stack_b)
-{
-	return (0);
+	while (peek(stack_b) != s_get_max_value(stack_b))
+		rb(stack_b);
+	while (!is_empty(stack_b))
+		pa(stack_a, stack_b);
 }
 
 void	new_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	int	cost_top;
-	int	cost_bot;
+	int	best_cost;
 
 	pb(stack_a, stack_b);
 	while (!is_empty(stack_a))
 	{
-		cost_top = get_cost_to_move_top(stack_a, stack_b);
-		cost_bot = get_cost_to_move_bot(stack_a, stack_b);
-		if (cost_top <= cost_bot)
-			move_top(stack_a, stack_b);
+		printf("------------\n");
+		stack_print("A", stack_a);
+		stack_print("B", stack_b);
+		best_cost = get_best_cost(stack_a, stack_b);
+		printf("------------\n");
+		getchar();
+		if (best_cost == 0)
+			insert_top_top(stack_a, stack_b);
+		else if (best_cost == 1)
+			insert_top_bot(stack_a, stack_b);
+		else if (best_cost == 2)
+			insert_bot_top(stack_a, stack_b);
 		else
-			move_bot(stack_a, stack_b);
+			insert_bot_bot(stack_a, stack_b);
 	}
+	send_back(stack_a, stack_b);
+	stack_print("A", stack_a);
+	stack_print("B", stack_b);
+
 }
 
 int main(int argc, char **argv)
 {
 	check_args(argc, argv);
-	t_stack *stack_a = create_stack(10);
-	t_stack *stack_b = create_stack(10);
+	t_stack *stack_a = create_stack(200);
+	if (!stack_a)
+		print_error_and_exit();
+	t_stack *stack_b = create_stack(200);
+	if (!stack_b)
+	{
+		stack_destroy(stack_a);
+		print_error_and_exit();
+	}
 	populate_stack(stack_a, argc, argv);
-	stack_print("A", stack_a);
-	stack_print("B", stack_b);
+	//stack_print("A", stack_a);
+	//stack_print("B", stack_b);
 
-	sort(stack_a, stack_b);
+	new_sort(stack_a, stack_b);
 
 	stack_destroy(stack_a);
 	stack_destroy(stack_b);
