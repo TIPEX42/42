@@ -106,6 +106,39 @@ void	sort(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
+int	get_cost_to_move_top(t_stack *stack_a, t_stack *stack_b)
+{
+	int	cost_bottom;
+	int	cost_top;
+
+	if (bpeek(stack_b) > peek(stack_a) || peek(stack_b) < peek(stack_a))
+		return (1);
+	cost_bottom = 0;
+	while (stack_a->items[cost_bottom])
+}
+
+int	get_cost_to_move_bot(t_stack *stack_a, t_stack *stack_b)
+{
+	return (0);
+}
+
+void	new_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	int	cost_top;
+	int	cost_bot;
+
+	pb(stack_a, stack_b);
+	while (!is_empty(stack_a))
+	{
+		cost_top = get_cost_to_move_top(stack_a, stack_b);
+		cost_bot = get_cost_to_move_bot(stack_a, stack_b);
+		if (cost_top <= cost_bot)
+			move_top(stack_a, stack_b);
+		else
+			move_bot(stack_a, stack_b);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	check_args(argc, argv);

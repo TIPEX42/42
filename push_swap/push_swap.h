@@ -31,9 +31,11 @@ void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 
 //stack_commands2.c
-void	stack_reverse(t_stack *stack);
 int		is_stack_sorted_dsc(t_stack *stack);
 int		is_stack_sorted_dsc(t_stack *stack);
+int		peek(t_stack *stack);
+int		bpeek(t_stack *stack);
+int		is_empty(t_stack *stack);
 
 //allowed_commands.c
 void	sa(t_stack *stack);

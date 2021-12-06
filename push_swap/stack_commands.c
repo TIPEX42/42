@@ -2,28 +2,28 @@
 
 void	push(t_stack *stack, int item)
 {
-    if (!stack)
-        return ;
-    if (stack->top == stack->size)
-    {
-        ft_putstr_fd("Stack overflow\n", 1);
-        return ;
-    }
-    stack->items[stack->top] = item;
-    stack->top++;
+	if (!stack)
+		return ;
+	if (stack->top == stack->size)
+	{
+		ft_putstr_fd("Stack overflow\n", 1);
+		return ;
+	}
+	stack->items[stack->top] = item;
+	stack->top++;
 }
 
 int	pop(t_stack *stack)
 {
-    if (!stack)
-        return (0);
-    if (stack->top == 0)
-    {
-        ft_putstr_fd("Stack underflow\n", 1);
-        return (0);
-    }
-    stack->top--;
-    return (stack->items[stack->top]);
+	if (!stack)
+		return (0);
+	if (stack->top == 0)
+	{
+		ft_putstr_fd("Stack underflow\n", 1);
+		return (0);
+	}
+	stack->top--;
+	return (stack->items[stack->top]);
 }
 
 void	swap(t_stack *stack)
@@ -39,7 +39,7 @@ void	swap(t_stack *stack)
 
 void	reverse_rotate(t_stack *stack)
 {
-	int i;
+	int	i;
 	int	temp_last_item;
 
 	temp_last_item = stack->items[0];
@@ -54,7 +54,7 @@ void	reverse_rotate(t_stack *stack)
 
 void	rotate(t_stack *stack)
 {
-	int i;
+	int	i;
 	int	temp_first_item;
 
 	temp_first_item = stack->items[stack->top - 1];
