@@ -18,7 +18,7 @@ int is_in(int *tab, int val)
 
 int main(int argc, char **argv)
 {
-	srand(time(NULL));
+	srand(time(NULL) + atoi(argv[2]));
 	int *tab = calloc((atoi(argv[1]) + 1), sizeof(int));
 
 	int i = 0;
