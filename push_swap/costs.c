@@ -55,9 +55,11 @@ int	get_best_cost(t_stack *stack_a, t_stack *stack_b)
 	i = 0;
 	while (i < 4)
 	{
+#ifdef DEBUG
 		printf("Cost %d : %d\n", i, costs[i]);
-		if (costs[best] > costs[i])
-			best++;
+#endif
+		if (costs[i] < costs[best])
+			best = i;
 		i++;
 	}
 	return (best);
