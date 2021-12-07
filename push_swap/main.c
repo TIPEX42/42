@@ -1,5 +1,7 @@
 #include "push_swap.h"
 
+//#define DEBUG
+
 void	print_error_and_exit();
 
 void	populate_stack(t_stack *stack, int argc, char **argv)
@@ -92,8 +94,16 @@ int	s_last_value(t_stack *stack, int value)
 
 void	send_back(t_stack *stack_a, t_stack *stack_b)
 {
-	while (peek(stack_b) != s_get_max_value(stack_b))
-		rb(stack_b);
+	if (get_item_index(stack_b, s_get_max_value(stack_b)) > s_size(stack_b) / 2)
+	{
+		while (peek(stack_b) != s_get_max_value(stack_b))
+			rb(stack_b);
+	}
+	else
+	{
+		while (peek(stack_b) != s_get_max_value(stack_b))
+			rrb(stack_b);
+	}
 	while (!is_empty(stack_b))
 		pa(stack_a, stack_b);
 }
