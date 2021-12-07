@@ -30,11 +30,11 @@ void	swap(t_stack *stack)
 {
 	int	temp_item;
 
-	if (stack->top < 3)
+	if (s_size(stack) < 2)
 		return ;
-	temp_item = stack->items[stack->top - 1];
-	stack->items[stack->top - 1] = stack->items[stack->top - 2];
-	stack->items[stack->top - 2] = temp_item;
+	temp_item = peek(stack);
+	stack->items[s_top(stack)] = stack->items[s_top(stack) - 1];
+	stack->items[s_top(stack) - 1] = temp_item;
 }
 
 void	reverse_rotate(t_stack *stack)
