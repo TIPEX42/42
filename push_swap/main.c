@@ -160,20 +160,28 @@ void	shit_sort(t_stack *stack_a, t_stack *stack_b)
 void	send_low_to_stack(t_stack *stack_a, t_stack *stack_b, int median, int virtual_size)
 {
 	int	rotations;
+	int	min_val;
 
 	rotations = 0;
-	while (s_get_min_value(stack_a) <= median && get_item_index(stack_a, s_get_min_value(stack_a)) >= s_size(stack_a) - virtual_size)
+	if (s_size(stack_a) - virtual_size < 0)
+		min_val = s_get(stack_a, 0);
+	else
+		min_val = s_get(stack_a, s_size(stack_a) - virtual_size);
+	while (min_val > median)
+		min_val = s_get(stack_a, get_item_index(stack_a, min_val) + 1);
+	//while (s_get_min_value(stack_a) <= median && get_item_index(stack_a, s_get_min_value(stack_a)) >= s_size(stack_a) - virtual_size)
+	while (is_empty(stack_b) || peek(stack_b) != min_val)
+	{
+		if (peek(stack_a) <= median)
+			pb(stack_a, stack_b);
+		else
 		{
-			if (peek(stack_a) <= median)
-				pb(stack_a, stack_b);
-			else
-			{
-				ra(stack_a);
-				rotations++;
-			}
+			ra(stack_a);
+			rotations++;
 		}
-		while (rotations--)
-			rra(stack_a);
+	}
+	while (rotations--)
+		rra(stack_a);
 }
 
 void	send_high_to_stack(t_stack *stack_a, t_stack *stack_b, int median, int virtual_size)
@@ -241,9 +249,9 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		getchar();
 		rotations = 0;
 		send_low_to_stack(stack_a, stack_b, median, virtual_size);
-		half_sort(stack_b, stack_a, virtual_size / 2, tabs + 1);
-		if (virtual_size / 2 > 2)
-			half_sort(stack_a, stack_b, virtual_size / 2, tabs + 1);
+		half_sort(stack_b, stack_a, virtual_size / 2 + virtual_size % 2, tabs + 1);
+		if (virtual_size / 2 + virtual_size % 2 > 2)
+			half_sort(stack_a, stack_b, virtual_size / 2 + virtual_size % 2, tabs + 1);
 	}
 	else if (virtual_size == 2)
 	{
@@ -259,28 +267,28 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 
 		if (!ft_strncmp(stack_a->name, "A", 1))
 		{
-			if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
+			if (s_size(stack_a) > 1 && s_size(stack_b) > 2 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
 				ss(stack_a, stack_b);
-			else if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+			else if (s_size(stack_a) > 1 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
 				sa(stack_a);
-			else if (peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
+			else if (s_size(stack_b) > 1 && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
 				sb(stack_b);
 		}
 		else
 		{
-			if (peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
+			if (s_size(stack_a) > 1 && s_size(stack_b) > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
 				ss(stack_a, stack_b);
-			else if (peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1))
+			else if (s_size(stack_a) > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1))
 				sa(stack_a);
-			else if (peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
+			else if (s_size(stack_b) > 1 && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
 				sb(stack_b);
 		}
-		//for (int i = 0; i < tabs; i++)
-		//	printf("	");
-		//stack_print(stack_a, virtual_size);
-		//for (int i = 0; i < tabs; i++)
-		//	printf("	");
-		//stack_print(stack_b, virtual_size);
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		stack_print(stack_a, virtual_size);
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		stack_print(stack_b, virtual_size);
 	}
 	for (int i = 0; i < tabs; i++)
 		printf("	");
@@ -288,7 +296,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	stack_print(stack_b, virtual_size);
-	if (virtual_size / 2 < 2 || is_empty(stack_b))
+	if (virtual_size / 2  + virtual_size % 2 < 2 || is_empty(stack_b))
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1))
 	{
@@ -296,7 +304,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		while (i++ < virtual_size / 2)
 			ra(stack_a);
 		i = 0;
-		while (i++ < virtual_size / 2)
+		while (i++ < virtual_size / 2 + virtual_size % 2)
 			pa(stack_a, stack_b);
 		i = 0;
 		while (i++ < virtual_size / 2)
@@ -305,7 +313,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	else
 	{
 		i = 0;
-		while (i++ < virtual_size / 2)
+		while (i++ < virtual_size / 2 + virtual_size % 2)
 			pa(stack_a, stack_b);
 	}
 	for (int i = 0; i < tabs; i++)
@@ -321,9 +329,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 
 void	new_and_improved_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	(void)stack_b;
 	half_sort(stack_a, stack_b, s_size(stack_a), 0);
-	//half_sort(stack_b, stack_a, s_size(stack_b));
 }
 
 int main(int argc, char **argv)
