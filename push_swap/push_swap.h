@@ -5,11 +5,15 @@
 # include <stdio.h>
 # include <limits.h>
 
+#define NO_OUT
+//#define DEBUG
+
 typedef struct	s_stack
 {
-	int	size;
-	int	top;
-	int	*items;
+	int		size;
+	int		top;
+	int		*items;
+	char	*name;
 } t_stack;
 
 //main.c
@@ -24,8 +28,8 @@ int		s_last_value(t_stack *stack, int value);
 void	check_args(int argc, char **argv);
 
 //stack.c
-t_stack	*create_stack(int capacity);
-void	stack_print(const char *str, t_stack *stack);
+t_stack	*create_stack(int capacity, char *name);
+void	stack_print(t_stack *stack, int virtual_size);
 void	stack_destroy(t_stack *stack);
 
 //stackCommands.c
