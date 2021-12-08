@@ -5,7 +5,7 @@
 # include <stdio.h>
 # include <limits.h>
 
-#define NO_OUT
+//#define NO_OUT
 //#define DEBUG
 
 typedef struct	s_stack

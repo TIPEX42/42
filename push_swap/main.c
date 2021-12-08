@@ -280,7 +280,9 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	stack_print(stack_b, virtual_size);
-	if (ft_strncmp(stack_a->name, "A", ft_strlen("A")) == 0 && virtual_size / 2 >= 2)
+	if (virtual_size / 2 < 2)
+		return ;
+	if (!ft_strncmp(stack_a->name, "B", 1))
 	{
 		i = 0;
 		while (i++ < virtual_size / 2)
@@ -292,7 +294,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		while (i++ < virtual_size / 2)
 			rra(stack_a);
 	}
-	else if (virtual_size / 2 >= 2)
+	else
 	{
 		i = 0;
 		while (i++ < virtual_size / 2)

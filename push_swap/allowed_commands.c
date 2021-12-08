@@ -4,7 +4,10 @@ void	sa(t_stack *stack)
 {
 	swap(stack);
 	//#ifndef NO_OUT
-	printf("sa\n");
+	if (!ft_strncmp(stack->name, "A", 1))
+		printf("sa\n");
+	else
+		printf("sb\n");
 	//#endif
 }
 
@@ -12,7 +15,10 @@ void	sb(t_stack *stack)
 {
 	swap(stack);
 	//#ifndef NO_OUT
-	printf("sb\n");
+	if (!ft_strncmp(stack->name, "A", 1))
+		printf("sa\n");
+	else
+		printf("sb\n");
 	//#endif
 }
 
@@ -29,7 +35,10 @@ void	pa(t_stack *stack_a, t_stack *stack_b)
 {
 	push(stack_a, pop(stack_b));
 	#ifndef NO_OUT
-	printf("pa\n");
+	if (!ft_strncmp(stack_a->name, "A", 1))
+		printf("pa\n");
+	else
+		printf("pb\n");
 	#endif
 }
 
@@ -37,6 +46,9 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 {
 	push(stack_b, pop(stack_a));
 	#ifndef NO_OUT
-	printf("pb\n");
+	if (!ft_strncmp(stack_b->name, "A", 1))
+		printf("pa\n");
+	else
+		printf("pb\n");
 	#endif
 }

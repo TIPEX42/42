@@ -4,7 +4,10 @@ void	ra(t_stack *stack)
 {
 	rotate(stack);
 	#ifndef NO_OUT
-	printf("ra\n");
+	if (!ft_strncmp(stack->name, "A", 1))
+		printf("ra\n");
+	else
+		printf("rb\n");
 	#endif
 }
 
@@ -12,7 +15,10 @@ void	rb(t_stack *stack)
 {
 	rotate(stack);
 	#ifndef NO_OUT
-	printf("rb\n");
+	if (!ft_strncmp(stack->name, "A", 1))
+		printf("ra\n");
+	else
+		printf("rb\n");
 	#endif
 }
 
