@@ -7,6 +7,8 @@
 
 //#define NO_OUT
 //#define DEBUG
+//for more debugging
+//#define DEBUG0
 
 typedef struct	s_stack
 {

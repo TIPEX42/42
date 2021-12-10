@@ -2,7 +2,7 @@
 
 void	insert_top_top(t_stack *stack_a, t_stack *stack_b)
 {
-#ifdef DEBUG
+#ifdef DEBUG0
 	printf("Insert top top\n");
 	getchar();
 #endif
@@ -13,7 +13,7 @@ void	insert_top_top(t_stack *stack_a, t_stack *stack_b)
 
 void	insert_top_bot(t_stack *stack_a, t_stack *stack_b)
 {
-#ifdef DEBUG
+#ifdef DEBUG0
 	printf("Insert top bot\n");
 	getchar();
 #endif
@@ -24,7 +24,7 @@ void	insert_top_bot(t_stack *stack_a, t_stack *stack_b)
 
 void	insert_bot_top(t_stack *stack_a, t_stack *stack_b)
 {
-#ifdef DEBUG
+#ifdef DEBUG0
 	printf("Insert bot top\n");
 	getchar();
 #endif
@@ -36,7 +36,7 @@ void	insert_bot_top(t_stack *stack_a, t_stack *stack_b)
 
 void	insert_bot_bot(t_stack *stack_a, t_stack *stack_b)
 {
-#ifdef DEBUG
+#ifdef DEBUG0
 	printf("Insert bot bot\n");
 	printf("next of %d is %d\n", bpeek(stack_a), s_next_value(stack_b, bpeek(stack_a)));
 	getchar();
@@ -44,7 +44,7 @@ void	insert_bot_bot(t_stack *stack_a, t_stack *stack_b)
 	while (s_next_value(stack_b, bpeek(stack_a)) != bpeek(stack_b))
 	{
 		rrb(stack_b);
-#ifdef DEBUG
+#ifdef DEBUG0
 		stack_print("B", stack_b);
 		printf("bpeek(stack_b) = %d\n", bpeek(stack_b));
 		printf("next of %d is %d\n", bpeek(stack_a), s_next_value(stack_b, bpeek(stack_a)));

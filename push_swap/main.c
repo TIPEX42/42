@@ -106,37 +106,7 @@ void	send_back(t_stack *stack_a, t_stack *stack_b)
 		pa(stack_a, stack_b);
 }
 
-void	new_sort(t_stack *stack_a, t_stack *stack_b)
-{
-	int	best_cost;
 
-	if (is_stack_sorted_dsc(stack_a))
-		return ;
-	pb(stack_a, stack_b);
-	while (!is_empty(stack_a))
-	{
-#ifdef DEBUG
-		printf("------------\n");
-		stack_print(stack_a);
-		stack_print(stack_b);
-#endif
-		best_cost = get_best_cost(stack_a, stack_b);
-#ifdef DEBUG
-		printf("Best cost : %d\n", best_cost);
-		printf("------------\n");
-		getchar();
-#endif
-		if (best_cost == 0)
-			insert_top_top(stack_a, stack_b);
-		else if (best_cost == 1)
-			insert_top_bot(stack_a, stack_b);
-		else if (best_cost == 2)
-			insert_bot_top(stack_a, stack_b);
-		else
-			insert_bot_bot(stack_a, stack_b);
-	}
-	send_back(stack_a, stack_b);
-}
 
 void	shit_sort(t_stack *stack_a, t_stack *stack_b)
 {
@@ -220,18 +190,43 @@ int	find_median(t_stack *stack, int virtual_size)
 	return (median);
 }
 
+void	swap_tops(t_stack *stack_a, t_stack *stack_b, int vs1, int vs2)
+{
+	if (!ft_strncmp(stack_a->name, "A", 1))
+		{
+			if (vs1 > 1 && vs2 > 1 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
+				ss(stack_a, stack_b);
+			else if (vs1 > 1 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+				sa(stack_a);
+			else if (vs2 > 1 && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
+				sb(stack_b);
+		}
+		else
+		{
+			if (vs1 > 1 && vs2 > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
+				ss(stack_a, stack_b);
+			else if (vs1 > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1))
+				sa(stack_a);
+			else if (vs2 > 1 && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
+				sb(stack_b);
+		}
+}
+
 void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 {
 	(void)stack_b;
 	int	median;
 	int	rotations;
 	int	i;
-	
+
+#ifdef DEBUG
 	for (int i = 0; i < tabs; i++)
 			printf("	");
 	printf("HalfSort() -%d-\n", virtual_size);
+#endif
 	if (virtual_size > 2)
 	{
+#ifdef DEBUG
 		for (int i = 0; i < tabs; i++)
 			printf("	");
 		printf("Splitting\n");
@@ -242,61 +237,34 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 			printf("	");
 		stack_print(stack_b, virtual_size);
 		getchar();
+#endif
 		median = find_median(stack_a, virtual_size);
+#ifdef DEBUG
 		for (int i = 0; i < tabs; i++)
 			printf("	");
 		printf("Median : %d\n", median);
 		getchar();
+#endif
 		rotations = 0;
 		send_low_to_stack(stack_a, stack_b, median, virtual_size);
-		half_sort(stack_b, stack_a, virtual_size / 2 + virtual_size % 2, tabs + 1);
-		if (virtual_size / 2 + virtual_size % 2 > 2)
-			half_sort(stack_a, stack_b, virtual_size / 2 + virtual_size % 2, tabs + 1);
-	}
-	else if (virtual_size == 2)
-	{
-		for (int i = 0; i < tabs; i++)
-			printf("	");
-		printf("Peek ------\n");
-		for (int i = 0; i < tabs; i++)
-			printf("	");
-		stack_print(stack_a, virtual_size);
-		for (int i = 0; i < tabs; i++)
-			printf("	");
-		stack_print(stack_b, virtual_size);
-
-		if (!ft_strncmp(stack_a->name, "A", 1))
-		{
-			if (s_size(stack_a) > 1 && s_size(stack_b) > 2 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
-				ss(stack_a, stack_b);
-			else if (s_size(stack_a) > 1 && peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
-				sa(stack_a);
-			else if (s_size(stack_b) > 1 && peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
-				sb(stack_b);
-		}
+		if (virtual_size / 2 <= 2)
+			swap_tops(stack_a, stack_b, virtual_size / 2, virtual_size / 2 + virtual_size % 2);
 		else
 		{
-			if (s_size(stack_a) > 1 && s_size(stack_b) > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1) && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
-				ss(stack_a, stack_b);
-			else if (s_size(stack_a) > 1 && peek(stack_a) < s_get(stack_a, s_top(stack_a) - 1))
-				sa(stack_a);
-			else if (s_size(stack_b) > 1 && peek(stack_b) > s_get(stack_b, s_top(stack_b) - 1))
-				sb(stack_b);
+			half_sort(stack_b, stack_a, virtual_size / 2 + virtual_size % 2, tabs + 1);
+			if (virtual_size / 2 + virtual_size % 2 > 2)
+				half_sort(stack_a, stack_b, virtual_size / 2, tabs + 1);
 		}
-		for (int i = 0; i < tabs; i++)
-			printf("	");
-		stack_print(stack_a, virtual_size);
-		for (int i = 0; i < tabs; i++)
-			printf("	");
-		stack_print(stack_b, virtual_size);
 	}
+#ifdef DEBUG
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	stack_print(stack_a, virtual_size);
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	stack_print(stack_b, virtual_size);
-	if (virtual_size / 2  + virtual_size % 2 < 2 || is_empty(stack_b))
+#endif
+	if (virtual_size / 2  + virtual_size % 2 <= 2 || is_empty(stack_b))
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1))
 	{
@@ -316,6 +284,7 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		while (i++ < virtual_size / 2 + virtual_size % 2)
 			pa(stack_a, stack_b);
 	}
+#ifdef DEBUG
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	stack_print(stack_a, virtual_size);
@@ -325,11 +294,26 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	for (int i = 0; i < tabs; i++)
 		printf("	");
 	printf("Finish() -%d-\n", virtual_size);
+#endif
 }
 
 void	new_and_improved_sort(t_stack *stack_a, t_stack *stack_b)
 {
 	half_sort(stack_a, stack_b, s_size(stack_a), 0);
+}
+
+int	need_to_sort(t_stack *stack_a)
+{
+	if (s_size(stack_a) < 2)
+		return (0);
+	if (is_stack_sorted_dsc(stack_a))
+		return (0);
+	if (s_size(stack_a) == 2)
+	{
+		sa(stack_a);
+		return (0);
+	}
+	return (1);
 }
 
 int main(int argc, char **argv)
@@ -351,7 +335,8 @@ int main(int argc, char **argv)
 	//sort(stack_a, stack_b);
 	//new_sort(stack_a, stack_b);
 	//shit_sort(stack_a, stack_b);
-	new_and_improved_sort(stack_a, stack_b);
+	if (need_to_sort(stack_a))
+		new_and_improved_sort(stack_a, stack_b);
 
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);

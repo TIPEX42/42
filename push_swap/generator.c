@@ -34,7 +34,9 @@ int main(int argc, char **argv)
 
 	for (int i = 0; tab[i]; i++)
 	{
-		printf("%d ", tab[i]);
+		printf("%d", tab[i]);
+		if (tab[i + 1])
+			printf(" ");
 	}
 	
 	free(tab);
