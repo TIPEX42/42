@@ -10,6 +10,7 @@ SRCS		=									\
 						stack_commands.c		\
 						stack_commands2.c		\
 						stack_commands3.c		\
+						stack_commands4.c		\
 						allowed_commands.c		\
 						allowed_commands2.c		\
 						allowed_commands3.c		\

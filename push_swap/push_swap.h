@@ -42,8 +42,6 @@ void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 
 //stack_commands2.c
-int		is_stack_sorted_asc(t_stack *stack);
-int		is_stack_sorted_dsc(t_stack *stack);
 int		peek(t_stack *stack);
 int		bpeek(t_stack *stack);
 int		is_empty(t_stack *stack);
@@ -52,6 +50,12 @@ int		is_empty(t_stack *stack);
 int		s_top(t_stack *stack);
 int		s_get(t_stack *stack, int index);
 int		s_size(t_stack *stack);
+
+//stack_commands4.c
+int		is_stack_sorted_asc(t_stack *stack);
+int		is_stack_sorted_dsc(t_stack *stack);
+int		is_vs_sorted_asc(t_stack *stack, int virtual_stack);
+int		is_vs_sorted_dsc(t_stack *stack, int virtual_stack);
 
 //allowed_commands.c
 void	sa(t_stack *stack);
@@ -78,10 +82,10 @@ void	insert_bot_top(t_stack *stack_a, t_stack *stack_b);
 void	insert_bot_bot(t_stack *stack_a, t_stack *stack_b);
 
 //costs.c
-int	get_cost_top_top(t_stack *stack_a, t_stack *stack_b);
-int	get_cost_top_bot(t_stack *stack_a, t_stack *stack_b);
-int	get_cost_bot_top(t_stack *stack_a, t_stack *stack_b);
-int	get_cost_bot_bot(t_stack *stack_a, t_stack *stack_b);
-int	get_best_cost(t_stack *stack_a, t_stack *stack_b);
+int		get_cost_top_top(t_stack *stack_a, t_stack *stack_b);
+int		get_cost_top_bot(t_stack *stack_a, t_stack *stack_b);
+int		get_cost_bot_top(t_stack *stack_a, t_stack *stack_b);
+int		get_cost_bot_bot(t_stack *stack_a, t_stack *stack_b);
+int		get_best_cost(t_stack *stack_a, t_stack *stack_b);
 
 #endif
