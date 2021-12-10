@@ -150,6 +150,8 @@ void	send_low_to_stack(t_stack *stack_a, t_stack *stack_b, int median, int virtu
 			rotations++;
 		}
 	}
+	if (s_size(stack_a) == virtual_size / 2)
+		return ;
 	while (rotations--)
 		rra(stack_a);
 }
@@ -204,6 +206,10 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 			printf("	");
 	printf("HalfSort() -%d-\n", virtual_size);
 #endif
+	if (!ft_strncmp(stack_a->name, "A", 1) && is_vs_sorted_dsc(stack_a, virtual_size))
+		return ;
+	if (!ft_strncmp(stack_a->name, "B", 1) && is_vs_sorted_asc(stack_a, virtual_size))
+		return ;
 	if (virtual_size >= 2)
 	{
 #ifdef DEBUG
@@ -250,9 +256,12 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1))
 	{
-		i = 0;
-		while (i++ < virtual_size / 2)
-			ra(stack_a);
+		if (s_size(stack_a) > virtual_size)
+		{
+			i = 0;
+			while (i++ < virtual_size / 2)
+				ra(stack_a);
+		}
 		i = 0;
 		while (i++ < virtual_size / 2 + virtual_size % 2)
 			pa(stack_a, stack_b);
