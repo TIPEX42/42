@@ -158,17 +158,17 @@ void	send_low_to_stack(t_stack *stack_a, t_stack *stack_b, int median, int virtu
 
 int	find_median(t_stack *stack, int virtual_size)
 {
-	int	number;
+	int	i;
 	int	median;
 
 	median = s_get_max_value(stack);
 	while (get_item_index(stack, median) < s_size(stack) - virtual_size)
 		median = s_last_value(stack, median - 1);
-	number = 0;
-	while (number < virtual_size / 2)
+	i = 0;
+	while (i < virtual_size / 2)
 	{
 		median = s_last_value(stack, median - 1);
-		number++;
+		i++;
 	}
 	return (median);
 }
@@ -195,6 +195,55 @@ void	swap_tops(t_stack *stack_a, t_stack *stack_b, int vs1, int vs2)
 		}
 }
 
+void	rev_dsc_vs(t_stack *stack_a, t_stack *stack_b, int virtual_size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+	{
+		pb(stack_a, stack_b);
+		i++;
+	}
+	j = 0;
+	while (i + j++ < virtual_size)
+		ra(stack_a);
+	while (i--)
+		pa(stack_a, stack_b);
+	while (j--)
+		rra(stack_a);
+	printf("OPTI REV !!\n");
+}
+
+int	try_reverse_a(t_stack *stack_a, t_stack *stack_b, int virtual_size)
+{
+	int	lowest_index;
+	int	lowest;
+	int	i;
+
+	lowest = s_get_max_value(stack_a);
+	while (get_item_index(stack_a, lowest) < s_size(stack_a) - virtual_size)
+		lowest = s_last_value(stack_a, lowest);
+	lowest_index = get_item_index(stack_a, lowest);
+	i = lowest_index;
+	while (i < s_top(stack_a) && s_get(stack_a, i) > s_get(stack_a, i + 1))
+		i++;
+	printf("last:%d\n", s_get(stack_a, i));
+	if (i < s_top(stack_a))
+		return (0);
+	printf("YES1\n");
+	i = s_size(stack_a) - virtual_size;
+	while (i < lowest_index && s_get(stack_a, i) > s_get(stack_a, i + 1))
+		i++;
+	printf("I:%d, lowest_index:%d, lowest:%d\n", i, lowest_index, lowest);
+	if (i < lowest_index)
+		return (0);
+	printf("YES2\n");
+	rev_dsc_vs(stack_a, stack_b, virtual_size);
+	return (1);
+}
+
 void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 {
 	(void)stack_b;
@@ -209,6 +258,8 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	if (!ft_strncmp(stack_a->name, "A", 1) && is_vs_sorted_dsc(stack_a, virtual_size))
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1) && is_vs_sorted_asc(stack_a, virtual_size))
+		return ;
+	if (!ft_strncmp(stack_a->name, "A", 1) && try_reverse_a(stack_a, stack_b, virtual_size))
 		return ;
 	if (virtual_size >= 2)
 	{
