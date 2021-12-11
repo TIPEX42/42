@@ -350,14 +350,19 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 		printf("	");
 	stack_print(stack_b, virtual_size);
 #endif
+
 	if (!ft_strncmp(stack_a->name, "A", 1) && is_vs_sorted_dsc(stack_a, virtual_size))
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1) && is_vs_sorted_asc(stack_a, virtual_size))
 		return ;
+
+#if 0
 	if (!ft_strncmp(stack_a->name, "A", 1) && try_reverse_a(stack_a, stack_b, virtual_size))
 		return ;
 	if (!ft_strncmp(stack_a->name, "V", 1) && try_reverse_b(stack_a, stack_b, virtual_size))
 		return ;
+#endif
+
 	if (virtual_size >= 2)
 	{
 #ifdef DEBUG
