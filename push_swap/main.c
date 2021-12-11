@@ -446,6 +446,137 @@ void	new_and_improved_sort(t_stack *stack_a, t_stack *stack_b)
 	half_sort(stack_a, stack_b, s_size(stack_a), 0);
 }
 
+void	new_insert(t_stack *stack_a, t_stack *stack_b, int virtual_size)
+{
+	int	i;
+	int	top_high;
+	int	top_low;
+	int	bot_high;
+	int	bot_low;
+	int	cost_top;
+	int	cost_bot;
+
+	pb(stack_a, stack_b);
+	top_high = peek(stack_b);
+	top_low = peek(stack_b);
+	i = 1;
+	while (i < virtual_size)
+	{
+		if (stack_a->name[0] == 'A')
+		{
+			
+		}
+	}
+}
+
+void	half_better_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
+{
+	(void)stack_b;
+	int	median;
+	int	i;
+
+#ifdef DEBUG
+	for (int i = 0; i < tabs; i++)
+			printf("	");
+	printf("HalfSort() -%d-\n", virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_a, virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_b, virtual_size);
+#endif
+
+	if (!ft_strncmp(stack_a->name, "A", 1) && is_vs_sorted_dsc(stack_a, virtual_size))
+		return ;
+	if (!ft_strncmp(stack_a->name, "B", 1) && is_vs_sorted_asc(stack_a, virtual_size))
+		return ;
+
+#if 0
+	if (!ft_strncmp(stack_a->name, "A", 1) && try_reverse_a(stack_a, stack_b, virtual_size))
+		return ;
+	if (!ft_strncmp(stack_a->name, "V", 1) && try_reverse_b(stack_a, stack_b, virtual_size))
+		return ;
+#endif
+
+	if (virtual_size > 16)
+	{
+#ifdef DEBUG
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		printf("Splitting\n");
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		stack_print(stack_a, virtual_size);
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		stack_print(stack_b, virtual_size);
+		getchar();
+#endif
+		median = find_median(stack_a, virtual_size);
+#ifdef DEBUG
+		for (int i = 0; i < tabs; i++)
+			printf("	");
+		printf("Median : %d\n", median);
+		getchar();
+#endif
+		send_low_to_stack(stack_a, stack_b, median, virtual_size);
+		half_sort(stack_b, stack_a, virtual_size / 2 + virtual_size % 2, tabs + 1);
+		half_sort(stack_a, stack_b, virtual_size / 2, tabs + 1);
+	}
+	else
+	{
+		new_insert(stack_a, stack_b, virtual_size);
+	}
+#ifdef DEBUG
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_a, virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_b, virtual_size);
+#endif
+	if (virtual_size <= 2 || is_empty(stack_b))
+		return ;
+	if (!ft_strncmp(stack_a->name, "B", 1))
+	{
+		if (s_size(stack_a) > virtual_size)
+		{
+			i = 0;
+			while (i++ < virtual_size / 2)
+				ra(stack_a);
+		}
+		i = 0;
+		while (i++ < virtual_size / 2 + virtual_size % 2)
+			pa(stack_a, stack_b);
+		i = 0;
+		while (i++ < virtual_size / 2)
+			rra(stack_a);
+	}
+	else
+	{
+		i = 0;
+		while (i++ < virtual_size / 2 + virtual_size % 2)
+			pa(stack_a, stack_b);
+	}
+#ifdef DEBUG
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_a, virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_b, virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	printf("Finish() -%d-\n", virtual_size);
+#endif
+}
+
+void	better_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	half_better_sort(stack_a, stack_b);
+}
+
 int	need_to_sort(t_stack *stack_a)
 {
 	if (s_size(stack_a) < 2)
@@ -481,6 +612,7 @@ int main(int argc, char **argv)
 	if (need_to_sort(stack_a))
 	{
 		new_and_improved_sort(stack_a, stack_b);
+		better_sort(stack_a, stack_b);
 		//shit_sort(stack_a, stack_b);
 	}
 
