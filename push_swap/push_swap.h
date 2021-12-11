@@ -6,7 +6,7 @@
 # include <limits.h>
 
 //#define NO_OUT
-#define DEBUG
+//#define DEBUG
 //for more debugging
 //#define DEBUG0
 

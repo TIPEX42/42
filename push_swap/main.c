@@ -49,7 +49,7 @@ int	get_item_index(t_stack *stack, int item)
 	int	index;
 
 	index = 0;
-	while (index < stack->top && stack->items[index] != item)
+	while (index < s_size(stack) && s_get(stack, index) != item)
 		index++;
 	return (index);
 }
@@ -195,25 +195,80 @@ void	swap_tops(t_stack *stack_a, t_stack *stack_b, int vs1, int vs2)
 		}
 }
 
-void	rev_dsc_vs(t_stack *stack_a, t_stack *stack_b, int virtual_size)
+void	rev_dsc_vs_safe(t_stack *stack_a, t_stack *stack_b, int virtual_size, int lowest)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+	while (peek(stack_a) != lowest)
 	{
 		pb(stack_a, stack_b);
 		i++;
 	}
 	j = 0;
-	while (i + j++ < virtual_size)
+	while (i + j < virtual_size)
+	{
 		ra(stack_a);
+		j++;
+	}
 	while (i--)
 		pa(stack_a, stack_b);
 	while (j--)
 		rra(stack_a);
-	printf("OPTI REV !!\n");
+}
+
+void	rev_asc_vs_safe(t_stack *stack_a, t_stack *stack_b, int virtual_size, int lowest)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (peek(stack_a) != lowest)
+	{
+		pa(stack_a, stack_b);
+		i++;
+	}
+	j = 0;
+	while (i + j < virtual_size)
+	{
+		rb(stack_b);
+		j++;
+	}
+	while (i--)
+		pb(stack_a, stack_b);
+	while (j--)
+		rrb(stack_b);
+}
+
+void	rev_dsc_vs(t_stack *stack_a, t_stack *stack_b, int virtual_size, int lowest)
+{
+	if (virtual_size == s_size(stack_a))
+	{
+		if (get_item_index(stack_a, s_get_min_value(stack_a)) < s_size(stack_a) / 2)
+			while (peek(stack_a) != s_get_min_value(stack_a))
+				rra(stack_a);
+		else
+			while (peek(stack_a) != s_get_min_value(stack_a))
+				ra(stack_a);
+	}
+	else
+		rev_dsc_vs_safe(stack_a, stack_b, virtual_size, lowest);
+}
+
+void	rev_asc_vs(t_stack *stack_a, t_stack *stack_b, int virtual_size, int lowest)
+{
+	if (virtual_size == s_size(stack_b))
+	{
+		if (get_item_index(stack_b, s_get_max_value(stack_b)) < s_size(stack_b) / 2)
+			while (peek(stack_b) != s_get_max_value(stack_b))
+				rra(stack_b);
+		else
+			while (peek(stack_b) != s_get_max_value(stack_b))
+				ra(stack_b);
+	}
+	else
+		rev_asc_vs_safe(stack_a, stack_b, virtual_size, lowest);
 }
 
 int	try_reverse_a(t_stack *stack_a, t_stack *stack_b, int virtual_size)
@@ -222,25 +277,59 @@ int	try_reverse_a(t_stack *stack_a, t_stack *stack_b, int virtual_size)
 	int	lowest;
 	int	i;
 
-	lowest = s_get_max_value(stack_a);
+	if (is_empty(stack_a))
+		return (0);
+	lowest = s_get_min_value(stack_a);
 	while (get_item_index(stack_a, lowest) < s_size(stack_a) - virtual_size)
-		lowest = s_last_value(stack_a, lowest);
+		lowest = s_next_value(stack_a, lowest + 1);
+	//printf("Lowest\n");
 	lowest_index = get_item_index(stack_a, lowest);
-	i = lowest_index;
+	i = lowest_index + 1;
 	while (i < s_top(stack_a) && s_get(stack_a, i) > s_get(stack_a, i + 1))
 		i++;
-	printf("last:%d\n", s_get(stack_a, i));
+	//printf("first\n");
 	if (i < s_top(stack_a))
 		return (0);
-	printf("YES1\n");
 	i = s_size(stack_a) - virtual_size;
 	while (i < lowest_index && s_get(stack_a, i) > s_get(stack_a, i + 1))
 		i++;
-	printf("I:%d, lowest_index:%d, lowest:%d\n", i, lowest_index, lowest);
+	//printf("second\n");
 	if (i < lowest_index)
 		return (0);
-	printf("YES2\n");
-	rev_dsc_vs(stack_a, stack_b, virtual_size);
+	if (peek(stack_a) < s_get(stack_a, s_size(stack_a) - virtual_size))
+		return (0);
+	rev_dsc_vs(stack_a, stack_b, virtual_size, lowest);
+	return (1);
+}
+
+int	try_reverse_b(t_stack *stack_a, t_stack *stack_b, int virtual_size)
+{
+	int	lowest_index;
+	int	lowest;
+	int	i;
+
+	if (is_empty(stack_b))
+		return (0);
+	lowest = s_get_min_value(stack_b);
+	while (get_item_index(stack_b, lowest) < s_size(stack_b) - virtual_size)
+		lowest = s_next_value(stack_b, lowest + 1);
+	//printf("Lowest\n");
+	lowest_index = get_item_index(stack_b, lowest);
+	i = lowest_index;
+	while (i < s_top(stack_b) && s_get(stack_b, i) < s_get(stack_b, i + 1))
+		i++;
+	//printf("first\n");
+	if (i < s_top(stack_b))
+		return (0);
+	i = s_size(stack_b) - virtual_size;
+	while (i < lowest_index && s_get(stack_b, i) < s_get(stack_b, i + 1))
+		i++;
+	//printf("second\n");
+	if (i < lowest_index)
+		return (0);
+	if (peek(stack_b) > s_get(stack_b, s_size(stack_b) - virtual_size))
+		return (0);
+	rev_asc_vs(stack_a, stack_b, virtual_size, lowest);
 	return (1);
 }
 
@@ -254,12 +343,20 @@ void	half_sort(t_stack *stack_a, t_stack *stack_b, int virtual_size, int tabs)
 	for (int i = 0; i < tabs; i++)
 			printf("	");
 	printf("HalfSort() -%d-\n", virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_a, virtual_size);
+	for (int i = 0; i < tabs; i++)
+		printf("	");
+	stack_print(stack_b, virtual_size);
 #endif
 	if (!ft_strncmp(stack_a->name, "A", 1) && is_vs_sorted_dsc(stack_a, virtual_size))
 		return ;
 	if (!ft_strncmp(stack_a->name, "B", 1) && is_vs_sorted_asc(stack_a, virtual_size))
 		return ;
 	if (!ft_strncmp(stack_a->name, "A", 1) && try_reverse_a(stack_a, stack_b, virtual_size))
+		return ;
+	if (!ft_strncmp(stack_a->name, "V", 1) && try_reverse_b(stack_a, stack_b, virtual_size))
 		return ;
 	if (virtual_size >= 2)
 	{
@@ -371,8 +468,10 @@ int main(int argc, char **argv)
 		print_error_and_exit();
 	}
 	populate_stack(stack_a, argc, argv);
-	//stack_print(stack_a, 0);
-	//stack_print(stack_b, 0);
+#ifdef DEBUG
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+#endif
 
 	if (need_to_sort(stack_a))
 	{
@@ -380,8 +479,10 @@ int main(int argc, char **argv)
 		//shit_sort(stack_a, stack_b);
 	}
 
-	//stack_print(stack_a, 0);
-	//stack_print(stack_b, 0);
+#ifdef DEBUG
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+#endif
 
 	stack_destroy(stack_a);
 	stack_destroy(stack_b);
