@@ -45,7 +45,7 @@ echo "\x1B[32mFinished ----------------"
 echo "\x1B[32m----Tests with size 100----"
 
 n=0
-while (( $n < 10 ))
+while (( $n < 100 ))
 do
 	AVG=$(( AVG+$(./push_swap $(./generator 100 n) | wc -l )))
 	n=$(( n+1 ))
@@ -57,14 +57,14 @@ do
 	./push_swap $nbs | ./checker_Mac.dms $nbs
 	n=$(( n+1 ))
 done
-AVG=$(( AVG/10 ))
+AVG=$(( AVG/100 ))
 echo "\x1B[33mAverage operations : \x1B[31m$AVG"
 echo "\x1B[32mFinished ----------------"
 
 echo "\x1B[32m----Tests with size 500----"
 
 n=0
-while (( $n < 10 ))
+while (( $n < 100 ))
 do
 	AVG=$(( AVG+$(./push_swap $(./generator 500 n) | wc -l )))
 	n=$(( n+1 ))
@@ -76,7 +76,7 @@ do
 	./push_swap $nbs | ./checker_Mac.dms $nbs
 	n=$(( n+1 ))
 done
-AVG=$(( AVG/10 ))
+AVG=$(( AVG/100 ))
 echo "\x1B[33mAverage operations : \x1B[31m$AVG"
 echo "\x1B[32mFinished ----------------"
 

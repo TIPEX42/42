@@ -10,7 +10,7 @@ do
 	do
 		nbs=$(./generator $i $n)
 		if [ "$(./push_swap $nbs | ./checker_Mac.dms $nbs)" != "OK" ]; then
-			echo "\x1B[31mError"
+			echo "\x1B[31mError with $nbs"
 		fi
 		n=$(( n+1 ))
 	done
