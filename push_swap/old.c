@@ -485,3 +485,35 @@ int	need_to_sort(t_stack *stack_a)
 	}
 	return (1);
 }
+
+int	s_get_max_value(t_stack *stack)
+{
+	int	i;
+	int	max;
+
+	i = 0;
+	max = INT_MIN;
+	while (i < s_size(stack))
+	{
+		if (s_get(stack, i) > max)
+			max = s_get(stack, i);
+		i++;
+	}
+	return (max);
+}
+
+int	s_get_min_value(t_stack *stack)
+{
+	int	i;
+	int	min;
+
+	i = 0;
+	min = INT_MAX;
+	while (i < stack->top)
+	{
+		if (stack->items[i] < min)
+			min = stack->items[i];
+		i++;
+	}
+	return (min);
+}

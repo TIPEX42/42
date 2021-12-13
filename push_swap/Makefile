@@ -14,8 +14,6 @@ SRCS		=									\
 						allowed_commands.c		\
 						allowed_commands2.c		\
 						allowed_commands3.c		\
-						insert.c				\
-						costs.c					\
 
 OBJS		=			$(SRCS:.c=.o)
 
