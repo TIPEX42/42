@@ -12,6 +12,13 @@ void	populate_stack(t_stack *stack, int argc, char **argv)
 	}
 }
 
+int abs(int x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
+
 int	s_get_index(t_stack *stack, int item)
 {
 	int	index;
@@ -85,6 +92,33 @@ int	s_get_median(t_stack *stack, int part)
 	return (median);
 }
 
+void	optimize_sort(t_stack *stack_a, t_stack *stack_b, int part)
+{
+	if (part == 3)
+	{
+		if (s_get_max(stack_a, part) == peek(stack_a))
+		{
+			pb(stack_a, stack_b);
+			ra(stack_a);
+			ra(stack_a);
+			pa(stack_a, stack_b);
+			rra(stack_a);
+			rra(stack_a);
+		}
+		else if (s_get_max(stack_a, part) == s_get(stack_a, s_top(stack_a) - 1))
+		{
+			ra(stack_a);
+			pb(stack_a, stack_b);
+			ra(stack_a);
+			pa(stack_a, stack_b);
+			rra(stack_a);
+			rra(stack_a);
+		}
+	}
+	if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+		sa(stack_a);
+}
+
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	int	rotations;
@@ -92,6 +126,11 @@ void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	int	min;
 	int	i;
 
+	if (peek(partitions) <= 3)
+	{
+		optimize_sort(stack_a, stack_b, peek(partitions));
+		return ;
+	}
 	median = s_get_median(stack_a, peek(partitions));
 	min = s_get(stack_a, s_size(stack_a) - peek(partitions));
 	i = 0;
