@@ -22,14 +22,14 @@ int	s_get_index(t_stack *stack, int item)
 	return (index);
 }
 
-int	s_get_max(t_stack *stack, int start, int end)
+int	s_get_max(t_stack *stack, int part)
 {
 	int	max;
 	int	i;
 
-	i = start;
+	i = s_size(stack) - part;
 	max = s_get(stack, i);
-	while (i < end)
+	while (i < s_size(stack))
 	{
 		if (s_get(stack, i) > max)
 			max = s_get(stack, i);
@@ -38,14 +38,14 @@ int	s_get_max(t_stack *stack, int start, int end)
 	return (max);
 }
 
-int	s_get_min(t_stack *stack, int start, int end)
+int	s_get_min(t_stack *stack, int part)
 {
 	int	min;
 	int	i;
 
-	i = start;
+	i = s_size(stack) - part;
 	min = s_get(stack, i);
-	while (i < end)
+	while (i < s_size(stack))
 	{
 		if (s_get(stack, i) < min)
 			min = s_get(stack, i);
@@ -54,14 +54,14 @@ int	s_get_min(t_stack *stack, int start, int end)
 	return (min);
 }
 
-int	s_get_last(t_stack *stack, int value, int start, int end)
+int	s_get_last(t_stack *stack, int value, int part)
 {
 	int	last;
 	int	i;
 
-	i = start;
-	last = s_get_min(stack, start, end);
-	while (i < end)
+	i = s_size(stack) - part;
+	last = s_get_min(stack, part);
+	while (i < s_size(stack))
 	{
 		if (s_get(stack, i) < value && s_get(stack, i) > last)
 			last = s_get(stack, i);
@@ -70,45 +70,42 @@ int	s_get_last(t_stack *stack, int value, int start, int end)
 	return (last);
 }
 
-int	s_get_median(t_stack *stack, int start, int end)
+int	s_get_median(t_stack *stack, int part)
 {
 	int	median;
-	int	size;
 	int	i;
 
 	i = 0;
-	size = (end - start) / 2;
-	median = s_get_max(stack, start, end);
-	while (i < size)
+	median = s_get_max(stack, part);
+	while (i < part / 2)
 	{
-		median = s_get_last(stack, median, start, end);
+		median = s_get_last(stack, median, part);
 		i++;
 	}
 	return (median);
 }
 
-void	s_push_low(t_stack *stack_a, t_stack *stack_b, int start, int end)
+void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	int	rotations;
 	int	median;
 	int	min;
 	int	i;
 
-	median = s_get_median(stack_a, start, end);
-	min = s_get(stack_a, start);
+	median = s_get_median(stack_a, peek(partitions));
+	min = s_get(stack_a, s_size(stack_a) - peek(partitions));
 	i = 0;
 	while (min > median)
-	{
-		printf("Median : %d\n", median);
-		min = s_get(stack_a, start + i++);
-	}
+		min = s_get(stack_a, s_size(stack_a) - peek(partitions) + i++);
 	rotations = 0;
-	
-	printf("Min : %d\n", min);
+
 	while (peek(stack_a) != min)
 	{
 		if (peek(stack_a) <= median)
+		{
 			pb(stack_a, stack_b);
+			partitions->items[s_top(partitions)]--;
+		}
 		else
 		{
 			ra(stack_a);
@@ -116,88 +113,148 @@ void	s_push_low(t_stack *stack_a, t_stack *stack_b, int start, int end)
 		}
 	}
 	if (peek(stack_a) <= median)
-			pb(stack_a, stack_b);
+	{
+		pb(stack_a, stack_b);
+		partitions->items[s_top(partitions)]--;
+	}
 	while (rotations--)
 		rra(stack_a);
 }
 
-void	s_push_high(t_stack *stack_a, t_stack *stack_b, int start, int end)
+void	s_push_high(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	int	rotations;
 	int	median;
 	int	max;
 	int	i;
 
+	push(partitions, 0);
 	if (s_size(stack_b) == 1)
 	{
+		partitions->items[s_top(partitions)]++;
 		pa(stack_a, stack_b);
 		return ;
 	}
-	median = s_get_median(stack_b, start, end);
-	max = s_get(stack_b, start);
-	printf("Max : %d, median : %d\n", max, median);
+	median = s_get_median(stack_b, s_size(stack_b));
+	max = s_get(stack_b, 0);
 	i = 0;
 	while (max <= median)
-		max = s_get(stack_b, start + i++);
+		max = s_get(stack_b, i++);
 	rotations = 0;
-	while (peek(stack_b) != max) // peut opti en verifiant si c'est pas mieux de push par le dessous
+	while (peek(stack_b) != max)
 	{
-#ifdef DEBUG
-	stack_print(stack_a, 0);
-	stack_print(stack_b, 0);
-#endif
 		if (peek(stack_b) > median)
+		{
 			pa(stack_a, stack_b);
+			partitions->items[s_top(partitions)]++;
+		}
 		else
 			rb(stack_b);
 	}
 	if (peek(stack_b) > median)
-			pa(stack_a, stack_b);
-}
-
-void	partition(t_stack *stack_a, t_stack *stack_b, int start, int end)
-{
-	s_push_low(stack_a, stack_b, start, end);
-#ifdef DEBUG
-	stack_print(stack_a, 0);
-	stack_print(stack_b, 0);
-#endif
-	while (!is_empty(stack_b))
 	{
-		s_push_high(stack_a, stack_b, 0, s_size(stack_b));
+			pa(stack_a, stack_b);
+			partitions->items[s_top(partitions)]++;
+	}
+}
+
+int	is_part_sorted(t_stack *stack, int start, int end)
+{
+	int	i;
+
+	i = start;
+	while (i < end - 1)
+	{
+		if (s_get(stack, i) > s_get(stack, i + 1))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
+{
+
+	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) || !is_empty(stack_b))
+	{
 #ifdef DEBUG
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);
+	stack_print(partitions, 0);
+	getchar();
 #endif
+		if (is_stack_sorted_dsc(stack_a, peek(partitions)))
+		{
+#ifdef DEBUG
+	printf("Push sorted partition\n");
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+	stack_print(partitions, 0);
+	getchar();
+#endif
+			while (peek(partitions))
+			{
+				ra(stack_a);
+				partitions->items[s_top(partitions)]--;
+			}
+			pop(partitions);
+		}
+		else
+		{
+			s_push_low(stack_a, stack_b, partitions);
+#ifdef DEBUG
+	printf("Push low\n");
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+	stack_print(partitions, 0);
+	getchar();
+#endif
+			while (!is_empty(stack_b))
+			{
+				s_push_high(stack_a, stack_b, partitions);
+#ifdef DEBUG
+	printf("Push high\n");
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+	getchar();
+#endif
+			}
+		}
+		
 	}
-	//partition(stack_a, stack_b, (start + end) / 2, end);
-	//partition(stack_a, stack_b, start, (start + end) / 2);
-}
-
-void	please_work_sort(t_stack *stack_a, t_stack *stack_b)
-{
-	partition(stack_a, stack_b, 0, s_size(stack_a));
 }
 
 int main(int argc, char **argv)
 {
+	t_stack	*partitions;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+
 	check_args(argc, argv);
-	t_stack *stack_a = create_stack(argc - 1, "A");
+	stack_a = create_stack(argc - 1, "A");
 	if (!stack_a)
 		print_error_and_exit();
-	t_stack *stack_b = create_stack(argc - 1, "B");
+	stack_b = create_stack(argc - 1, "B");
 	if (!stack_b)
 	{
 		stack_destroy(stack_a);
 		print_error_and_exit();
 	}
+	partitions = create_stack(argc - 1, "P");
+	if (!partitions)
+	{
+		stack_destroy(stack_a);
+		stack_destroy(stack_b);
+		print_error_and_exit();
+	}
 	populate_stack(stack_a, argc, argv);
+	push(partitions, argc - 1);
 #ifdef DEBUG
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);
 #endif
 
-	please_work_sort(stack_a, stack_b);
+	please_work_sort(stack_a, stack_b, partitions);
 
 #ifdef DEBUG
 	stack_print(stack_a, 0);

@@ -6,7 +6,7 @@
 # include <limits.h>
 
 //#define NO_OUT
-#define DEBUG
+//#define DEBUG
 //for more debugging
 //#define DEBUG0
 
@@ -52,8 +52,8 @@ int		s_get(t_stack *stack, int index);
 int		s_size(t_stack *stack);
 
 //stack_commands4.c
-int		is_stack_sorted_asc(t_stack *stack);
-int		is_stack_sorted_dsc(t_stack *stack);
+int		is_stack_sorted_asc(t_stack *stack, int part);
+int		is_stack_sorted_dsc(t_stack *stack, int part);
 int		is_vs_sorted_asc(t_stack *stack, int virtual_stack);
 int		is_vs_sorted_dsc(t_stack *stack, int virtual_stack);
 
