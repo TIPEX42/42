@@ -3,8 +3,10 @@
 git add *.c
 git add *.h
 git add Makefile
-git add push.sh
 git add generator
+git add push.sh
+git add start.sh
+git add stress.sh
 cd libft
 git add *.c
 git add *.h
