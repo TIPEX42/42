@@ -119,12 +119,29 @@ void	optimize_sort(t_stack *stack_a, t_stack *stack_b, int part)
 		sa(stack_a);
 }
 
+int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
+{
+	if (peek(stack_a) <= median)
+	{
+		pb(stack_a, stack_b);
+		partitions->items[s_top(partitions)]--;
+		return (0);
+	}
+	if (peek(partitions) == s_size(stack_a) && bpeek(stack_a) <= median)
+	{
+		rra(stack_a);
+		pb(stack_a, stack_b);
+		partitions->items[s_top(partitions)]--;
+		return (0);
+	}
+	ra(stack_a);
+	return (1);
+}
+
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	int	rotations;
 	int	median;
-	int	min;
-	int	i;
 
 	if (peek(partitions) <= 3)
 	{
@@ -132,30 +149,9 @@ void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 		return ;
 	}
 	median = s_get_median(stack_a, peek(partitions));
-	min = s_get(stack_a, s_size(stack_a) - peek(partitions));
-	i = 0;
-	while (min > median)
-		min = s_get(stack_a, s_size(stack_a) - peek(partitions) + i++);
 	rotations = 0;
-
-	while (peek(stack_a) != min)
-	{
-		if (peek(stack_a) <= median)
-		{
-			pb(stack_a, stack_b);
-			partitions->items[s_top(partitions)]--;
-		}
-		else
-		{
-			ra(stack_a);
-			rotations++;
-		}
-	}
-	if (peek(stack_a) <= median)
-	{
-		pb(stack_a, stack_b);
-		partitions->items[s_top(partitions)]--;
-	}
+	while (peek(partitions) - rotations > 0 && s_get_min(stack_a, peek(partitions) - rotations) <= median)
+		rotations += push_b_opti(stack_a, stack_b, partitions, median);
 	while (rotations--)
 		rra(stack_a);
 }
