@@ -1,6 +1,6 @@
 NAME		=			push_swap
 CC			=			gcc
-CFLAGS		=			-Wall -Werror -Wextra
+CFLAGS		=			-Wall -Werror -Wextra# -fsanitize=address
 DEPS		=			push_swap.h Makefile
 
 SRCS		=									\
@@ -25,7 +25,6 @@ objs/%.o:		%.c $(DEPS)
 			@$(CC) -c $< $(CFLAGS) -o $@
 
 $(NAME):	$(OBJS)
-			@printf "\x1B[34m Compiling libft...\n"
 			@make bonus -C libft
 			@cp libft/libft.a libft.a
 			@printf "\x1B[36m Linking $(NAME)...\n"

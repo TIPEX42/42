@@ -5,10 +5,7 @@
 # include <stdio.h>
 # include <limits.h>
 
-//#define NO_OUT
 //#define DEBUG
-//for more debugging
-//#define DEBUG0
 
 typedef struct	s_stack
 {
@@ -54,8 +51,6 @@ int		s_size(t_stack *stack);
 //stack_commands4.c
 int		is_stack_sorted_asc(t_stack *stack, int part);
 int		is_stack_sorted_dsc(t_stack *stack, int part);
-int		is_vs_sorted_asc(t_stack *stack, int virtual_stack);
-int		is_vs_sorted_dsc(t_stack *stack, int virtual_stack);
 
 //allowed_commands.c
 void	sa(t_stack *stack);

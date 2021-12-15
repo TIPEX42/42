@@ -138,6 +138,37 @@ int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int med
 	return (1);
 }
 
+void	smart_rotate(t_stack *stack_a, t_stack *partitions)
+{
+	int	i;
+	int	sorted_elements;
+
+	i = s_top(partitions);
+	sorted_elements = 0;
+	while (i && is_stack_sorted_dsc(stack_a, s_get(partitions, i) + sorted_elements))
+	{
+		sorted_elements += s_get(partitions, i);
+		i--;
+	}
+	if (sorted_elements < s_size(stack_a))
+	{
+		while (peek(partitions))
+		{
+			ra(stack_a);
+			partitions->items[s_top(partitions)]--;
+		}
+		pop(partitions);
+		return ;
+	}
+	while (s_size(stack_a) - sorted_elements)
+	{
+		rra(stack_a);
+		sorted_elements++;
+	}
+	while (i--)
+		pop(partitions);
+}
+
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	int	rotations;
@@ -152,13 +183,33 @@ void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	rotations = 0;
 	while (peek(partitions) - rotations > 0 && s_get_min(stack_a, peek(partitions) - rotations) <= median)
 		rotations += push_b_opti(stack_a, stack_b, partitions, median);
+	if (peek(partitions) == s_size(stack_a))
+		return ;
 	while (rotations--)
 		rra(stack_a);
 }
 
+void	push_a_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
+{
+	if (peek(stack_b) > median)
+	{
+		pa(stack_a, stack_b);
+		partitions->items[s_top(partitions)]++;
+		return ;
+	}
+	if (peek(partitions) == s_size(stack_b) && bpeek(stack_b) > median)
+	{
+		rrb(stack_b);
+		pa(stack_a, stack_b);
+		partitions->items[s_top(partitions)]++;
+		return ;
+	}
+	rb(stack_b);
+	return ;
+}
+
 void	s_push_high(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
-	int	rotations;
 	int	median;
 	int	max;
 	int	i;
@@ -175,17 +226,8 @@ void	s_push_high(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	i = 0;
 	while (max <= median)
 		max = s_get(stack_b, i++);
-	rotations = 0;
 	while (peek(stack_b) != max)
-	{
-		if (peek(stack_b) > median)
-		{
-			pa(stack_a, stack_b);
-			partitions->items[s_top(partitions)]++;
-		}
-		else
-			rb(stack_b);
-	}
+		push_a_opti(stack_a, stack_b, partitions, median);
 	if (peek(stack_b) > median)
 	{
 			pa(stack_a, stack_b);
@@ -207,9 +249,52 @@ int	is_part_sorted(t_stack *stack, int start, int end)
 	return (1);
 }
 
+int	worth_rotating(t_stack *stack)
+{
+	int	i;
+	int	ras;
+	int	rras;
+
+	ras = 0;
+	while (!is_stack_sorted_dsc(stack, s_size(stack)) && ras++ < s_size(stack))
+		rotate(stack);
+	i = ras;
+	while (i--)
+		reverse_rotate(stack);
+	rras = 0;
+	while (!is_stack_sorted_dsc(stack, s_size(stack)) && rras++ < s_size(stack))
+		reverse_rotate(stack);
+	i = rras;
+	while (i--)
+		rotate(stack);
+	if (ras >= s_size(stack) && rras >= s_size(stack))
+		return (0);
+	if (ras <= rras)
+		return (1);
+	return (2);
+}
+
+int	try_rotate(t_stack *stack_a)
+{
+	if (worth_rotating(stack_a) == 1)
+	{
+		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
+			ra(stack_a);
+		return (1);
+	}
+	if (worth_rotating(stack_a) == 2)
+	{
+		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
+			rra(stack_a);
+		return (1);
+	}
+	return (0);
+}
+
 void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
-
+	if (try_rotate(stack_a))
+		return ;
 	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) || !is_empty(stack_b))
 	{
 #ifdef DEBUG
@@ -227,12 +312,7 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	stack_print(partitions, 0);
 	getchar();
 #endif
-			while (peek(partitions))
-			{
-				ra(stack_a);
-				partitions->items[s_top(partitions)]--;
-			}
-			pop(partitions);
+			smart_rotate(stack_a, partitions);
 		}
 		else
 		{
@@ -255,7 +335,6 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 #endif
 			}
 		}
-		
 	}
 }
 

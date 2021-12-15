@@ -12,12 +12,14 @@ OBJSB		=		$(SRCSB:.c=.o)
 			@$(CC) -c $< $(CFLAGS)
 
 $(NAME):	$(OBJSA)
+			@printf "\x1B[34m Compiling libft...\n"
 			@ar -rcs libft.a $(OBJSA)
 			@ranlib $(NAME)
 
 all:		$(NAME)
 
 bonus:		$(OBJSA) $(OBJSB)
+			@printf "\x1B[34m Compiling libft...\n"
 			@ar -rcs libft.a *.o
 			@ranlib $(NAME)
 
