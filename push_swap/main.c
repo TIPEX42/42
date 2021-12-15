@@ -249,7 +249,7 @@ int	is_part_sorted(t_stack *stack, int start, int end)
 	return (1);
 }
 
-int	worth_rotating(t_stack *stack)
+int	worth_rotating_a(t_stack *stack)
 {
 	int	i;
 	int	ras;
@@ -276,25 +276,39 @@ int	worth_rotating(t_stack *stack)
 
 int	try_rotate(t_stack *stack_a)
 {
-	if (worth_rotating(stack_a) == 1)
+	if (worth_rotating_a(stack_a) == 1)
 	{
 		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
 			ra(stack_a);
 		return (1);
 	}
-	if (worth_rotating(stack_a) == 2)
+	if (worth_rotating_a(stack_a) == 2)
 	{
 		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
 			rra(stack_a);
 		return (1);
 	}
+	if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+		sa(stack_a);
 	return (0);
+}
+
+void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions)
+{
+	while (peek(stack_a) == s_get_min(stack_a, peek(partitions)))
+	{
+		ra(stack_a);
+		partitions->items[s_top(partitions)]--;
+	}
 }
 
 void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
+	if (s_size(stack_a) <= 1)
+		return ;
 	if (try_rotate(stack_a))
 		return ;
+	rotate_already_sorted(stack_a, partitions);
 	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) || !is_empty(stack_b))
 	{
 #ifdef DEBUG
@@ -316,6 +330,7 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 		}
 		else
 		{
+			rotate_already_sorted(stack_a, partitions);
 			s_push_low(stack_a, stack_b, partitions);
 #ifdef DEBUG
 	printf("Push low\n");
