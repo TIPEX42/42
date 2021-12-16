@@ -26,13 +26,13 @@ echo "\x1B[32mFinished ----------------"
 echo "\x1B[32m----Tests with size 5----"
 
 n=0
-while (( $n < 1000 ))
+while (( $n < 2000 ))
 do
 	AVG=$(( AVG+$(./push_swap $(./generator 5 n) | wc -l )))
 	n=$(( n+1 ))
 done
 n=0
-while (( $n < 1000 ))
+while (( $n < 100 ))
 do
 	nbs=$(./generator 5 $n)
 	if [ "$(./push_swap $nbs | ./checker_Mac.dms $nbs)" != "OK" ]; then
@@ -40,7 +40,7 @@ do
 	fi
 	n=$(( n+1 ))
 done
-AVG=$(( AVG/1000 ))
+AVG=$(( AVG/2000 ))
 echo "\x1B[33mAverage operations : \x1B[31m$AVG"
 echo "\x1B[32mFinished ----------------"
 
@@ -56,7 +56,9 @@ n=0
 while (( $n < 40 ))
 do
 	nbs=$(./generator 50 $n)
-	./push_swap $nbs | ./checker_Mac.dms $nbs
+	if [ "$(./push_swap $nbs | ./checker_Mac.dms $nbs)" != "OK" ]; then
+			echo "\x1B[31mError with $nbs"
+	fi
 	n=$(( n+1 ))
 done
 AVG=$(( AVG/10 ))
@@ -75,7 +77,9 @@ n=0
 while (( $n < 40 ))
 do
 	nbs=$(./generator 100 $n)
-	./push_swap $nbs | ./checker_Mac.dms $nbs
+	if [ "$(./push_swap $nbs | ./checker_Mac.dms $nbs)" != "OK" ]; then
+			echo "\x1B[31mError with $nbs"
+	fi
 	n=$(( n+1 ))
 done
 AVG=$(( AVG/1000 ))
@@ -85,7 +89,7 @@ echo "\x1B[32mFinished ----------------"
 echo "\x1B[32m----Tests with size 500----"
 
 n=0
-while (( $n < 1000 ))
+while (( $n < 100 ))
 do
 	AVG=$(( AVG+$(./push_swap $(./generator 500 n) | wc -l )))
 	n=$(( n+1 ))
@@ -94,10 +98,12 @@ n=0
 while (( $n < 40 ))
 do
 	nbs=$(./generator 500 $n)
-	./push_swap $nbs | ./checker_Mac.dms $nbs
+	if [ "$(./push_swap $nbs | ./checker_Mac.dms $nbs)" != "OK" ]; then
+			echo "\x1B[31mError with $nbs"
+	fi
 	n=$(( n+1 ))
 done
-AVG=$(( AVG/1000 ))
+AVG=$(( AVG/100 ))
 echo "\x1B[33mAverage operations : \x1B[31m$AVG"
 echo "\x1B[32mFinished ----------------"
 

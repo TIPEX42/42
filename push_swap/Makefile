@@ -1,6 +1,6 @@
 NAME		=			push_swap
 CC			=			gcc
-CFLAGS		=			-Wall -Werror -Wextra -fsanitize=address
+CFLAGS		=			-Wall -Werror -Wextra# -fsanitize=address
 DEPS		=			push_swap.h Makefile
 
 SRCS		=									\

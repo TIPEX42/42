@@ -5,7 +5,7 @@
 # include <stdio.h>
 # include <limits.h>
 
-#define DEBUG
+//#define DEBUG
 
 typedef struct	s_stack
 {
@@ -17,11 +17,10 @@ typedef struct	s_stack
 
 //main.c
 void	print_error_and_exit();
-int		s_get_max_value(t_stack *stack);
-int		s_get_min_value(t_stack *stack);
 int		get_item_index(t_stack *stack, int item);
 int		s_next_value(t_stack *stack, int value);
 int		s_last_value(t_stack *stack, int value);
+void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions);
 
 //checking.c
 void	check_args(int argc, char **argv);

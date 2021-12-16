@@ -94,6 +94,13 @@ int	s_get_median(t_stack *stack, int part)
 
 void	optimize_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
+#ifdef DEBUG
+	printf("Optimizing sort\n");
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+	stack_print(partitions, 0);
+	getchar();
+#endif
 	if (peek(partitions) == 3)
 	{
 		if (s_get_max(stack_a, peek(partitions)) == peek(stack_a))
@@ -104,6 +111,7 @@ void	optimize_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 			ra(stack_a);
 			ra(stack_a);
 			pa(stack_a, stack_b);
+			ra(stack_a);
 		}
 		else if (s_get_max(stack_a, peek(partitions)) == s_get(stack_a, s_top(stack_a) - 1))
 		{
@@ -120,7 +128,12 @@ void	optimize_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 			ra(stack_a);
 		}
 		else if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+		{
 			sa(stack_a);
+			ra(stack_a);
+			ra(stack_a);
+			ra(stack_a);
+		}
 		pop(partitions);
 		return ;
 	}
@@ -136,14 +149,18 @@ int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int med
 {
 	if (peek(stack_a) <= median)
 	{
+		//if (peek(stack_a) != s_get_min(stack_a, peek(partitions)) || peek(stack_a) >= s_get_min(stack_b, s_size(stack_b)))
 		pb(stack_a, stack_b);
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
 	if (peek(partitions) == s_size(stack_a) && bpeek(stack_a) <= median)
 	{
-		rra(stack_a);
-		pb(stack_a, stack_b);
+		//if (bpeek(stack_a) != s_get_min(stack_a, peek(partitions)) || bpeek(stack_a) >= s_get_min(stack_b, s_size(stack_b)))
+		//{
+			rra(stack_a);
+			pb(stack_a, stack_b);
+		//}
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
@@ -163,6 +180,8 @@ void	smart_rotate(t_stack *stack_a, t_stack *partitions)
 		sorted_elements += s_get(partitions, i);
 		i--;
 	}
+	if (!sorted_elements)
+		return ;
 	if (sorted_elements < s_size(stack_a))
 	{
 		while (peek(partitions))
@@ -171,7 +190,7 @@ void	smart_rotate(t_stack *stack_a, t_stack *partitions)
 			partitions->items[s_top(partitions)]--;
 		}
 		pop(partitions);
-		return ;
+		return ; 
 	}
 	while (s_size(stack_a) - sorted_elements)
 	{
@@ -315,10 +334,12 @@ void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions)
 	if (peek(stack_a) == s_get_min(stack_a, peek(partitions)))
 		printf("Rotating already sorted\n");
 #endif
-	while (peek(stack_a) == s_get_min(stack_a, peek(partitions)))
+	while (s_size(partitions) && peek(stack_a) == s_get_min(stack_a, peek(partitions)))
 	{
 		ra(stack_a);
 		partitions->items[s_top(partitions)]--;
+		if (!peek(partitions))
+			pop(partitions);
 	}
 }
 
