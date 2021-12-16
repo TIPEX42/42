@@ -1,6 +1,7 @@
 NAME		=			push_swap
 CC			=			gcc
-CFLAGS		=			-Wall -Werror -Wextra# -fsanitize=address
+CFLAGS		=			-Wall -Werror -Wextra
+DEBUG_FLAGS	=			-DDEBUG -fsanitize=address
 DEPS		=			push_swap.h Makefile
 
 SRCS		=									\
@@ -31,6 +32,9 @@ $(NAME):				$(OBJS)
 						@$(CC) libft.a $(OBJS) -o $(NAME) $(CFLAGS)
 
 all:					header $(NAME)
+
+debug:					CFLAGS += $(DEBUG_FLAGS)
+debug:					header re
 
 info:					header
 

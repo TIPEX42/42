@@ -92,59 +92,6 @@ int	s_get_median(t_stack *stack, int part)
 	return (median);
 }
 
-void	optimize_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
-{
-#ifdef DEBUG
-	printf("Optimizing sort\n");
-	stack_print(stack_a, 0);
-	stack_print(stack_b, 0);
-	stack_print(partitions, 0);
-	getchar();
-#endif
-	if (peek(partitions) == 3)
-	{
-		if (s_get_max(stack_a, peek(partitions)) == peek(stack_a))
-		{
-			pb(stack_a, stack_b);
-			if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
-				sa(stack_a);
-			ra(stack_a);
-			ra(stack_a);
-			pa(stack_a, stack_b);
-			ra(stack_a);
-		}
-		else if (s_get_max(stack_a, peek(partitions)) == s_get(stack_a, s_top(stack_a) - 1))
-		{
-			ra(stack_a);
-			pb(stack_a, stack_b);
-			if (peek(stack_a) < bpeek(stack_a))
-			{
-				rra(stack_a);
-				sa(stack_a);
-				ra(stack_a);
-			}
-			ra(stack_a);
-			pa(stack_a, stack_b);
-			ra(stack_a);
-		}
-		else if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
-		{
-			sa(stack_a);
-			ra(stack_a);
-			ra(stack_a);
-			ra(stack_a);
-		}
-		pop(partitions);
-		return ;
-	}
-	if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
-		sa(stack_a);
-	ra(stack_a);
-	ra(stack_a);
-	pop(partitions);
-	return ;
-}
-
 int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
 {
 	if (peek(stack_a) <= median)
@@ -200,6 +147,59 @@ void	smart_rotate(t_stack *stack_a, t_stack *partitions)
 	while (i--)
 		pop(partitions);
 }
+
+void optimize_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions) {
+#ifdef DEBUG
+    printf("Optimizing sort\n");
+	stack_print(stack_a, 0);
+	stack_print(stack_b, 0);
+	stack_print(partitions, 0);
+	getchar();
+#endif
+    if (peek(partitions) == 3)
+    {
+        if (s_get_max(stack_a, peek(partitions)) == peek(stack_a))
+        {
+            pb(stack_a, stack_b);
+            if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+                sa(stack_a);
+            ra(stack_a);
+            ra(stack_a);
+            pa(stack_a, stack_b);
+            ra(stack_a);
+        }
+        else if (s_get_max(stack_a, peek(partitions)) == s_get(stack_a, s_top(stack_a) - 1))
+        {
+            ra(stack_a);
+            pb(stack_a, stack_b);
+            if (peek(stack_a) < bpeek(stack_a))
+            {
+                rra(stack_a);
+                sa(stack_a);
+                ra(stack_a);
+            }
+            ra(stack_a);
+            pa(stack_a, stack_b);
+            ra(stack_a);
+        }
+        else if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+        {
+            sa(stack_a);
+            ra(stack_a);
+            ra(stack_a);
+            ra(stack_a);
+        }
+        pop(partitions);
+        return ;
+    }
+    if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+        sa(stack_a);
+    ra(stack_a);
+    ra(stack_a);
+    pop(partitions);
+    return ;
+}
+
 
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
