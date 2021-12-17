@@ -56,6 +56,22 @@ void optimize_sort_3_a_safe(t_stack *stack_a, t_stack *stack_b, t_stack *partiti
 //TODO: merge those two ! rrr rr and ss
 void optimize_sort_3_a(t_stack *stack_a, t_stack *partitions)
 {
+#ifdef DEBUG
+	printf("Optimizing sort 3 a\n");
+	stack_print(stack_a, 0);
+	stack_print(partitions, 0);
+	getchar();
+#endif
+	if (peek(partitions) == 1)
+		return ;
+	if (peek(partitions) == 2)
+	{
+		if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
+			sa(stack_a);
+		return ;
+	}
+	if (peek(partitions) != s_size(stack_a))
+		return ;
 	if (peek(stack_a) == s_get_max(stack_a, s_size(stack_a)))
 		ra(stack_a);
 	if (s_get(stack_a, s_top(stack_a) - 1) == s_get_max(stack_a, s_size(stack_a)))
@@ -64,13 +80,26 @@ void optimize_sort_3_a(t_stack *stack_a, t_stack *partitions)
 		sa(stack_a);
 	pop(partitions);
 }
-//TODO: make it work
+
 void optimize_sort_3_b(t_stack *stack_b)
 {
+#ifdef DEBUG
+	printf("Optimizing sort 3 b\n");
+	stack_print(stack_b, 0);
+	getchar();
+#endif
+	if (s_size(stack_b) == 1)
+		return ;
+	if (s_size(stack_b) == 2)
+	{
+		if (peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
+			sb(stack_b);
+		return ;
+	}
+	if (peek(stack_b) == s_get_min(stack_b, s_size(stack_b)))
+		rb(stack_b);
+	if (s_get(stack_b, s_top(stack_b) - 1) == s_get_min(stack_b, s_size(stack_b)))
+		rrb(stack_b);
 	if (peek(stack_b) < s_get(stack_b, s_top(stack_b) - 1))
 		sb(stack_b);
-	if (bpeek(stack_b) == s_get_max(stack_b, s_size(stack_b)))
-		rrb(stack_b);
-	if (s_get(stack_b, s_top(stack_b) - 1) == s_get_max(stack_b, s_size(stack_b)))
-		rb(stack_b);
 }

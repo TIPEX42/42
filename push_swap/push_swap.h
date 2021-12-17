@@ -46,6 +46,7 @@ int		s_get_min(t_stack *stack, int part);
 int		s_top(t_stack *stack);
 int		is_empty(t_stack *stack);
 int		s_size(t_stack *stack);
+int		s_sum(t_stack *stack);
 
 //stack_sorted.c
 int		is_stack_sorted_asc(t_stack *stack, int part);
@@ -78,6 +79,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 void	s_push_high(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);
 void	push_a_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median);
+void 	smart_rotate(t_stack *stack_a, int rotations);
 
 //splitting_optimizations.c
 void	optimize_sort_3_a_safe(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);

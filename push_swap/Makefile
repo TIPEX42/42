@@ -2,7 +2,7 @@ NAME		=			push_swap
 NAMED		=			push_swapd
 CC			=			gcc
 CFLAGS		=			-Wall -Werror -Wextra
-DEBUG_FLAGS	=			$(CFLAGS) -DDEBUG -fsanitize=address
+DEBUG_FLAGS	=			-DDEBUG -fsanitize=address
 DEPS		=			push_swap.h Makefile
 
 SRCS		=													\
@@ -42,7 +42,7 @@ OBJSD		=													\
 						$(PATH_OBJSD)checkingd.o				\
 						$(PATH_OBJSD)splittingd.o				\
 						$(PATH_OBJSD)splitting_optimizationsd.o	\
-						$(PATH_OBJSD)rotate_optimizationsd.o		\
+						$(PATH_OBJSD)rotate_optimizationsd.o	\
 						$(PATH_OBJSD)stackd.o					\
 						$(PATH_OBJSD)stack_basicsd.o			\
 						$(PATH_OBJSD)stack_getd.o				\
@@ -81,6 +81,7 @@ $(NAMED):				$(OBJSD)
 
 all:					header $(NAME)
 
+debug:					CFLAGS += $(DEBUG_FLAGS)
 debug:					header $(NAMED)
 
 

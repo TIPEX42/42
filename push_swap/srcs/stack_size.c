@@ -16,3 +16,18 @@ int	is_empty(t_stack *stack)
 		return (1);
 	return (0);
 }
+
+int	s_sum(t_stack *stack)
+{
+	int i;
+	int sum;
+
+	i = 0;
+	sum = 0;
+	while (i < s_size(stack))
+	{
+		sum += s_get(stack, i);
+		i++;
+	}
+	return (sum);
+}

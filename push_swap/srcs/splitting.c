@@ -4,23 +4,40 @@ int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int med
 {
 	if (peek(stack_a) <= median)
 	{
-		//if (peek(stack_a) != s_get_min(stack_a, peek(partitions)) || peek(stack_a) >= s_get_min(stack_b, s_size(stack_b)))
 		pb(stack_a, stack_b);
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
 	if (peek(partitions) == s_size(stack_a) && bpeek(stack_a) <= median)
 	{
-		//if (bpeek(stack_a) != s_get_min(stack_a, peek(partitions)) || bpeek(stack_a) >= s_get_min(stack_b, s_size(stack_b)))
-		//{
 		rra(stack_a);
 		pb(stack_a, stack_b);
-		//}
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
 	ra(stack_a);
 	return (1);
+}
+
+void 	smart_rotate(t_stack *stack_a, int rotations)
+{
+	int i;
+
+	i = 0;
+	if (rotations > s_size(stack_a) / 2)
+	{
+		while (i < s_size(stack_a) - rotations)
+		{
+			ra(stack_a);
+			i++;
+		}
+		return ;
+	}
+	while (i < rotations)
+	{
+		rra(stack_a);
+		i++;
+	}
 }
 
 void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
@@ -44,8 +61,7 @@ void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 		rotations += push_b_opti(stack_a, stack_b, partitions, median);
 	if (peek(partitions) == s_size(stack_a))
 		return ;
-	while (rotations--)
-		rra(stack_a);
+	smart_rotate(stack_a, rotations);
 }
 
 void	push_a_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
