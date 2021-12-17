@@ -1,6 +1,10 @@
 #!/bin/sh
 
 make
+cd testing/
+rm -f push_swap
+cp ../push_swap push_swap
+
 i=1
 while (( $i < 500 ))
 do

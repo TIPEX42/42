@@ -1,6 +1,9 @@
 #!/bin/sh
 
 make
+cd testing/
+rm -f push_swap
+cp ../push_swap push_swap
 
 AVG=0
 

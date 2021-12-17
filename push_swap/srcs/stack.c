@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../push_swap.h"
 
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
@@ -26,6 +26,16 @@ t_stack	*create_stack(int capacity, char *name)
 		return (NULL);
 	}
 	return (new_stack);
+}
+
+void	populate_stack(t_stack *stack, int argc, char **argv)
+{
+	argc--;
+	while (argc > 0)
+	{
+		push(stack, ft_atol(argv[argc]));
+		argc--;
+	}
 }
 
 void	stack_print(t_stack *stack, int virtual_size)
