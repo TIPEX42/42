@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);
 #endif
-
+	printf("Biggest ascending is : %d\n", s_find_longest_dsc_b(stack_a));
 	please_work_sort(stack_a, stack_b, partitions);
 
 #ifdef DEBUG

@@ -56,6 +56,7 @@ int		is_stack_sorted_dsc(t_stack *stack, int part);
 int		s_get_median(t_stack *stack, int part);
 int		s_get_last(t_stack *stack, int value, int part);
 int		s_get_index(t_stack *stack, int item);
+int 	s_find_longest_dsc_b(t_stack *stack_b);
 
 //allowed_commands.c
 void	sa(t_stack *stack);
