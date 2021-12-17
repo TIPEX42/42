@@ -58,6 +58,8 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	}
 }
 
+//TODO: faire des rrr quand on remet les grands elemets de a qu'on a ra pour faire remonter sur b les grands elements
+
 int main(int argc, char **argv)
 {
 	t_stack	*partitions;
