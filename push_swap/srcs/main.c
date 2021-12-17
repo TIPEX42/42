@@ -59,7 +59,7 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 }
 
 //TODO: faire des rrr quand on remet les grands elemets de a qu'on a ra pour faire remonter sur b les grands elements
-
+//TODO: faire que lq mediane soit un element de moins sur les nombres impaires pour envoyer que 2 elements sur b au lieu de t3 quans y'en a 5
 int main(int argc, char **argv)
 {
 	t_stack	*partitions;
