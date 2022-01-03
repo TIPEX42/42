@@ -12,73 +12,67 @@
 
 #include "../push_swap.h"
 
-int	worth_rotating_a(t_stack *stack_a, t_stack *stack_b)
+int	worth_rotating_a(t_stack *sta, t_stack *stb)
 {
-	int i;
-	int index_min;
-	int index_max;
+	int	i;
+	int	index_min;
+	int	index_max;
 
-	if (is_stack_sorted_dsc(stack_a, s_size(stack_a)) || !is_empty(stack_b))
+	if (is_stack_sorted_dsc(sta, s_size(sta)) || !is_empty(stb))
 		return (0);
-	index_min = s_get_index(stack_a, s_get_min(stack_a, s_size(stack_a)));
-	index_max = s_get_index(stack_a, s_get_max(stack_a, s_size(stack_a)));
+	index_min = s_get_index(sta, s_get_min(sta, s_size(sta)));
+	index_max = s_get_index(sta, s_get_max(sta, s_size(sta)));
 	if (index_min == index_max - 1)
 	{
 		i = index_max;
-		while (i < s_top(stack_a) && s_get(stack_a, i) > s_get(stack_a, i + 1))
+		while (i < s_top(sta) && s_get(sta, i) > s_get(sta, i + 1))
 			i++;
-		if (i != s_top(stack_a))
-			return (0);
-		if (peek(stack_a) <= bpeek(stack_a))
+		if (i != s_top(sta) || peek(sta) <= bpeek(sta))
 			return (0);
 		i = 0;
-		while (i < index_min && s_get(stack_a, i) > s_get(stack_a, i + 1))
+		while (i < index_min && s_get(sta, i) > s_get(sta, i + 1))
 			i++;
 		if (i != index_min)
 			return (0);
-		if (index_min < s_size(stack_a) / 2)
+		if (index_min < s_size(sta) / 2)
 			return (2);
 		return (1);
 	}
 	return (0);
 }
 
-int	try_rotate(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
+int	try_rotate(t_stack *sta, t_stack *stb, t_stack *partitions)
 {
 	if (!s_size(partitions))
-		return(1);
-	if (s_get(stack_a, s_top(stack_a) - 1) == s_get_min(stack_a, s_sum(partitions)))
+		return (1);
+	if (s_get(sta, s_top(sta) - 1) == s_get_min(sta, s_sum(partitions)))
 	{
-		sa(stack_a);
-		rotate_already_sorted(stack_a, partitions);
-		return (try_rotate(stack_a, stack_b, partitions));
+		sa(sta);
+		rotate_already_sorted(sta, partitions);
+		return (try_rotate(sta, stb, partitions));
 	}
-	if (worth_rotating_a(stack_a, stack_b) == 1)
+	if (worth_rotating_a(sta, stb) == 1)
 	{
-		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
-			ra(stack_a);
+		while (!is_stack_sorted_dsc(sta, s_size(sta)))
+			ra(sta);
 		return (1);
 	}
-	if (worth_rotating_a(stack_a, stack_b) == 2)
+	if (worth_rotating_a(sta, stb) == 2)
 	{
-		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
-			rra(stack_a);
+		while (!is_stack_sorted_dsc(sta, s_size(sta)))
+			rra(sta);
 		return (1);
 	}
 	return (0);
 }
 
-void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions)
+void	rotate_already_sorted(t_stack *sta, t_stack *partitions)
 {
-#ifdef DEBUG
-	if (peek(stack_a) == s_get_min(stack_a, peek(partitions)))
-		printf("Rotating already sorted\n");
-#endif
-	if (s_size(stack_a) <= 3)
+	if (s_size(sta) <= 3)
 		return ;
-	while (s_size(partitions) && peek(stack_a) == s_get_min(stack_a, peek(partitions)))
+	while (s_size(partitions) && peek(sta) == s_get_min(sta, peek(partitions)))
 	{
-		ra(stack_a);
+		ra(sta);
 		partitions->items[s_top(partitions)]--;
 		if (!peek(partitions))
 			pop(partitions);

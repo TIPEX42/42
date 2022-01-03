@@ -1,13 +1,16 @@
-#include "../push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/03 14:43:10 by njennes           #+#    #+#             */
+/*   Updated: 2022/01/03 14:43:10 by njennes          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
+#include "../push_swap.h"
 
 t_stack	*create_stack(int capacity, char *name)
 {
@@ -38,26 +41,7 @@ void	populate_stack(t_stack *stack, t_params params)
 		push(stack, params.values[i]);
 		i--;
 	}
-}
-
-void	stack_print(t_stack *stack, int virtual_size)
-{
-	int	i;
-
-	if (!stack)
-		return ;
-	i = 0;
-	printf("%s%s [%d]: ", KBLU, stack->name, stack->top);
-	while (i < stack->top)
-	{
-		if (i >= s_size(stack) - virtual_size)
-			printf("%s%d ", KRED, stack->items[i]);
-		else
-			printf("%s%d ", KGRN, stack->items[i]);
-		i++;
-		printf("%s", KYEL);
-	}
-	printf("\n");
+	free(params.values);
 }
 
 void	stack_destroy(t_stack *stack)

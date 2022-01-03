@@ -12,28 +12,28 @@
 
 #include "../push_swap.h"
 
-int	push_b_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
+int	push_b_opti(t_stack *sta, t_stack *stb, t_stack *partitions, int median)
 {
-	if (peek(stack_a) < median)
+	if (peek(sta) < median)
 	{
-		pb(stack_a, stack_b);
+		pb(sta, stb);
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
-	if (peek(partitions) == s_size(stack_a) && bpeek(stack_a) < median)
+	if (peek(partitions) == s_size(sta) && bpeek(sta) < median)
 	{
-		rra(stack_a);
-		pb(stack_a, stack_b);
+		rra(sta);
+		pb(sta, stb);
 		partitions->items[s_top(partitions)]--;
 		return (0);
 	}
-	ra(stack_a);
+	ra(sta);
 	return (1);
 }
 
-void 	smart_rotate(t_stack *stack_a, int rotations)
+void	smart_rotate(t_stack *stack_a, int rotations)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (rotations > s_size(stack_a) / 2)
@@ -52,81 +52,79 @@ void 	smart_rotate(t_stack *stack_a, int rotations)
 	}
 }
 
-void	s_push_low(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
+void	s_push_low(t_stack *sta, t_stack *stb, t_stack *partitions)
 {
 	int	rotations;
 	int	median;
 
-	if (s_size(stack_a) <= 3)
+	if (s_size(sta) <= 3)
 	{
-		optimize_sort_3_a(stack_a, partitions);
+		optimize_sort_3_a(sta, partitions);
 		return ;
 	}
 	if (peek(partitions) <= 3)
 	{
-		optimize_sort_3_a_safe(stack_a, stack_b, partitions);
+		optimize_sort_3_a_safe(sta, stb, partitions);
 		return ;
 	}
-	median = s_get_median(stack_a, peek(partitions));
+	median = s_get_median(sta, peek(partitions));
 	rotations = 0;
-	while (peek(partitions) - rotations > 0 && s_get_min(stack_a, peek(partitions) - rotations) < median)
-		rotations += push_b_opti(stack_a, stack_b, partitions, median);
-	if (peek(partitions) == s_size(stack_a))
+	while (peek(partitions) - rotations > 0 && \
+			s_get_min(sta, peek(partitions) - rotations) < median)
+		rotations += push_b_opti(sta, stb, partitions, median);
+	if (peek(partitions) == s_size(sta))
 		return ;
-	smart_rotate(stack_a, rotations);
+	smart_rotate(sta, rotations);
 }
 
-void	push_a_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int median)
+void	push_a_opti(t_stack *sta, t_stack *stb, t_stack *partitions, int median)
 {
-	if (peek(stack_b) > median && bpeek(stack_b) >= median)
+	if (peek(stb) > median && bpeek(stb) >= median)
 	{
-		if (bpeek(stack_b) > peek(stack_b))
-			rrb(stack_b);
-		pa(stack_a, stack_b);
+		if (bpeek(stb) > peek(stb))
+			rrb(stb);
+		pa(sta, stb);
 		partitions->items[s_top(partitions)]++;
 	}
-	else if (peek(stack_b) >= median)
+	else if (peek(stb) >= median)
 	{
-		pa(stack_a, stack_b);
+		pa(sta, stb);
 		partitions->items[s_top(partitions)]++;
 	}
-	else if (bpeek(stack_b) >= median)
+	else if (bpeek(stb) >= median)
 	{
-		rrb(stack_b);
-		pa(stack_a, stack_b);
+		rrb(stb);
+		pa(sta, stb);
 		partitions->items[s_top(partitions)]++;
 	}
 	else
-		rb(stack_b);
+		rb(stb);
 	return ;
 }
 
-void	s_push_high(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
+void	s_push_high(t_stack *sta, t_stack *stb, t_stack *partitions)
 {
 	int	median;
 
-	if (s_size(stack_b) == 1)
+	if (s_size(stb) == 1)
 	{
 		partitions->items[s_top(partitions)]++;
-		pa(stack_a, stack_b);
+		pa(sta, stb);
 		return ;
 	}
-	if (s_size(stack_a) <= 3 && s_size(stack_b) <= 3)
-		optimize_sort_3(stack_a, stack_b, partitions);
-	else
-	{
-		if (s_size(stack_a) <= 3)
-			optimize_sort_3_a(stack_a, partitions);
-		if (s_size(stack_b) <= 3)
-			optimize_sort_3_b(stack_b);
-	}
+	if (s_size(sta) <= 3 && s_size(stb) <= 3)
+		optimize_sort_3(sta, stb, partitions);
+	else if (s_size(sta) <= 3)
+		optimize_sort_3_a(sta, partitions);
+	else if (s_size(stb) <= 3)
+		optimize_sort_3_b(stb);
 	push(partitions, 0);
-	median = s_get_median(stack_b, s_size(stack_b));
-	while (s_get_max(stack_b, s_size(stack_b)) >= median)
-		push_a_opti(stack_a, stack_b, partitions, median);
-	if (peek(stack_b) >= median)
+	median = s_get_median(stb, s_size(stb));
+	while (s_get_max(stb, s_size(stb)) >= median)
+		push_a_opti(sta, stb, partitions, median);
+	if (peek(stb) >= median)
 	{
-		pa(stack_a, stack_b);
+		pa(sta, stb);
 		partitions->items[s_top(partitions)]++;
 	}
 }
