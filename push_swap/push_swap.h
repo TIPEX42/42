@@ -56,7 +56,6 @@ int		is_stack_sorted_dsc(t_stack *stack, int part);
 int		s_get_median(t_stack *stack, int part);
 int		s_get_last(t_stack *stack, int value, int part);
 int		s_get_index(t_stack *stack, int item);
-int 	s_find_longest_dsc_b(t_stack *stack_b);
 
 //allowed_commands.c
 void	sa(t_stack *stack);
@@ -83,13 +82,14 @@ void	push_a_opti(t_stack *stack_a, t_stack *stack_b, t_stack *partitions, int me
 void 	smart_rotate(t_stack *stack_a, int rotations);
 
 //splitting_optimizations.c
+void	optimize_sort_3(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);
 void	optimize_sort_3_a_safe(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);
 void	optimize_sort_3_a(t_stack *stack, t_stack *partitions);
 void	optimize_sort_3_b(t_stack *stack_b);
 
 //rotate_optimizations.c
 void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions);
-int		try_rotate(t_stack *stack_a, t_stack *stack_b);
+int		try_rotate(t_stack *stack_a, t_stack *stack_b, t_stack *partitions);
 int		worth_rotating_a(t_stack *stack_a, t_stack *stack_b);
 
 #endif

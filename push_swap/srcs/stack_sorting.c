@@ -26,6 +26,22 @@ int	s_get_last(t_stack *stack, int value, int part)
 	return (last);
 }
 
+int	s_get_next(t_stack *stack, int value, int part)
+{
+	int	next;
+	int	i;
+
+	i = s_size(stack) - part;
+	next = s_get_max(stack, part);
+	while (i < s_size(stack))
+	{
+		if (s_get(stack, i) > value && s_get(stack, i) < next)
+			next = s_get(stack, i);
+		i++;
+	}
+	return (next);
+}
+
 int	s_get_median(t_stack *stack, int part)
 {
 	int	median;
@@ -38,32 +54,7 @@ int	s_get_median(t_stack *stack, int part)
 		median = s_get_last(stack, median, part);
 		i++;
 	}
+	if (part % 2 == 0)
+		median = s_get_next(stack, median, part);
 	return (median);
-}
-
-//TODO: test this
-int s_find_longest_dsc_b(t_stack *stack_b)
-{
-	int i;
-	int j;
-	int longest_index;
-	int longest_length;
-
-	j = 0;
-	longest_index = s_top(stack_b);
-	longest_length = 0;
-	while (j < s_size(stack_b))
-	{
-		i = j;
-		while (i < s_top(stack_b) && s_get(stack_b, i) < s_get(stack_b, i + 1))
-			i++;
-		if (i - j > longest_length)
-		{
-			longest_length = i - j;
-			longest_index = j + longest_length - 1;
-			printf("Longest : %d, index : %d\n", longest_length, longest_index);
-		}
-		j++;
-	}
-	return (longest_index);
 }

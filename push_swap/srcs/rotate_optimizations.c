@@ -58,8 +58,16 @@ int	worth_rotating_a(t_stack *stack_a, t_stack *stack_b)
 	return (0);
 }
 
-int	try_rotate(t_stack *stack_a, t_stack *stack_b)
+int	try_rotate(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
+	if (!s_size(partitions))
+		return(1);
+	if (s_get(stack_a, s_top(stack_a) - 1) == s_get_min(stack_a, s_sum(partitions)))
+	{
+		sa(stack_a);
+		rotate_already_sorted(stack_a, partitions);
+		return (try_rotate(stack_a, stack_b, partitions));
+	}
 	if (worth_rotating_a(stack_a, stack_b) == 1)
 	{
 		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
@@ -71,11 +79,6 @@ int	try_rotate(t_stack *stack_a, t_stack *stack_b)
 		while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)))
 			rra(stack_a);
 		return (1);
-	}
-	if (peek(stack_a) > s_get(stack_a, s_top(stack_a) - 1))
-	{
-		sa(stack_a);
-		return (try_rotate(stack_a, stack_b));
 	}
 	return (0);
 }

@@ -4,7 +4,7 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 {
 	if (s_size(stack_a) <= 1)
 		return ;
-	if (try_rotate(stack_a, stack_b))
+	if (try_rotate(stack_a, stack_b, partitions))
 		return ;
 	rotate_already_sorted(stack_a, partitions);
 	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) || !is_empty(stack_b))
@@ -15,7 +15,7 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	stack_print(partitions, 0);
 	getchar();
 #endif
-		if (try_rotate(stack_a, stack_b))
+		if (try_rotate(stack_a, stack_b, partitions))
 			return ;
 		if (is_stack_sorted_dsc(stack_a, peek(partitions)))
 		{
@@ -58,8 +58,6 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 	}
 }
 
-//TODO: faire des rrr quand on remet les grands elemets de a qu'on a ra pour faire remonter sur b les grands elements
-//TODO: faire que lq mediane soit un element de moins sur les nombres impaires pour envoyer que 2 elements sur b au lieu de t3 quans y'en a 5
 int main(int argc, char **argv)
 {
 	t_stack	*partitions;
@@ -89,7 +87,6 @@ int main(int argc, char **argv)
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);
 #endif
-	printf("Biggest ascending is : %d\n", s_find_longest_dsc_b(stack_a));
 	please_work_sort(stack_a, stack_b, partitions);
 
 #ifdef DEBUG
