@@ -15,16 +15,22 @@ typedef struct	s_stack
 	char	*name;
 } t_stack;
 
+typedef struct	s_params
+{
+	int		size;
+	int 	*values;
+} t_params;
+
 //main.c
 void	print_error_and_exit();
 void	rotate_already_sorted(t_stack *stack_a, t_stack *partitions);
 
 //checking.c
-void	check_args(int argc, char **argv);
+t_params	check_args(int argc, char **argv);
 
 //stack.c
 t_stack	*create_stack(int capacity, char *name);
-void	populate_stack(t_stack *stack, int argc, char **argv);
+void	populate_stack(t_stack *stack, t_params params);
 void	stack_print(t_stack *stack, int virtual_size);
 void	stack_destroy(t_stack *stack);
 

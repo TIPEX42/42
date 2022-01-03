@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/03 14:41:23 by njennes           #+#    #+#             */
+/*   Updated: 2022/01/03 14:41:23 by njennes          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
 void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
@@ -60,29 +72,30 @@ void	please_work_sort(t_stack *stack_a, t_stack *stack_b, t_stack *partitions)
 
 int main(int argc, char **argv)
 {
-	t_stack	*partitions;
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_params	params;
+	t_stack		*partitions;
+	t_stack		*stack_a;
+	t_stack		*stack_b;
 
-	check_args(argc, argv);
-	stack_a = create_stack(argc - 1, "A");
+	params = check_args(argc, argv);
+	stack_a = create_stack(params.size, "A");
 	if (!stack_a)
 		print_error_and_exit();
-	stack_b = create_stack(argc - 1, "B");
+	stack_b = create_stack(params.size, "B");
 	if (!stack_b)
 	{
 		stack_destroy(stack_a);
 		print_error_and_exit();
 	}
-	partitions = create_stack(argc - 1, "P");
+	partitions = create_stack(params.size, "P");
 	if (!partitions)
 	{
 		stack_destroy(stack_a);
 		stack_destroy(stack_b);
 		print_error_and_exit();
 	}
-	populate_stack(stack_a, argc, argv);
-	push(partitions, argc - 1);
+	populate_stack(stack_a, params);
+	push(partitions, params.size);
 #ifdef DEBUG
 	stack_print(stack_a, 0);
 	stack_print(stack_b, 0);

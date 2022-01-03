@@ -1,31 +1,16 @@
-#include "../push_swap.h"
-/*
-int	worth_rotating_a(t_stack *stack_a, t_stack *stack_b)
-{
-	int	i;
-	int	ras;
-	int	rras;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate_optimizations.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/03 14:41:13 by njennes           #+#    #+#             */
+/*   Updated: 2022/01/03 14:41:19 by njennes          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-	if (!is_empty(stack_b))
-		return (0);
-	ras = 0;
-	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) && ras++ < s_size(stack_a))
-		rotate(stack_a);
-	i = ras;
-	while (i--)
-		reverse_rotate(stack_a);
-	rras = 0;
-	while (!is_stack_sorted_dsc(stack_a, s_size(stack_a)) && rras++ < s_size(stack_a))
-		reverse_rotate(stack_a);
-	i = rras;
-	while (i--)
-		rotate(stack_a);
-	if (ras >= s_size(stack_a) && rras >= s_size(stack_a))
-		return (0);
-	if (ras <= rras)
-		return (1);
-	return (2);
-}*/
+#include "../push_swap.h"
 
 int	worth_rotating_a(t_stack *stack_a, t_stack *stack_b)
 {

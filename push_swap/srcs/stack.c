@@ -28,13 +28,15 @@ t_stack	*create_stack(int capacity, char *name)
 	return (new_stack);
 }
 
-void	populate_stack(t_stack *stack, int argc, char **argv)
+void	populate_stack(t_stack *stack, t_params params)
 {
-	argc--;
-	while (argc > 0)
+	int	i;
+
+	i = params.size - 1;
+	while (i >= 0)
 	{
-		push(stack, ft_atol(argv[argc]));
-		argc--;
+		push(stack, params.values[i]);
+		i--;
 	}
 }
 
