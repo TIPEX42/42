@@ -1,5 +1,4 @@
 NAME		=			push_swap
-NAMED		=			push_swapd
 CC			=			gcc
 CFLAGS		=			-Wall -Werror -Wextra
 DEPS		=			push_swap.h

@@ -16,23 +16,23 @@ void	rra(t_stack *stack)
 {
 	reverse_rotate(stack);
 	if (!ft_strncmp(stack->name, "A", 1))
-		printf("rra\n");
+		ft_putstr_fd("rra\n", 1);
 	else
-		printf("rrb\n");
+		ft_putstr_fd("rrb\n", 1);
 }
 
 void	rrb(t_stack *stack)
 {
 	reverse_rotate(stack);
 	if (!ft_strncmp(stack->name, "A", 1))
-		ft_printf("rra\n");
+		ft_putstr_fd("rra\n", 1);
 	else
-		ft_printf("rrb\n");
+		ft_putstr_fd("rrb\n", 1);
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);
-	ft_printf("rrr\n");
+	ft_putstr_fd("rrr\n", 1);
 }

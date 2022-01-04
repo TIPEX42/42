@@ -48,7 +48,6 @@ int	try_rotate(t_stack *sta, t_stack *stb, t_stack *partitions)
 	if (s_get(sta, s_top(sta) - 1) == s_get_min(sta, s_sum(partitions)))
 	{
 		sa(sta);
-		rotate_already_sorted(sta, partitions);
 		return (try_rotate(sta, stb, partitions));
 	}
 	if (worth_rotating_a(sta, stb) == 1)
@@ -63,6 +62,7 @@ int	try_rotate(t_stack *sta, t_stack *stb, t_stack *partitions)
 			rra(sta);
 		return (1);
 	}
+	rotate_already_sorted(sta, partitions);
 	return (0);
 }
 

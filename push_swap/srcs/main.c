@@ -14,7 +14,9 @@
 
 void	please_work_sort(t_stack *sta, t_stack *stb, t_stack *pts)
 {
-	if (s_size(sta) <= 1 || try_rotate(sta, stb, pts))
+	if (s_size(sta) <= 1 || is_stack_sorted_dsc(sta, s_size(sta)))
+		return ;
+	if (try_rotate(sta, stb, pts))
 		return ;
 	rotate_already_sorted(sta, pts);
 	while (!is_stack_sorted_dsc(sta, s_size(sta)) || !is_empty(stb))
@@ -79,6 +81,7 @@ int	main(int argc, char **argv)
 	please_work_sort(stack_a, stack_b, partitions);
 	stack_destroy(stack_a);
 	stack_destroy(stack_b);
+	stack_destroy(partitions);
 	return (0);
 }
 

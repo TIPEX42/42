@@ -83,6 +83,8 @@ t_params	check_args(int argc, char **argv)
 {
 	t_params	params;
 
+	if (argc == 1)
+		exit(0);
 	params = get_input(argc, argv);
 	if (check_for_doubles(params))
 	{

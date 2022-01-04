@@ -48,7 +48,6 @@ t_params	split_input(char **argv);
 //stack.c
 t_stack		*create_stack(int capacity, char *name);
 void		populate_stack(t_stack *stack, t_params params);
-void		stack_print(t_stack *stack, int virtual_size);
 void		stack_destroy(t_stack *stack);
 
 //stack_basics.c

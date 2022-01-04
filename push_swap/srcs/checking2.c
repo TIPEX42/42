@@ -67,7 +67,7 @@ t_params	split_input(char **argv)
 		result[i] = ft_atoi(split_arg[i]);
 		i++;
 	}
-	free(split_arg);
+	free_tab(split_arg);
 	params.size = i;
 	params.values = result;
 	return (params);
