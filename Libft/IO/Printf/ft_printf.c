@@ -21,7 +21,7 @@ void	ft_print_hex(va_list *parameters_infos, int *chars_printed);
 void	ft_print_hex_big(va_list *parameters_infos, int *chars_printed);
 void	ft_print_ptr(va_list *parameters_infos, int *chars_printed);
 
-void	ft_parse_param(const char *str, va_list *parameters, int *chars_printed)
+static void	ft_parse_param(const char *str, va_list *parameters, int *chars_printed)
 {
 	if (*str == 'c')
 		ft_print_char(parameters, chars_printed);

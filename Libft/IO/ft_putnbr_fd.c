@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-static void	ft_print(long nb, long modulo, int fd)
+static void	ft_print(long nb, long modulo, int fd, int *printed)
 {
 	char	letter;
 	long	result;
@@ -25,35 +25,35 @@ static void	ft_print(long nb, long modulo, int fd)
 		result = result + 1;
 	}
 	letter = letter + result;
-	write(fd, &letter, 1);
+	(*printed) += write(fd, &letter, 1);
 	if (modulo > 1)
-		ft_print(nb, modulo / 10, fd);
+		ft_print(nb, modulo / 10, fd, printed);
 }
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(long n, int fd)
 {
 	char	c;
 	long	modulo;
-	long	nbcpy;
+	int		printed;
 
-	nbcpy = n;
-	if (nbcpy < 0)
+	printed = 0;
+	if (n < 0)
 	{
-		write(fd, "-", 1);
-		nbcpy = nbcpy * -1;
+		printed += write(fd, "-", 1);
+		n = n * -1;
 	}
-	if (nbcpy < 10)
+	if (n < 10)
 	{
-		c = '0';
-		c = c + nbcpy;
-		write(fd, &c, 1);
+		c = '0' + n;
+		printed += write(fd, &c, 1);
 	}
 	else
 	{
 		modulo = 10;
-		while (modulo <= nbcpy)
+		while (modulo <= n)
 			modulo = modulo * 10;
 		modulo = modulo / 10;
-		ft_print(nbcpy, modulo, fd);
+		ft_print(n, modulo, fd, &printed);
 	}
+	return (printed);
 }

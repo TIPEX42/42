@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "../libft.h"
 
-static	*find_line(int fd, char *buffer, char **line);
-static	int	ft_get_line_length(char *line, int bytes_read);
-static	int	ft_add_to_line(char **line, char *buffer, int bytes_read);
+static char	*find_line(int fd, char *buffer, char **line);
+static int	ft_get_line_length(char *line, int bytes_read);
+static int	ft_add_to_line(char **line, char *buffer, int bytes_read);
 
 char	*ft_get_next_line(int fd)
 {
@@ -30,7 +30,7 @@ char	*ft_get_next_line(int fd)
 	return (find_line(fd, buffer[fd], &line));
 }
 
-static	*find_line(int fd, char *buffer, char **line)
+static char	*find_line(int fd, char *buffer, char **line)
 {
 	int		bytes_read;
 	int		add_line_result;
