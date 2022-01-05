@@ -1,39 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec4_mult.c                                        :+:      :+:    :+:   */
+/*   vec3_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 17:59:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:13:23 by                  ###   ########.fr       */
+/*   Created: 2022/01/05 17:59:42 by                   #+#    #+#             */
+/*   Updated: 2022/01/05 18:31:34 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../libft.h"
 
-t_Vec4	*vec4_multi(t_Vec4 *self, long value)
+t_Vec3	vec3(float x, float y, float z)
 {
-	self->x *= value;
-	self->y *= value;
-	self->z *= value;
-	self->w *= value;
-	return (self);
+	t_Vec3	vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
 }
 
-t_Vec4	*vec4_multf(t_Vec4 *self, float value)
+t_Vec3	vec3_copy(t_Vec3 old)
 {
-	self->x *= value;
-	self->y *= value;
-	self->z *= value;
-	self->w *= value;
-	return (self);
+	t_Vec3	vec;
+
+	vec.x = old.x;
+	vec.y = old.y;
+	vec.z = old.z;
+	return (vec);
 }
 
-t_Vec4	*vec4_multv4(t_Vec4 *self, const t_Vec4 vec)
+t_Vec3	vec3_zero(void)
 {
-	self->x *= vec.x;
-	self->y *= vec.y;
-	self->z *= vec.z;
-	self->w *= vec.w;
-	return (self);
+	t_Vec3	vec;
+
+	vec.x = 0;
+	vec.y = 0;
+	vec.z = 0;
+	return (vec);
+}
+
+t_Vec3	vec3_set(float value)
+{
+	t_Vec3	vec;
+
+	vec.x = value;
+	vec.y = value;
+	vec.z = value;
+	return (vec);
 }

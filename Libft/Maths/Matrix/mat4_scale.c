@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_uinteger.c                                :+:      :+:    :+:   */
+/*   mat4_scale.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:00 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/24 15:36:54 by njennes          ###   ########lyon.fr   */
+/*   Created: 2022/01/05 18:20:20 by                   #+#    #+#             */
+/*   Updated: 2022/01/05 18:20:20 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-int	ft_print_uinteger(va_list *parameters_infos)
+t_Mat4	mat4_scalef(float value)
 {
-	unsigned int	integer;
+	return (mat4(value));
+}
 
-	integer = (unsigned int)va_arg(*parameters_infos, unsigned int);
-	return (ft_putnbr_fd(integer, 1));
+t_Mat4	mat4_scalev3(t_Vec3 vec)
+{
+	t_Mat4	mat;
+
+	mat = mat4_identity();
+	mat.m[0][0] = vec.x;
+	mat.m[1][1] = vec.y;
+	mat.m[2][2] = vec.z;
+	return (mat);
 }

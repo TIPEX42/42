@@ -1,39 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec4_mult.c                                        :+:      :+:    :+:   */
+/*   vec2_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 17:59:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:13:23 by                  ###   ########.fr       */
+/*   Created: 2022/01/05 17:59:45 by                   #+#    #+#             */
+/*   Updated: 2022/01/05 18:30:44 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../libft.h"
 
-t_Vec4	*vec4_multi(t_Vec4 *self, long value)
+t_Vec2	vec2(float x, float y)
 {
-	self->x *= value;
-	self->y *= value;
-	self->z *= value;
-	self->w *= value;
-	return (self);
+	t_Vec2	vec;
+
+	vec.x = x;
+	vec.y = y;
+	return (vec);
 }
 
-t_Vec4	*vec4_multf(t_Vec4 *self, float value)
+t_Vec2	vec2_copy(t_Vec2 old)
 {
-	self->x *= value;
-	self->y *= value;
-	self->z *= value;
-	self->w *= value;
-	return (self);
+	t_Vec2	vec;
+
+	vec.x = old.x;
+	vec.y = old.y;
+	return (vec);
 }
 
-t_Vec4	*vec4_multv4(t_Vec4 *self, const t_Vec4 vec)
+t_Vec2	vec2_zero(void)
 {
-	self->x *= vec.x;
-	self->y *= vec.y;
-	self->z *= vec.z;
-	self->w *= vec.w;
-	return (self);
+	t_Vec2	vec;
+
+	vec.x = 0;
+	vec.y = 0;
+	return (vec);
+}
+
+t_Vec2	vec2_set(float value)
+{
+	t_Vec2	vec;
+
+	vec.x = value;
+	vec.y = value;
+	return (vec);
 }

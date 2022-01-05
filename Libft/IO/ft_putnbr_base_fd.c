@@ -12,14 +12,14 @@
 
 #include "../libft.h"
 
-static void	ft_putnbr(char *result, int *chars_printed)
+static void	ft_putnbr(char *result, int *chars_printed, int fd)
 {
 	result += 32;
 	while (*result != -1)
 	{
 		if (*result != -2)
 		{
-			write(1, result, 1);
+			write(fd, result, 1);
 			(*chars_printed)++;
 		}
 		result--;
@@ -56,6 +56,6 @@ int	ft_putnbr_base_fd(size_t nbr, char *base, int fd)
 		result[i] = base[r];
 	}
 	printed = 0;
-	ft_putnbr(result, &printed);
+	ft_putnbr(result, &printed, fd);
 	return (printed);
 }

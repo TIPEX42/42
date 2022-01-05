@@ -12,10 +12,10 @@
 
 #include "../../libft.h"
 
-void	ft_print_integer(va_list *parameters_infos, int *chars_printed)
+int	ft_print_integer(va_list *parameters_infos)
 {
 	int	integer;
 
 	integer = (int)va_arg(*parameters_infos, int);
-	ft_putnbr_fd(integer, 1);
+	return (ft_putnbr_fd(integer, 1));
 }

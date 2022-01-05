@@ -18,5 +18,5 @@ void	ft_print_ptr(va_list *parameters_infos, int *chars_printed)
 
 	ptr = (long)va_arg(*parameters_infos, size_t);
 	(*chars_printed) += write(1, "0x", 2);
-	(*chars_printed) += ft_putnbr_base_fd(1, ptr, "0123456789abcdef");
+	(*chars_printed) += ft_putnbr_base_fd(ptr, "0123456789abcdef", 1);
 }

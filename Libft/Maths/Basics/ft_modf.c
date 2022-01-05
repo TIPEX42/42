@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_uinteger.c                                :+:      :+:    :+:   */
+/*   ft_modf.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:00 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/24 15:36:54 by njennes          ###   ########lyon.fr   */
+/*   Created: 2022/01/05 18:22:06 by                   #+#    #+#             */
+/*   Updated: 2022/01/05 18:22:08 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-int	ft_print_uinteger(va_list *parameters_infos)
+double	ft_modf(double x, double y)
 {
-	unsigned int	integer;
-
-	integer = (unsigned int)va_arg(*parameters_infos, unsigned int);
-	return (ft_putnbr_fd(integer, 1));
+	return (x - ((int)(x / y)) * y);
 }

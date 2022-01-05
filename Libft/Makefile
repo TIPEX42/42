@@ -13,7 +13,13 @@ LINKLIST			=		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft
 
 #IO
 IODIR				=		IO/
-IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c
+IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c			\
+							ft_putnbr_base_fd.c
+
+#Printf
+PRINTFDIR			=		IO/Printf/
+PRINTF				=		ft_print_char.c ft_print_hex.c ft_print_hex_big.c ft_print_integer.c ft_print_ptr.c			\
+							ft_print_str.c ft_print_uinteger.c ft_printf.c
 
 #Memory Management
 MEMORYDIR			=		Memory/
@@ -32,20 +38,27 @@ STRINGVIEW			=		sv_create.c
 
 #Basic Maths
 BASICMATHDIR		=		Maths/Basics/
-BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c
+BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c
 
 #Vectors
 VECTORSDIR			=		Maths/Vectors/
-VECTORS				=		vec2_add.c vec2_div.c vec2_magnitude.c vec2_mult.c vec2_normalize.c vec3_add.c vec3_div.c	\
- 							vec3_magnitude.c vec3_mult.c vec3_normalize.c vec4_add.c vec4_div.c vec4_mult.c
+VECTORS				=		vec2_init.c vec2_add.c vec2_div.c vec2_magnitude.c vec2_mult.c vec2_normalize.c				\
+							vec3_init.c vec3_add.c vec3_div.c vec3_magnitude.c vec3_mult.c vec3_normalize.c				\
+							vec4_init.c vec4_add.c vec4_div.c vec4_mult.c												\
+
+#Matrix
+MATRIXDIR			=		Maths/Matrix/
+MATRIX				=		mat4_init.c mat4_mult.c mat4_mvp.c mat4_rotation.c mat4_scale.c
 
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(IODIR), $(IO)) 																\
+							$(addprefix $(PRINTFDIR), $(PRINTF)) 														\
 							$(addprefix $(MEMORYDIR), $(MEMORY)) 														\
 							$(addprefix $(CSTRINGSDIR), $(CSTRINGS)) 													\
 							$(addprefix $(BASICMATHDIR), $(BASICMATH)) 													\
 							$(addprefix $(VECTORSDIR), $(VECTORS)) 														\
+							$(addprefix $(MATRIXDIR), $(MATRIX)) 														\
 
 
 OBJSDIR				=		objs/
@@ -56,24 +69,39 @@ OBJS				=		$(addprefix $(OBJSDIR), $(notdir $(SRCS:.c=.o)))
 
 $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(IODIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
+					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(PRINTFDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MEMORYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(CSTRINGSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STRINGVIEWDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(BASICMATHDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(VECTORSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
+					@mkdir -p objs
+					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(MATRIXDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 
 $(NAME):			$(OBJS) Makefile
