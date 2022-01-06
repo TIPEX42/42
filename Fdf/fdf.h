@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 11:31:15 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:56:04 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ typedef struct s_mlx {
 
 //mlx_draw.c
 void	mlx_set_pixel(t_mlx *mlx, int x, int y, int color);
-void	mlx_set_pixel(t_mlx *mlx, int x, int y, int color)
+void	mlx_draw_circle(t_mlx *mlx, t_vec2 pos, int radius, int color);
 
 #endif
