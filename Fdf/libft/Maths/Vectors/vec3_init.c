@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:59:42 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:31:34 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:35 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../libft.h"
 
-t_Vec3	vec3(float x, float y, float z)
+
+t_vec3	vec3(float x, float y, float z)
 {
-	t_Vec3	vec;
+	t_vec3	vec;
 
 	vec.x = x;
 	vec.y = y;
@@ -21,9 +21,9 @@ t_Vec3	vec3(float x, float y, float z)
 	return (vec);
 }
 
-t_Vec3	vec3_copy(t_Vec3 old)
+t_vec3	vec3_copy(t_vec3 old)
 {
-	t_Vec3	vec;
+	t_vec3	vec;
 
 	vec.x = old.x;
 	vec.y = old.y;
@@ -31,9 +31,9 @@ t_Vec3	vec3_copy(t_Vec3 old)
 	return (vec);
 }
 
-t_Vec3	vec3_zero(void)
+t_vec3	vec3_zero(void)
 {
-	t_Vec3	vec;
+	t_vec3	vec;
 
 	vec.x = 0;
 	vec.y = 0;
@@ -41,9 +41,9 @@ t_Vec3	vec3_zero(void)
 	return (vec);
 }
 
-t_Vec3	vec3_set(float value)
+t_vec3	vec3_set(float value)
 {
-	t_Vec3	vec;
+	t_vec3	vec;
 
 	vec.x = value;
 	vec.y = value;

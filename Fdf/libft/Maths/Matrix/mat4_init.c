@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mat4_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:58:52 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 17:58:52 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:41:00 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-t_Mat4	mat4(float value)
+t_mat4	mat4(float value)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat = mat4_zero();
 	mat.m[0][0] = value;
@@ -24,9 +24,9 @@ t_Mat4	mat4(float value)
 	return (mat);
 }
 
-t_Mat4	mat_copy(t_Mat4 old)
+t_mat4	mat_copy(t_mat4 old)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 	int		i;
 	int		j;
 
@@ -44,14 +44,14 @@ t_Mat4	mat_copy(t_Mat4 old)
 	return (mat);
 }
 
-t_Mat4	mat4_identity(void)
+t_mat4	mat4_identity(void)
 {
 	return (mat4(1.0f));
 }
 
-t_Mat4	mat4_zero(void)
+t_mat4	mat4_zero(void)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat.m[0][0] = 0;
 	mat.m[0][1] = 0;

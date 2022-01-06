@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   vec2_add.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:17:56 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:17:56 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:35 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../libft.h"
 
-t_Vec2	*vec2_add(t_Vec2 *self, const t_Vec2 other)
+
+t_vec2	*vec2_add(t_vec2 *self, const t_vec2 other)
 {
 	self->x += other.x;
 	self->y += other.y;

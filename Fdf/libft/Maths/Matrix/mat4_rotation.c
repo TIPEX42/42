@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   mat4_rotation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:20:58 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:20:58 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:41:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../libft.h"
 
-t_Mat4	mat4_rotatex(t_Mat4 self, float value)
+
+t_mat4	mat4_rotatex(t_mat4 self, float value)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat = mat4_copy(self);
 	mat.m[1][1] = ft_cos(value);
@@ -23,9 +23,9 @@ t_Mat4	mat4_rotatex(t_Mat4 self, float value)
 	return (mat);
 }
 
-t_Mat4	mat4_rotatey(t_Mat4 self, float value)
+t_mat4	mat4_rotatey(t_mat4 self, float value)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat = mat4_copy(self);
 	mat.m[0][0] = ft_cos(value);
@@ -35,9 +35,9 @@ t_Mat4	mat4_rotatey(t_Mat4 self, float value)
 	return (mat);
 }
 
-t_Mat4	mat4_rotatez(t_Mat4 self, float value)
+t_mat4	mat4_rotatez(t_mat4 self, float value)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat = mat4_copy(self);
 	mat.m[0][0] = ft_cos(value);
@@ -47,9 +47,9 @@ t_Mat4	mat4_rotatez(t_Mat4 self, float value)
 	return (mat);
 }
 
-t_Mat4	mat4_rotate(t_Mat4 self, t_Vec3 vec)
+t_mat4	mat4_rotate(t_mat4 self, t_vec3 vec)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 
 	mat = mat4_rotateZ(self, vec.z);
 	mat = mat4_rotateY(mat, vec.y);
