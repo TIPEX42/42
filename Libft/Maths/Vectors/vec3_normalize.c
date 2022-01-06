@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_normalize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:59:39 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 17:59:39 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:35 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../libft.h"
 
-t_Vec3	*vec3_normalize(t_Vec3 *vec)
+
+t_vec3	*vec3_normalize(t_vec3 *vec)
 {
 	float	magnitude;
 
@@ -22,10 +22,10 @@ t_Vec3	*vec3_normalize(t_Vec3 *vec)
 	return (vec);
 }
 
-t_Vec3	vec3_normalized(t_Vec3 vec)
+t_vec3	vec3_normalized(t_vec3 vec)
 {
 	float	magnitude;
-	t_Vec3	normalized;
+	t_vec3	normalized;
 
 	magnitude = vec3_mag(vec);
 	normalized.x = vec.x / magnitude;

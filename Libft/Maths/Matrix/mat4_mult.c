@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mat4_mult.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:19:04 by                   #+#    #+#             */
-/*   Updated: 2022/01/05 18:20:57 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:41:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-t_Mat4	*mat4_multi(t_Mat4 *self, int value)
+t_mat4	*mat4_multi(t_mat4 *self, int value)
 {
 	self->m[0][0] *= value;
 	self->m[0][1] *= value;
@@ -33,7 +33,7 @@ t_Mat4	*mat4_multi(t_Mat4 *self, int value)
 	return (self);
 }
 
-t_Mat4	*mat4_multf(t_Mat4 *self, float value)
+t_mat4	*mat4_multf(t_mat4 *self, float value)
 {
 	self->m[0][0] *= value;
 	self->m[0][1] *= value;
@@ -54,9 +54,9 @@ t_Mat4	*mat4_multf(t_Mat4 *self, float value)
 	return (self);
 }
 
-t_Vec4	mat4_multv4(t_Mat4 self, t_Vec4 other)
+t_vec4	mat4_multv4(t_mat4 self, t_vec4 other)
 {
-	t_Vec4	vec;
+	t_vec4	vec;
 
 	vec.x = self.m[0][0] * other.x + self.m[0][1] * other.y + \
 			self.m[0][2] * other.z + self.m[0][3] * other.w;
@@ -69,9 +69,9 @@ t_Vec4	mat4_multv4(t_Mat4 self, t_Vec4 other)
 	return (vec);
 }
 
-t_Mat4	mat4_multm4(t_Mat4 self, t_Mat4 other)
+t_mat4	mat4_multm4(t_mat4 self, t_mat4 other)
 {
-	t_Mat4	mat;
+	t_mat4	mat;
 	float	sum;
 	int		i;
 	int		j;

@@ -1,6 +1,17 @@
-#include "../../libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec2_normalize.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/05 18:17:51 by                   #+#    #+#             */
+/*   Updated: 2022/01/06 11:39:35 by njennes          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_Vec2	*vec2_normalize(t_Vec2 *vec)
+
+t_vec2	*vec2_normalize(t_vec2 *vec)
 {
 	float	magnitude;
 
@@ -10,10 +21,10 @@ t_Vec2	*vec2_normalize(t_Vec2 *vec)
 	return (vec);
 }
 
-t_Vec2	vec2_normalized(t_Vec2 vec)
+t_vec2	vec2_normalized(t_vec2 vec)
 {
 	float	magnitude;
-	t_Vec2	normalized;
+	t_vec2	normalized;
 
 	magnitude = vec2_mag(vec);
 	normalized.x = vec.x / magnitude;
