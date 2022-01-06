@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:43 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:41:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,10 @@ t_mat4		*mat4_multf(t_mat4 *self, float value);
 t_vec4		mat4_multv4(t_mat4 self, t_vec4 other);
 t_mat4		mat4_multm4(t_mat4 self, t_mat4 other);
 t_mat4		mat4_translate(t_mat4 self, t_vec3 vec);
-t_mat4		mat4_rotateX(t_mat4 self, float value);
-t_mat4		mat4_rotateY(t_mat4 self, float value);
-t_mat4		mat4_rotateZ(t_mat4 self, float value);
-t_mat4		mat4_rotate(t_mat4 self, t_vec3 vec);
+t_mat4		mat4_rotatex(t_mat4 self, float value);
+t_mat4		mat4_rotatey(t_mat4 self, float value);
+t_mat4		mat4_rotatez(t_mat4 self, float value);
+t_mat4		mat4_rotate(t_vec3 vec);
 t_mat4		mat4_translate(t_mat4 self, t_vec3 vec);
 t_mat4		mat4_ortho(t_proj proj);
 t_mat4		mat4_scalef(float value);

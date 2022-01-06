@@ -18,8 +18,8 @@ t_mat4	mat4_translate(t_mat4 self, t_vec3 vec)
 
 	mat = mat4_copy(self);
 	mat.m[0][3] = vec.x;
-	mat.m[1][3] = vec.x;
-	mat.m[2][3] = vec.x;
+	mat.m[1][3] = vec.y;
+	mat.m[2][3] = vec.z;
 	return (mat);
 }
 

@@ -6,10 +6,11 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:17:48 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:43 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 11:39:35 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../libft.h"
 
 t_vec3	*vec3_add(t_vec3 *self, const t_vec3 other)
 {

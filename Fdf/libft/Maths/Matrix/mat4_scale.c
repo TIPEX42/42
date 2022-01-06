@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:20:20 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:43 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 12:41:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 t_mat4	mat4_scalef(float value)
 {
-	return (mat4(value));
+	t_mat4	mat;
+
+	mat = mat4_identity();
+	mat.m[0][0] = value;
+	mat.m[1][1] = value;
+	mat.m[2][2] = value;
+	return (mat);
 }
 
 t_mat4	mat4_scalev3(t_vec3 vec)

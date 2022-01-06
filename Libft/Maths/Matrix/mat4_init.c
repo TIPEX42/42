@@ -24,7 +24,7 @@ t_mat4	mat4(float value)
 	return (mat);
 }
 
-t_mat4	mat_copy(t_mat4 old)
+t_mat4	mat4_copy(t_mat4 old)
 {
 	t_mat4	mat;
 	int		i;

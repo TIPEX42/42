@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:58:52 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:43 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 13:08:10 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_mat4	mat4(float value)
 	return (mat);
 }
 
-t_mat4	mat_copy(t_mat4 old)
+t_mat4	mat4_copy(t_mat4 old)
 {
 	t_mat4	mat;
 	int		i;

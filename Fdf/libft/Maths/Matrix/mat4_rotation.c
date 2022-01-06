@@ -6,10 +6,11 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:20:58 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 12:44:43 by                  ###   ########.fr       */
+/*   Updated: 2022/01/06 17:06:17 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../libft.h"
 
 t_mat4	mat4_rotatex(t_mat4 self, float value)
 {
@@ -47,12 +48,14 @@ t_mat4	mat4_rotatez(t_mat4 self, float value)
 	return (mat);
 }
 
-t_mat4	mat4_rotate(t_mat4 self, t_vec3 vec)
+t_mat4	mat4_rotate(t_vec3 vec)
 {
 	t_mat4	mat;
 
-	mat = mat4_rotateZ(self, vec.z);
-	mat = mat4_rotateY(mat, vec.y);
-	mat = mat4_rotateX(mat, vec.x);
+	mat = mat4_rotatey(mat4_identity(), vec.y);
+	mat = mat4_multm4(mat, mat4_rotatex(mat4_identity(), vec.x));
+	mat = mat4_multm4(mat, mat4_rotatez(mat4_identity(), vec.z));
 	return (mat);
 }
+
+//zxy,

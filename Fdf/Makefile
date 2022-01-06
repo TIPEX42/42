@@ -1,15 +1,15 @@
 CC			=		gcc
-CFLAGS		=		-Wall -Werror -Wextra -o2
-LDFLAGS		=		-Wall -Werror -Wextra -o2 -framework OpenGL -framework AppKit
+CFLAGS		=		-Wall -Werror -Wextra -o2 -std=c11
+LDFLAGS		=		-Wall -Werror -Wextra -o2 -framework OpenGL -framework AppKit -std=c11
 NAME		=		fdf
 
-LIBFT		=		libft
+LIBFT		=		Libft
 MINILIBX	=		minilibx_macos
 
 DEPS		=		fdf.h
 
 SRCDIR		=		srcs/
-SRC			=		main.c mlx_draw.c
+SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c
 
 SRCS		=		$(addprefix $(SRCDIR), $(SRC))
 
@@ -17,6 +17,9 @@ OBJDIR		=		objs/
 OBJ			=		$(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
 
 all:				$(NAME)
+
+run:				all
+					./$(NAME)
 
 libs:
 					@echo "Generating libft..."
@@ -27,7 +30,7 @@ libs:
 $(NAME):			libs $(OBJ) Makefile
 					@$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
 
-$(OBJ):				$(SRCS) $(DEPS)
+$(OBJDIR)%.o:		$(SRCDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
