@@ -73,7 +73,7 @@ void	draw_square(t_canvas *canvas, t_square *square)
 
 void	rotate_square(t_fdf *app, t_square *square)
 {
-	square->rotation.y += app->delta_time * PI / 180;
+	square->rotation.y += app->delta_time * TWO_PI;
 	square->pos.x = ft_sin(square->rotation.y) * 200 + 1920 / 2;
 	square->pos.y = ft_cos(square->rotation.y) * 200 + 1080 / 2;
 }
@@ -83,17 +83,16 @@ int	render(t_fdf *app)
 	static clock_t	last_time;
 	double			elapsed;
 
-	elapsed = clock() - last_time;
-	ft_printf("FPS : %d\n", (int)(1.0 / (elapsed / CLOCKS_PER_SEC)));
+	elapsed = ((double)clock() - last_time) / CLOCKS_PER_SEC;
+	ft_printf("FPS : %d\n", (int)(1.0 / elapsed));
 	app->delta_time = elapsed;
-	printf("Delta %f\n", elapsed);
 	last_time = clock();
 	clear_screen(&app->canvas, get_color(0, 30, 20, 51));
-	//elapsed = (double)(clock() - time) / CLOCKS_PER_SEC;
+	//elapsed = (double)(clock() - last_time) / CLOCKS_PER_SEC;
 	//printf("Clearing took %f seconds\n", elapsed);
-	//time = clock();
+	//last_time = clock();
 	draw_square(&app->canvas, &app->square);
-	//elapsed = (double)(clock() - time) / CLOCKS_PER_SEC;
+	//elapsed = (double)(clock() - last_time) / CLOCKS_PER_SEC;
 	//printf("Drawing took %f seconds\n", elapsed);
 	rotate_square(app, &app->square);
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);

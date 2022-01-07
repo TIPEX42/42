@@ -59,7 +59,7 @@ typedef struct s_fdf {
 	t_canvas	canvas;
 	int			should_close;
 	t_square	square;
-	clock_t		delta_time;
+	double		delta_time;
 }				t_fdf;
 
 //mlx_draw.c
