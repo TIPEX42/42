@@ -75,6 +75,14 @@ typedef struct s_proj
 	float	aspect;
 }			t_proj;
 
+typedef struct s_darray
+{
+	void	*items;
+	size_t	item_size;
+	size_t	capacity;
+	size_t	size;
+}			t_darray;
+
 //Character Testing
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
@@ -140,6 +148,15 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstnew(void *content);
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+//Dynamic array
+t_darray	darray_create(size_t item_size);
+int			darray_exists(t_darray *array);
+int			darray_add(t_darray *array, void *element);
+void		*darray_get(t_darray *array, size_t index);
+void		darray_remove(t_darray *array, size_t index);
+size_t		darray_size(t_darray *array);
+void		darray_free(t_darray *array);
 
 //Maths Basics
 double		ft_abs(double nb);

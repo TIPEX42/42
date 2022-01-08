@@ -14,6 +14,10 @@ LINKLISTDIR			=		DataStructures/LinkList/
 LINKLIST			=		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstize.c	\
 							ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 
+#Dynamic Arrays
+DARRAYDIR			=		DataStructures/DynamicArray/
+DARRAY				=		darray_create.c darray_add.c darray_remove.c darray_get.c darray_free.c darray_utils.c		\
+
 #IO
 IODIR				=		IO/
 IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c			\
@@ -59,6 +63,7 @@ STANDARD			=		ft_error_exit.c
 
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
+							$(addprefix $(DARRAYDIR), $(DARRAY)) 														\
 							$(addprefix $(IODIR), $(IO)) 																\
 							$(addprefix $(PRINTFDIR), $(PRINTF)) 														\
 							$(addprefix $(MEMORYDIR), $(MEMORY)) 														\
@@ -66,7 +71,7 @@ SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(BASICMATHDIR), $(BASICMATH)) 													\
 							$(addprefix $(VECTORSDIR), $(VECTORS)) 														\
 							$(addprefix $(MATRIXDIR), $(MATRIX)) 														\
-							$(addprefix $(STANDARDDIR), $(STANDARD)) 														\
+							$(addprefix $(STANDARDDIR), $(STANDARD)) 													\
 
 
 OBJSDIR				=		objs/
@@ -78,6 +83,10 @@ OBJSD				=		$(addprefix $(OBJSDIRD), $(notdir $(SRCS:.c=d.o)))
 
 #RELEASE
 $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIR)
+					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(DARRAYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
@@ -120,6 +129,10 @@ $(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
 
 #DEBUG
 $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(DARRAYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
@@ -175,8 +188,10 @@ $(NAME):			$(OBJS) Makefile
 
 clean:
 					@rm -f $(OBJSDIR)*.o
+					@rm -f $(OBJSDIRD)*.o
 
 fclean: clean
 					@rm -f $(NAME)
+					@rm -f $(NAMED)
 
 re: fclean all
