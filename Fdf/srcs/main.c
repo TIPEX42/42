@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:51 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 18:38:01 by                  ###   ########.fr       */
+/*   Updated: 2022/01/08 14:26:04 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ void	printpoint(t_vec4 point)
 	printf("Point : x[%f] y[%f] z[%f] w[%f]\n", point.x, point.y, point.z, point.w);
 }
 
-t_mat4	generate_mvp(t_square *square)
+t_mat4	generate_mvp(t_map *map)
 {
 	t_mat4	result;
 	t_mvp	mvp;
 
-	mvp.model = mat4_translate(mat4_identity(), square->pos);
-	mvp.model = mat4_multm4(mvp.model, mat4_rotate(square->rotation));
-	mvp.model = mat4_multm4(mvp.model, mat4_scalef(square->scale));
+	mvp.model = mat4_translate(mat4_identity(), map->pos);
+	mvp.model = mat4_multm4(mvp.model, mat4_rotate(map->rotation));
+	mvp.model = mat4_multm4(mvp.model, mat4_scalev3(map->scale));
 	mvp.view = mat4_identity();
 	mvp.proj = mat4_identity();
 	result = mvp.proj;
@@ -48,34 +48,77 @@ t_mat4	generate_mvp(t_square *square)
 	return (result);
 }
 
-void	draw_square(t_canvas *canvas, t_square *square)
+void	update_projections(t_map *map, t_map_info *infos)
 {
 	t_mat4	mvp;
-	t_vec4	point[4];
 	int		i;
+	int		j;
 
-	mvp = generate_mvp(square);
+	mvp = generate_mvp(map);
 	i = 0;
-	while (i < 4)
+	while (i < infos->size_z)
 	{
-		point[i] = mat4_multv4(mvp, square->points[i]);
-		draw_circle(canvas, (t_vec2){point[i].x, point[i].y}, 10, get_color(0, 150, 150, 150));
+		j = 0;
+		while (j < infos->size_x)
+		{
+			map->projection[i][j] = mat4_multv4(mvp, map->verticies[i][j]);
+			j++;
+		}
 		i++;
 	}
-	i = 0;
-	while (i < 3)
-	{
-		draw_line(canvas, (t_vec2){point[i].x, point[i].y}, (t_vec2){point[i + 1].x, point[i + 1].y}, get_color(0, 255, 0, 0));
-		i++;
-	}
-	draw_line(canvas, (t_vec2){point[i].x, point[i].y}, (t_vec2){point[0].x, point[0].y}, get_color(0, 255, 0, 0));
 }
 
-void	rotate_square(t_fdf *app, t_square *square)
+void draw_wires_x(t_canvas *canvas, t_map_info *infos, t_vec4 **projection)
 {
-	square->rotation.y += app->delta_time * TWO_PI;
-	square->pos.x = ft_sin(square->rotation.y) * 200 + 1920 / 2;
-	square->pos.y = ft_cos(square->rotation.y) * 200 + 1080 / 2;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < infos->size_z)
+	{
+		j = 0;
+		while (j < infos->size_x - 1)
+		{
+			draw_line(canvas, (t_vec2){projection[i][j].x, projection[i][j].y},
+					  (t_vec2){projection[i][j + 1].x, projection[i][j + 1].y},
+					  get_color(0, 200, 200, 200));
+			j++;
+		}
+		i++;
+	}
+}
+
+void draw_wires_y(t_canvas *canvas, t_map_info *infos, t_vec4 **projection)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < infos->size_z - 1)
+	{
+		j = 0;
+		while (j < infos->size_x)
+		{
+			draw_line(canvas, (t_vec2){projection[i][j].x, projection[i][j].y},
+					  (t_vec2){projection[i + 1][j].x, projection[i + 1][j].y},
+					  get_color(0, 200, 200, 200));
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_map(t_canvas *canvas, t_map *map)
+{
+	update_projections(map, &map->infos);
+	draw_wires_x(canvas, &map->infos, map->projection);
+	draw_wires_y(canvas, &map->infos, map->projection);
+}
+
+void	rotate_map(t_fdf *app, t_map *map)
+{
+	map->rotation.y += app->delta_time * HALF_PI;
+	map->rotation.x += app->delta_time * HALF_PI / 2;
 }
 
 int	render(t_fdf *app)
@@ -84,17 +127,17 @@ int	render(t_fdf *app)
 	double			elapsed;
 
 	elapsed = ((double)clock() - last_time) / CLOCKS_PER_SEC;
-	ft_printf("FPS : %d\n", (int)(1.0 / elapsed));
+	//ft_printf("FPS : %d\n", (int)(1.0 / elapsed));
 	app->delta_time = elapsed;
 	last_time = clock();
 	clear_screen(&app->canvas, get_color(0, 30, 20, 51));
 	//elapsed = (double)(clock() - last_time) / CLOCKS_PER_SEC;
 	//printf("Clearing took %f seconds\n", elapsed);
 	//last_time = clock();
-	draw_square(&app->canvas, &app->square);
+	draw_map(&app->canvas, &app->map);
 	//elapsed = (double)(clock() - last_time) / CLOCKS_PER_SEC;
 	//printf("Drawing took %f seconds\n", elapsed);
-	rotate_square(app, &app->square);
+	rotate_map(app, &app->map);
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
 	if (app->should_close)
 	{
@@ -145,20 +188,6 @@ void	init_callbacks(t_fdf *app)
 	mlx_loop_hook(app->mlx, render, app);
 }
 
-t_square	create_square()
-{
-	t_square	square;
-
-	square.points[0] = vec4(-1, -1, 0, 1);
-	square.points[1] = vec4(1, -1, 0, 1);
-	square.points[2] = vec4(1, 1, 0, 1);
-	square.points[3] = vec4(-1, 1, 0, 1);
-	square.pos = vec3(1920 / 2, 1080 / 2, 400);
-	square.rotation = vec3(0, 0, PI / 4);
-	square.scale = 50;
-	return (square);
-}
-
 void	init_app(t_fdf *app)
 {
 	app->mlx = mlx_init();
@@ -170,7 +199,6 @@ void	init_app(t_fdf *app)
 	app->window = create_window(app->mlx, 1920, 1080, "Fdf YAYYYY !");
 	app->canvas = create_canvas(app->mlx, app->window);
 	app->should_close = 0;
-	app->square = create_square();
 	app->delta_time = 0;
 	init_callbacks(app);
 }
@@ -182,13 +210,89 @@ void	start_app(t_fdf *app)
 
 void	close_app(t_fdf *app)
 {
+	int	i;
+
+	i = 0;
+	while (i < app->map.infos.size_z)
+	{
+		free(app->map.infos.heights[i]);
+		free(app->map.verticies[i]);
+		i++;
+	}
+	free(app->map.verticies);
+	free(app->map.infos.heights);
 	free(app->mlx);
 }
 
-int main()
+t_vec4	**generate_verticies(t_map_info *infos)
+{
+	t_vec4	**tab;
+	int		i;
+	int		j;
+
+	tab = ft_calloc(infos->size_z, sizeof(t_vec4));
+	if (!tab)
+		ft_error_exit("Allocation error\n");
+	i = 0;
+	while (i < infos->size_z)
+	{
+		tab[i] = ft_calloc(infos->size_x, sizeof(t_vec4));
+		if (!tab[i])
+			ft_error_exit("Allocation error\n");
+		j = 0;
+		while (j < infos->size_x)
+		{
+			tab[i][j] = vec4(j, infos->heights[i][j], i, 1);
+			j++;
+		}
+		i++;
+	}
+	return (tab);
+}
+
+t_vec4	**init_projections(t_map_info *infos)
+{
+	t_vec4	**tab;
+	int		i;
+
+	tab = ft_calloc(infos->size_z, sizeof(t_vec4));
+	if (!tab)
+		ft_error_exit("Allocation error\n");
+	i = 0;
+	while (i < infos->size_z)
+	{
+		tab[i] = ft_calloc(infos->size_x, sizeof(t_vec4));
+		if (!tab[i])
+			ft_error_exit("Allocation error\n");
+		i++;
+	}
+	return (tab);
+}
+
+void	create_map(t_map *map, char *file)
+{
+	load_map(&map->infos, file);
+	map->pos = vec3(1920 / 2, 1080 / 2, 0);
+	map->rotation = vec3_zero();
+	map->scale = vec3(100, 100, 100);
+	map->verticies = generate_verticies(&map->infos);
+	map->projection = init_projections(&map->infos);
+}
+
+void	check_args(int argc)
+{
+	if (argc < 2)
+		ft_error_exit("No map provided\n");
+	if (argc > 2)
+		ft_error_exit("Too many arguments\n");
+}
+
+int main(int argc, char **argv)
 {
 	t_fdf	app;
 
+	check_args(argc);
+	create_map(&app.map, argv[1]);
 	init_app(&app);
 	start_app(&app);
 	close_app(&app);

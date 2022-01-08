@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/06 12:41:27 by                  ###   ########.fr       */
+/*   Updated: 2022/01/08 11:17:41 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int			ft_isprint(int c);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
+int			ft_atoi(const char *str);
+int			ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
@@ -95,6 +97,8 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		**ft_split(char const *s, char c);
+int			ft_split_size(char **tab);
+void		ft_split_free(char **tab);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -113,6 +117,9 @@ int			ft_putnbr_fd(long n, int fd);
 int			ft_putnbr_base_fd(size_t nbr, char *base, int fd);
 char		*ft_get_next_line(int fd);
 int			ft_printf(const char *str, ...);
+
+//Standard
+void	ft_error_exit(char *message);
 
 //Memory Management
 int			ft_memcmp(const void *s1, const void *s2, size_t n);

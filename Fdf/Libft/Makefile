@@ -1,6 +1,7 @@
 NAME				=		libft.a
 CC					=		gcc
 CFLAGS				=		-Wall -Werror -Wextra -o2
+FSANITIZE			=		-fsanitize=address
 DEPS				=		libft.h
 
 #=========================
@@ -30,7 +31,7 @@ CSTRINGSDIR			=		Strings/CStrings/
 CSTRINGS			=		ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c		\
  							ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c 	\
  							ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c 	\
- 							ft_tolower.c ft_toupper.c
+ 							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c
 
 #Stringviews
 STRINGVIEWDIR		=		Strings/StringView/
@@ -50,6 +51,10 @@ VECTORS				=		vec2_init.c vec2_add.c vec2_div.c vec2_magnitude.c vec2_mult.c vec
 MATRIXDIR			=		Maths/Matrix/
 MATRIX				=		mat4_init.c mat4_mult.c mat4_mvp.c mat4_rotation.c mat4_scale.c
 
+#Standard
+STANDARDDIR			=		Standard/
+STANDARD			=		ft_error_exit.c
+
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(IODIR), $(IO)) 																\
@@ -59,6 +64,7 @@ SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(BASICMATHDIR), $(BASICMATH)) 													\
 							$(addprefix $(VECTORSDIR), $(VECTORS)) 														\
 							$(addprefix $(MATRIXDIR), $(MATRIX)) 														\
+							$(addprefix $(STANDARDDIR), $(STANDARD)) 														\
 
 
 OBJSDIR				=		objs/
@@ -103,13 +109,21 @@ $(OBJSDIR)%.o:		$(MATRIXDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p objs
+					@$(CC) -c $< $(CFLAGS) -o $@
+
+
+all:				$(NAME)
+
+debug:				CFLAGS += $(FSANITIZE)
+debug:				$(NAME)
 
 $(NAME):			$(OBJS) Makefile
 					@rm -f libft.a
 					@ar -rcs libft.a $(OBJS)
 					@ranlib $(NAME)
-
-all:				$(NAME)
 
 clean:
 					@rm -f $(OBJSDIR)*.o
