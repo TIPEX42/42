@@ -23,14 +23,6 @@
 #include "Libft/libft.h"
 #include "minilibx_macos/mlx.h"
 
-typedef struct s_square
-{
-	t_vec4	points[4];
-	t_vec3	pos;
-	t_vec3	rotation;
-	int		scale;
-}			t_square;
-
 typedef struct s_mvp
 {
 	t_mat4	model;
@@ -70,7 +62,7 @@ typedef struct s_map
 	t_vec4		**projection;
 	t_vec3		pos;
 	t_vec3		rotation;
-	float		scale;
+	t_vec3		scale;
 }				t_map;
 
 

@@ -24,31 +24,31 @@ OBJD		=		$(addprefix $(OBJDIRD), $(notdir $(SRCS:.c=d.o)))
 
 all:				$(NAME)
 
-debug:				$(OBJD)
-					@echo "Generating debug libft..."
-					@make debug -C $(LIBFT)
-					@echo "Generating minilibx..."
-					@make -C $(MINILIBX)
-					@$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJ) $(LDFLAGSD) -o $(NAME)
+debug:				libsd
+debug:				$(OBJD) Makefile
+					$(CC) -Llibft -Lminilibx_macos -lftd -lmlx $(OBJD) $(LDFLAGSD) -o $(NAME)
+
+$(NAME):			libs
+$(NAME):			$(OBJ) Makefile
+					$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
 
 run:				all
 					./$(NAME)
 
-libs:
-					@echo "Generating libft..."
-					@make -C $(LIBFT)
-					@echo "Generating minilibx..."
+libsd:
+					@make debug -C $(LIBFT)
 					@make -C $(MINILIBX)
 
-$(NAME):			libs $(OBJ) Makefile
-					$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
+libs:
+					@make -C $(LIBFT)
+					@make -C $(MINILIBX)
 
 $(OBJDIR)%.o:		$(SRCDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 
-$(OBJDIRD)%.o:		$(SRCDIR)$(%:d.c=.c).c $(DEPS)
+$(OBJDIRD)%d.o:		$(SRCDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p objsd
 					@$(CC) -c $< $(CFLAGSD) -o $@

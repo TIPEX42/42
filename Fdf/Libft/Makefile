@@ -1,6 +1,8 @@
 NAME				=		libft.a
+NAMED				=		libftd.a
 CC					=		gcc
 CFLAGS				=		-Wall -Werror -Wextra -o2
+CFLAGSD				=		$(CFLAGS) $(FSANITIZE)
 FSANITIZE			=		-fsanitize=address
 DEPS				=		libft.h
 
@@ -68,61 +70,107 @@ SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 
 
 OBJSDIR				=		objs/
-
 OBJS				=		$(addprefix $(OBJSDIR), $(notdir $(SRCS:.c=.o)))
 
+OBJSDIRD			=		objsd/
+OBJSD				=		$(addprefix $(OBJSDIRD), $(notdir $(SRCS:.c=d.o)))
 
 
+#RELEASE
 $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(IODIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(PRINTFDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MEMORYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(CSTRINGSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STRINGVIEWDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(BASICMATHDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(VECTORSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MATRIXDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
 					@echo "Compiling $<"
-					@mkdir -p objs
+					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
+
+#DEBUG
+$(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(IODIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(PRINTFDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(MEMORYDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(CSTRINGSDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(STRINGVIEWDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(BASICMATHDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(VECTORSDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(MATRIXDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(STANDARDDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
 
 
 all:				$(NAME)
 
-debug:				CFLAGS += $(FSANITIZE)
-debug:				$(NAME)
+debug:				$(OBJSD) Makefile
+					@rm -f $(NAMED)
+					@ar -rcs $(NAMED) $(OBJSD)
+					@ranlib $(NAMED)
 
 $(NAME):			$(OBJS) Makefile
-					@rm -f libft.a
-					@ar -rcs libft.a $(OBJS)
+					@rm -f $(NAME)
+					@ar -rcs $(NAME) $(OBJS)
 					@ranlib $(NAME)
 
 clean:

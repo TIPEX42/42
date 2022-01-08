@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:51 by                   #+#    #+#             */
-/*   Updated: 2022/01/08 14:26:04 by                  ###   ########.fr       */
+/*   Updated: 2022/01/08 15:02:55 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ t_vec4	**generate_verticies(t_map_info *infos)
 		j = 0;
 		while (j < infos->size_x)
 		{
-			tab[i][j] = vec4(j, infos->heights[i][j], i, 1);
+			tab[i][j] = vec4(j - infos->size_x / 2, infos->heights[i][j], i - infos->size_z / 2, 1);
 			j++;
 		}
 		i++;
@@ -274,7 +274,7 @@ void	create_map(t_map *map, char *file)
 	load_map(&map->infos, file);
 	map->pos = vec3(1920 / 2, 1080 / 2, 0);
 	map->rotation = vec3_zero();
-	map->scale = vec3(100, 100, 100);
+	map->scale = vec3(50, 5, 50);
 	map->verticies = generate_verticies(&map->infos);
 	map->projection = init_projections(&map->infos);
 }
