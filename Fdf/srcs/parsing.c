@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 10:37:26 by                   #+#    #+#             */
-/*   Updated: 2022/01/08 13:42:12 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 14:31:43 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ void	add_heights(t_map_info *map, char *line)
 	while (i < size)
 	{
 		new_heights[i] = ft_atoi(heights_split[i]);
+		if (new_heights[i] > map->highest_point)
+			map->highest_point = new_heights[i];
+		if (new_heights[i] < map->lowest_point)
+			map->lowest_point = new_heights[i];
 		i++;
 	}
 	map->heights[map->size_z] = new_heights;
@@ -87,6 +91,8 @@ void	load_map(t_map_info *infos, char *file)
 	infos->size_x = get_map_width(line);
 	infos->size_z = 0;
 	infos->heights = NULL;
+	infos->lowest_point = INT_MAX;
+	infos->highest_point = INT_MIN;
 	while (line)
 	{
 		add_heights(infos, line);

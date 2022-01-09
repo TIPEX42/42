@@ -16,13 +16,12 @@ void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color)
 {
 	char		*dst;
 
-	if (x < 0 || x > canvas->width || y < 0 || y > canvas->height)
+	if (x < 0 || x >= canvas->width || y < 0 || y >= canvas->height)
 		return ;
 	dst = canvas->addr + (y * canvas->line_length + x * (canvas->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-//TODO: Just re-draw all models where they were last time they were drawn with the "clear color"
 void	clear_screen(t_canvas *canvas, int color)
 {
 	int			i;

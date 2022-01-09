@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:23:47 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 13:24:09 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 15:04:10 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 int	get_color(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	get_colorv3(t_vec3 color)
+{
+	return (0 | (int)color.x << 16 |
+	(int)color.y << 8 | (int)color.z);
 }
 
 int	get_t(int trgb)

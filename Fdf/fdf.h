@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/08 14:06:31 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 15:03:50 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_map_info
 {
 	int	size_x;
 	int	size_z;
+	int	lowest_point;
+	int	highest_point;
 	int	**heights;
 }		t_map_info;
 
@@ -60,6 +62,7 @@ typedef struct s_map
 	t_map_info	infos;
 	t_vec4		**verticies;
 	t_vec4		**projection;
+	int			**colors;
 	t_vec3		pos;
 	t_vec3		rotation;
 	t_vec3		scale;
@@ -75,6 +78,21 @@ typedef struct s_fdf {
 	t_map		map;
 }				t_fdf;
 
+//app.c
+int	close_app(t_fdf *app);
+
+//map_init.c
+t_vec4	**generate_verticies(t_map_info *infos);
+t_vec4	**init_projections(t_map_info *infos);
+void	create_map(t_map *map, char *file);
+
+//map_draw.c
+void	clear_map(t_canvas *canvas, t_map *map, int color);
+void	draw_map(t_canvas *canvas, t_map *map);
+void 	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
+void 	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
+void	update_projections(t_map *map, t_map_info *infos);
+
 //mlx_draw.c
 void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color);
 void	clear_screen(t_canvas *canvas, int color);
@@ -82,6 +100,7 @@ void	draw_circle(t_canvas *canvas, t_vec2 pos, int radius, int color);
 void	draw_line(t_canvas *canvas, t_vec2 start, t_vec2 end, int color);
 
 //mlx_colors.c
+int	get_colorv3(t_vec3 color);
 int	get_color(int t, int r, int g, int b);
 int	get_t(int trgb);
 int	get_r(int trgb);

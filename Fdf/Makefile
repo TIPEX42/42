@@ -12,7 +12,7 @@ MINILIBX	=		minilibx_macos
 DEPS		=		fdf.h
 
 SRCDIR		=		srcs/
-SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c
+SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c
 
 SRCS		=		$(addprefix $(SRCDIR), $(SRC))
 
@@ -57,11 +57,11 @@ clean:
 					@make clean -C $(MINILIBX)
 					@make clean -C $(LIBFT)
 					rm -f $(OBJ)
+					rm -f $(OBJSD)
 
-fclean:
+fclean:				clean
 					@make clean -C $(MINILIBX)
 					@make fclean -C $(LIBFT)
-					rm -f $(OBJ)
 					rm -f $(NAME)
 
 re:					fclean $(NAME)
