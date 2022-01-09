@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/09 17:25:10 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 18:59:38 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ typedef struct s_dict_node
 
 typedef struct s_dict
 {
-	s_dict_node	*items;
-	size_t		item_size;
+	t_dict_node	*items;
 	size_t		capacity;
+	size_t		cap_size_ratio;
 	size_t		size;
 }				t_dict;
 
@@ -141,7 +141,7 @@ char		*ft_get_next_line(int fd);
 int			ft_printf(const char *str, ...);
 
 //Standard
-void	ft_error_exit(char *message);
+void		ft_error_exit(char *message);
 
 //Memory Management
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -171,6 +171,15 @@ void		*darray_get(t_darray *array, size_t index);
 void		darray_remove(t_darray *array, size_t index);
 size_t		darray_size(t_darray *array);
 void		darray_free(t_darray *array);
+
+//Dictionary
+t_dict		dict_create();
+int			dict_exists(t_dict *dict);
+int			dict_key_exists(t_dict *dict, char *key);
+int			dict_add(t_dict *dict, char *key, double value);
+int			dict_remove(t_dict *dict, char *key);
+double		dict_get(t_dict *dict, char *key);
+int			dict_free(t_dict *dict);;
 
 //Maths Basics
 double		ft_abs(double nb);

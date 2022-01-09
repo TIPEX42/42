@@ -10,6 +10,7 @@
     </sourceRoots>
     <excludeRoots>
       <file path="$PROJECT_DIR$/objs" />
+      <file path="$PROJECT_DIR$/objsd" />
     </excludeRoots>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />

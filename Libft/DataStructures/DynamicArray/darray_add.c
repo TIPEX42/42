@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:31:35 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 16:41:39 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2022/01/09 17:43:01 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 int	darray_grow(t_darray *array)
 {
 	void	*new_arr;
+	size_t	new_cap;
 
-	new_arr = ft_calloc(array->capacity * 2, array->item_size);
+	if (array->capacity > 10000)
+		new_cap = array->capacity + 10000;
+	else
+		new_cap = array->capacity * 2;
+	new_arr = ft_calloc(new_cap, array->item_size);
 	if (!new_arr)
 		return (0);
 	ft_memmove(new_arr, array->items, array->capacity * array->item_size);
 	free(array->items);
 	array->items = new_arr;
-	array->capacity *= 2;
+	array->capacity = new_cap;
 	return (1);
 }
 

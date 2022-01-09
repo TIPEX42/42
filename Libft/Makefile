@@ -18,6 +18,10 @@ LINKLIST			=		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft
 DARRAYDIR			=		DataStructures/DynamicArray/
 DARRAY				=		darray_create.c darray_add.c darray_remove.c darray_get.c darray_free.c darray_utils.c		\
 
+#Dictionary
+DICTIONARYDIR		=		DataStructures/Dictionary/
+DICTIONARY			=		dict_create.c dict_add.c dict_get.c dict_remove.c dict_free.c								\
+
 #IO
 IODIR				=		IO/
 IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c			\
@@ -65,6 +69,7 @@ STANDARD			=		ft_error_exit.c
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(DARRAYDIR), $(DARRAY)) 														\
+							$(addprefix $(DICTIONARYDIR), $(DICTIONARY)) 												\
 							$(addprefix $(IODIR), $(IO)) 																\
 							$(addprefix $(PRINTFDIR), $(PRINTF)) 														\
 							$(addprefix $(MEMORYDIR), $(MEMORY)) 														\
@@ -88,6 +93,10 @@ $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(DARRAYDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIR)
+					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(DICTIONARYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
@@ -134,6 +143,10 @@ $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(DARRAYDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(DICTIONARYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@

@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dict_create.c                                      :+:      :+:    :+:   */
+/*   dict_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/09 17:21:03 by                   #+#    #+#             */
-/*   Updated: 2022/01/09 18:03:23 by                  ###   ########.fr       */
+/*   Created: 2022/01/09 18:57:42 by                   #+#    #+#             */
+/*   Updated: 2022/01/09 18:58:49 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-t_dict	dict_create()
+int	dict_free(t_dict *dict)
 {
-	t_dict	dict;
-
-	dict.size = 0;
-	dict.capacity = 10;
-	dict.cap_size_ratio = 5;
-	dict.items = ft_calloc(dict.capacity, sizeof(t_dict_node));
-	if (!dict.items)
-		dict.items = NULL;
-	return (dict);
-}
-
-int	dict_exists(t_dict *dict)
-{
-	if (dict == NULL)
+	if (!dict_exists(dict))
 		return (0);
-	return (dict->items != NULL);
+	free(dict->items);
+	dict->items = NULL;
+	return (1);
 }
