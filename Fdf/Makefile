@@ -12,7 +12,7 @@ MINILIBX	=		minilibx_macos
 DEPS		=		fdf.h
 
 SRCDIR		=		srcs/
-SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c
+SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c app_init.c
 
 SRCS		=		$(addprefix $(SRCDIR), $(SRC))
 

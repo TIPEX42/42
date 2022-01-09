@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/09 15:03:50 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 15:37:58 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,44 +74,48 @@ typedef struct s_fdf {
 	t_window	window;
 	t_canvas	canvas;
 	int			should_close;
-	double		delta_time;
 	t_map		map;
 }				t_fdf;
 
-//app.c
-int	close_app(t_fdf *app);
+//main.c
+int			close_app(t_fdf *app);
+int			render(t_fdf *app);
+
+//app_init.c
+void		init_app(t_fdf *app);
+void		init_callbacks(t_fdf *app);
+t_canvas	create_canvas(void *mlx, t_window window);
+t_window	create_window(void *mlx, int width, int height, char *title);
 
 //map_init.c
-t_vec4	**generate_verticies(t_map_info *infos);
-t_vec4	**init_projections(t_map_info *infos);
-void	create_map(t_map *map, char *file);
+t_vec4		**generate_verticies(t_map_info *infos);
+t_vec4		**init_projections(t_map_info *infos);
+void		create_map(t_map *map, char *file);
 
 //map_draw.c
-void	clear_map(t_canvas *canvas, t_map *map, int color);
-void	draw_map(t_canvas *canvas, t_map *map);
-void 	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
-void 	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
-void	update_projections(t_map *map, t_map_info *infos);
+void		clear_map(t_canvas *canvas, t_map *map, int color);
+void		draw_map(t_canvas *canvas, t_map *map, int color);
+void 		draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
+void 		draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
+void		update_projections(t_map *map, t_map_info *infos);
 
 //mlx_draw.c
-void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color);
-void	clear_screen(t_canvas *canvas, int color);
-void	draw_circle(t_canvas *canvas, t_vec2 pos, int radius, int color);
-void	draw_line(t_canvas *canvas, t_vec2 start, t_vec2 end, int color);
+void		mlx_set_pixel(t_canvas *canvas, int x, int y, int color);
+void		clear_screen(t_canvas *canvas, int color);
+void		draw_line(t_canvas *canvas, t_vec2 start, t_vec2 end, int color);
 
 //mlx_colors.c
-int	get_colorv3(t_vec3 color);
-int	get_color(int t, int r, int g, int b);
-int	get_t(int trgb);
-int	get_r(int trgb);
-int	get_g(int trgb);
-int	get_b(int trgb);
+int			get_color(int t, int r, int g, int b);
+int			get_t(int trgb);
+int			get_r(int trgb);
+int			get_g(int trgb);
+int			get_b(int trgb);
 
 //mlx_keys.c
-int	key_callback(int key, t_fdf *app);
-int	mouse_callback(int button, t_fdf *app);
+int			key_callback(int key, t_fdf *app);
+int			mouse_callback(int button, t_fdf *app);
 
 //parsing.c
-void	load_map(t_map_info *infos, char *file);
+void		load_map(t_map_info *infos, char *file);
 
 #endif
