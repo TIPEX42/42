@@ -45,12 +45,13 @@ STRINGVIEW			=		sv_create.c
 
 #Basic Maths
 BASICMATHDIR		=		Maths/Basics/
-BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c
+BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c ft_lerp.c
 
 #Vectors
 VECTORSDIR			=		Maths/Vectors/
 VECTORS				=		vec2_init.c vec2_add.c vec2_div.c vec2_magnitude.c vec2_mult.c vec2_normalize.c				\
 							vec3_init.c vec3_add.c vec3_div.c vec3_magnitude.c vec3_mult.c vec3_normalize.c				\
+							vec3_lerpf.c																				\
 							vec4_init.c vec4_add.c vec4_div.c vec4_mult.c												\
 
 #Matrix
@@ -176,15 +177,18 @@ $(OBJSDIRD)%d.o:	$(STANDARDDIR)%.c $(DEPS)
 
 all:				$(NAME)
 
-debug:				$(OBJSD) Makefile
-					@rm -f $(NAMED)
-					@ar -rcs $(NAMED) $(OBJSD)
-					@ranlib $(NAMED)
+debug:				$(NAMED)
+
 
 $(NAME):			$(OBJS) Makefile
 					@rm -f $(NAME)
 					@ar -rcs $(NAME) $(OBJS)
 					@ranlib $(NAME)
+
+$(NAMED):			$(OBJSD) Makefile
+					@rm -f $(NAMED)
+					@ar -rcs $(NAMED) $(OBJSD)
+					@ranlib $(NAMED)
 
 clean:
 					@rm -f $(OBJSDIR)*.o

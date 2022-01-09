@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/08 11:17:41 by                  ###   ########.fr       */
+/*   Updated: 2022/01/09 17:25:10 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,20 @@ typedef struct s_darray
 	size_t	capacity;
 	size_t	size;
 }			t_darray;
+
+typedef struct s_dict_node
+{
+	char	*key;
+	double	value;
+}			t_dict_node;
+
+typedef struct s_dict
+{
+	s_dict_node	*items;
+	size_t		item_size;
+	size_t		capacity;
+	size_t		size;
+}				t_dict;
 
 //Character Testing
 int			ft_isalpha(int c);
@@ -166,6 +180,8 @@ double		ft_pow2(double value);
 double		ft_cos(double x);
 double		ft_sin(double x);
 double		ft_modf(double x, double y);
+double		ft_lerpf(double base, double high, double value);
+double		ft_ilerpf(double base, double high, double value);
 
 //Vectors
 t_vec2		vec2(float x, float y);
@@ -190,12 +206,13 @@ t_vec3		vec3_set(float value);
 t_vec3		*vec3_add(t_vec3 *self, const t_vec3 other);
 t_vec3		*vec3_multi(t_vec3 *self, long value);
 t_vec3		*vec3_multf(t_vec3 *self, float value);
-t_vec3		*vec3_multv2(t_vec3 *self, t_vec3 vec);
+t_vec3		*vec3_multv3(t_vec3 *self, t_vec3 vec);
 t_vec3		*vec3_divi(t_vec3 *self, long value);
 t_vec3		*vec3_divf(t_vec3 *self, float value);
 t_vec3		*vec3_divv3(t_vec3 *self, t_vec3 vec);
 t_vec3		*vec3_normalize(t_vec3 *vec);
 t_vec3		vec3_normalized(t_vec3 vec);
+t_vec3		vec3_lerpf(t_vec3 base, t_vec3 high, double value);
 float		vec3_mag(t_vec3 vec);
 
 t_vec4		vec4(float x, float y, float z, float w);
@@ -205,7 +222,7 @@ t_vec4		vec4_set(float value);
 t_vec4		*vec4_add(t_vec4 *self, const t_vec4 other);
 t_vec4		*vec4_multi(t_vec4 *self, long value);
 t_vec4		*vec4_multf(t_vec4 *self, float value);
-t_vec4		*vec4_multv2(t_vec4 *self, t_vec4 vec);
+t_vec4		*vec4_multv4(t_vec4 *self, t_vec4 vec);
 t_vec4		*vec4_divi(t_vec4 *self, long value);
 t_vec4		*vec4_divf(t_vec4 *self, float value);
 t_vec4		*vec4_divv4(t_vec4 *self, t_vec4 vec);
@@ -224,7 +241,6 @@ t_mat4		mat4_rotatex(t_mat4 self, float value);
 t_mat4		mat4_rotatey(t_mat4 self, float value);
 t_mat4		mat4_rotatez(t_mat4 self, float value);
 t_mat4		mat4_rotate(t_vec3 vec);
-t_mat4		mat4_translate(t_mat4 self, t_vec3 vec);
 t_mat4		mat4_ortho(t_proj proj);
 t_mat4		mat4_scalef(float value);
 t_mat4		mat4_scalev3(t_vec3 vec);
