@@ -21,7 +21,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "Libft/libft.h"
-#include "minilibx_macos/mlx.h"
+#include "minilibx_mac/mlx.h"
 
 # define WIN_WIDTH 900
 # define WIN_HEIGHT 600

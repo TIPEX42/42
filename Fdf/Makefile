@@ -1,13 +1,13 @@
-CC			=		clang
+CC			=		gcc
 CFLAGS		=		-Wall -Werror -Wextra -std=c11
 LDFLAGS		=		-Wall -Werror -Wextra -framework OpenGL -framework AppKit -std=c11
 CFLAGSD		=		$(CFLAGS) $(FSANITIZE)
 LDFLAGSD	=		$(LDFLAGS) $(FSANITIZE)
-FSANITIZE	=		-fsanitize=leak
+FSANITIZE	=		-fsanitize=address
 NAME		=		fdf
 
 LIBFT		=		Libft
-MINILIBX	=		minilibx_macos
+MINILIBX	=		minilibx_mac
 
 DEPS		=		fdf.h
 
@@ -29,26 +29,26 @@ all:				$(NAME)
 
 bonus:				libs
 bonus:				$(OBJBONUS) Makefile
-					$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
 
 debug:				libsd
 debug:				$(OBJD) Makefile
-					$(CC) -Llibft -Lminilibx_macos -lftd -lmlx $(OBJD) $(LDFLAGSD) -o $(NAME)
+					$(CC) -Llibft -L$(MINILIBX) -lftd -lmlx $(OBJD) $(LDFLAGSD) -o $(NAME)
 
 $(NAME):			libs
 $(NAME):			$(OBJ) Makefile
-					$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
 
 run:				all
 					./$(NAME)
 
 libsd:
 					@make debug -C $(LIBFT)
-					@make -C $(MINILIBX)
+					@make all -C $(MINILIBX)
 
 libs:
-					@make -C $(LIBFT)
-					@make -C $(MINILIBX)
+					@make all -C $(LIBFT)
+					@make all -C $(MINILIBX)
 
 $(OBJDIR)%.o:		$(SRCDIR)%.c $(DEPS)
 					@echo "Compiling $<"

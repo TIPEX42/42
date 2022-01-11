@@ -14,13 +14,13 @@
 
 int	render(t_fdf *app)
 {
+	if (app->should_close)
+		exit(1);
 	if (!app->map.has_scaled)
 		scale_map(&app->canvas, &app->map);
 	draw_map(&app->canvas, &app->map, get_color(0, 200, 200, 200));
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
 	clear_map(&app->canvas, &app->map, get_color(0, 30, 20, 51));
-	if (app->should_close)
-		close_app(app);
 	return (0);
 }
 
