@@ -13,7 +13,7 @@
 #ifndef FDF_H
 # define FDF_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
@@ -23,12 +23,8 @@
 #include "Libft/libft.h"
 #include "minilibx_macos/mlx.h"
 
-typedef struct s_mvp
-{
-	t_mat4	model;
-	t_mat4	view;
-	t_mat4	proj;
-}			t_mvp;
+# define WIN_WIDTH 900
+# define WIN_HEIGHT 600
 
 typedef struct s_canvas
 {
@@ -113,7 +109,6 @@ int			get_b(int trgb);
 
 //mlx_keys.c
 int			key_callback(int key, t_fdf *app);
-int			mouse_callback(int button, t_fdf *app);
 
 //parsing.c
 void		load_map(t_map_info *infos, char *file);

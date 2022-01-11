@@ -15,10 +15,13 @@
 void	update_projections(t_map *map, t_map_info *infos)
 {
 	t_mat4	model;
+	t_vec3	cam_pos;
 	int		i;
 	int		j;
 
-	model = mat4_translate(mat4_identity(), map->pos);
+	cam_pos = (t_vec3){WIN_WIDTH / 2, WIN_HEIGHT / 2, 0};
+	model = mat4_translate(mat4_identity(), cam_pos);
+	model = mat4_multm4(model, mat4_translate(mat4_identity(), map->pos));
 	model = mat4_multm4(model, mat4_rotate(map->rotation));
 	model = mat4_multm4(model, mat4_scalev3(map->scale));
 	i = 0;

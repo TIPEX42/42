@@ -16,6 +16,7 @@ void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color)
 {
 	char		*dst;
 
+	y = canvas->height - y;
 	if (x < 0 || x >= canvas->width || y < 0 || y >= canvas->height)
 		return ;
 	dst = canvas->addr + (y * canvas->line_length + x * (canvas->bits_per_pixel / 8));

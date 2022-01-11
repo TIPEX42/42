@@ -48,7 +48,6 @@ void	init_callbacks(t_fdf *app)
 {
 	mlx_hook(app->window.ptr, 2, 1L<<0, key_callback, app);
 	mlx_hook(app->window.ptr, 17, 0, close_app, app);
-	mlx_mouse_hook(app->window.ptr, mouse_callback, app);
 	mlx_loop_hook(app->mlx, render, app);
 }
 
@@ -60,7 +59,7 @@ void	init_app(t_fdf *app)
 		printf("Couldn't initialize mlx\n");
 		exit(1);
 	}
-	app->window = create_window(app->mlx, 1920, 1080, "Fdf YAYYYY !");
+	app->window = create_window(app->mlx, WIN_WIDTH, WIN_HEIGHT, "Fdf YAYYYY !");
 	app->canvas = create_canvas(app->mlx, app->window);
 	app->should_close = 0;
 	init_callbacks(app);

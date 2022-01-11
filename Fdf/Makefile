@@ -13,16 +13,23 @@ DEPS		=		fdf.h
 
 SRCDIR		=		srcs/
 SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c app_init.c
+SRCBONUS	=		main.c mlx_draw.c mlx_colors.c mlx_keys_bonus.c parsing.c map_init.c map_draw.c app_init.c
 
 SRCS		=		$(addprefix $(SRCDIR), $(SRC))
+SRCSBONUS	=		$(addprefix $(SRCDIR), $(SRCBONUS))
 
 OBJDIR		=		objs/
 OBJ			=		$(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
+OBJBONUS	=		$(addprefix $(OBJDIR), $(notdir $(SRCSBONUS:.c=.o)))
 
 OBJDIRD		=		objsd/
 OBJD		=		$(addprefix $(OBJDIRD), $(notdir $(SRCS:.c=d.o)))
 
 all:				$(NAME)
+
+bonus:				libs
+bonus:				$(OBJBONUS) Makefile
+					$(CC) -Llibft -Lminilibx_macos -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
 
 debug:				libsd
 debug:				$(OBJD) Makefile
