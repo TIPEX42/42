@@ -30,7 +30,8 @@ t_vec4	**generate_verticies(t_map_info *infos)
 		j = 0;
 		while (j < infos->size_x)
 		{
-			tab[i][j] = vec4(j - infos->size_x / 2, infos->heights[i][j], infos->size_z / 2 - i, 1);
+			tab[i][j] = vec4(j - infos->size_x / 2, infos->heights[i][j], \
+							infos->size_z / 2 - i, 1);
 			j++;
 		}
 		i++;
@@ -64,22 +65,6 @@ float	max(float a, float b)
 	return (b);
 }
 
-t_vec3	fit_to_window(t_map_info *infos)
-{
-	t_vec3	scale;
-	float	map_width;
-	float	map_height;
-	float	max_size;
-
-	map_width = ft_sqrt(ft_pow2(infos->size_x) + ft_pow2(infos->size_z));
-	map_height = ft_sqrt(ft_pow2(infos->size_x) + ft_pow2(infos->size_z));
-	max_size = max(map_width, map_height);
-	scale.x = (WIN_WIDTH - 100.0f) / max_size;
-	scale.y = (WIN_WIDTH - 100.0f) / max_size / 10.0f;
-	scale.z = (WIN_WIDTH - 100.0f) / max_size;
-	return (scale);
-}
-
 void	create_map(t_map *map, char *file)
 {
 	t_vec3	base_color;
@@ -89,8 +74,9 @@ void	create_map(t_map *map, char *file)
 	high_color = vec3(255, 100, 100);
 	load_map(&map->infos, file);
 	map->pos = vec3_zero();
-	map->rotation = vec3(-PI / 6, PI / 3.3, -PI / 5.5);
-	map->scale = fit_to_window(&map->infos);
+	map->rotation = vec3(-PI / 5.7, PI / 3.3, -PI / 4.2);
+	map->scale = vec3(1, 1, 1);
+	map->has_scaled = 0;
 	map->verticies = generate_verticies(&map->infos);
 	map->projection = init_projections(&map->infos);
 }

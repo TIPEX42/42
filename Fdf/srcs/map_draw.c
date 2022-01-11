@@ -37,7 +37,7 @@ void	update_projections(t_map *map, t_map_info *infos)
 	}
 }
 
-void draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
+void	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
 {
 	int	i;
 	int	j;
@@ -48,16 +48,16 @@ void draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
 		j = 0;
 		while (j < infos->size_x - 1)
 		{
-			draw_line(canvas, (t_vec2){proj[i][j].x, proj[i][j].y},
-					  (t_vec2){proj[i][j + 1].x, proj[i][j + 1].y},
-					  color);
+			draw_line(canvas, (t_vec2){proj[i][j].x, proj[i][j].y}, \
+						(t_vec2){proj[i][j + 1].x, proj[i][j + 1].y}, \
+						color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
+void	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
 {
 	int	i;
 	int	j;
@@ -68,9 +68,9 @@ void draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color)
 		j = 0;
 		while (j < infos->size_x)
 		{
-			draw_line(canvas, (t_vec2){proj[i][j].x, proj[i][j].y},
-					  (t_vec2){proj[i + 1][j].x, proj[i + 1][j].y},
-					  color);
+			draw_line(canvas, (t_vec2){proj[i][j].x, proj[i][j].y}, \
+					(t_vec2){proj[i + 1][j].x, proj[i + 1][j].y}, \
+					color);
 			j++;
 		}
 		i++;

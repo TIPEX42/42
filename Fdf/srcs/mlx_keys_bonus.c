@@ -36,7 +36,5 @@ int	key_callback(int key, t_fdf *app)
 		app->map.pos.x += 1;
 	if (key == 2)
 		app->map.pos.x -= 1;
-
-	printf("X: %f Y: %f Z: %f\n", app->map.rotation.x, app->map.rotation.y, app->map.rotation.z);
 	return (0);
 }

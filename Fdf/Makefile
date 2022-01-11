@@ -1,9 +1,9 @@
-CC			=		gcc
-CFLAGS		=		-Wall -Werror -Wextra -o2 -std=c11
-LDFLAGS		=		-Wall -Werror -Wextra -o2 -framework OpenGL -framework AppKit -std=c11
+CC			=		clang
+CFLAGS		=		-Wall -Werror -Wextra -std=c11
+LDFLAGS		=		-Wall -Werror -Wextra -framework OpenGL -framework AppKit -std=c11
 CFLAGSD		=		$(CFLAGS) $(FSANITIZE)
 LDFLAGSD	=		$(LDFLAGS) $(FSANITIZE)
-FSANITIZE	=		-fsanitize=address
+FSANITIZE	=		-fsanitize=leak
 NAME		=		fdf
 
 LIBFT		=		Libft
@@ -12,8 +12,8 @@ MINILIBX	=		minilibx_macos
 DEPS		=		fdf.h
 
 SRCDIR		=		srcs/
-SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c app_init.c
-SRCBONUS	=		main.c mlx_draw.c mlx_colors.c mlx_keys_bonus.c parsing.c map_init.c map_draw.c app_init.c
+SRC			=		main.c mlx_draw.c mlx_colors.c mlx_keys.c parsing.c map_init.c map_draw.c map_scale.c app_init.c
+SRCBONUS	=		main.c mlx_draw.c mlx_colors.c mlx_keys_bonus.c parsing.c map_init.c map_draw.c map_scale.c app_init.c
 
 SRCS		=		$(addprefix $(SRCDIR), $(SRC))
 SRCSBONUS	=		$(addprefix $(SRCDIR), $(SRCBONUS))

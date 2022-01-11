@@ -49,12 +49,29 @@ int	**grow_tab(int **old_tab, int old_cap)
 	return (new_tab);
 }
 
+void	populate_new_heights(t_map_info *map, int *new_heights, char **split)
+{
+	int	size;
+	int	i;
+
+	size = ft_split_size(split);
+	i = 0;
+	while (i < size)
+	{
+		new_heights[i] = ft_atoi(split[i]);
+		if (new_heights[i] > map->highest_point)
+			map->highest_point = new_heights[i];
+		if (new_heights[i] < map->lowest_point)
+			map->lowest_point = new_heights[i];
+		i++;
+	}
+}
+
 void	add_heights(t_map_info *map, char *line)
 {
 	char	**heights_split;
 	int		*new_heights;
 	int		size;
-	int		i;
 
 	map->heights = grow_tab(map->heights, map->size_z);
 	heights_split = ft_split(line, ' ');
@@ -64,16 +81,7 @@ void	add_heights(t_map_info *map, char *line)
 	new_heights = ft_calloc(size, sizeof(int));
 	if (!new_heights)
 		ft_error_exit("Allocation Error\n");
-	i = 0;
-	while (i < size)
-	{
-		new_heights[i] = ft_atoi(heights_split[i]);
-		if (new_heights[i] > map->highest_point)
-			map->highest_point = new_heights[i];
-		if (new_heights[i] < map->lowest_point)
-			map->lowest_point = new_heights[i];
-		i++;
-	}
+	populate_new_heights(map, new_heights, heights_split);
 	map->heights[map->size_z] = new_heights;
 	ft_split_free(heights_split);
 	free(line);

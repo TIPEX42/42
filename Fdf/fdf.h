@@ -58,10 +58,10 @@ typedef struct s_map
 	t_map_info	infos;
 	t_vec4		**verticies;
 	t_vec4		**projection;
-	int			**colors;
 	t_vec3		pos;
 	t_vec3		rotation;
 	t_vec3		scale;
+	int			has_scaled;
 }				t_map;
 
 
@@ -94,6 +94,9 @@ void		draw_map(t_canvas *canvas, t_map *map, int color);
 void 		draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
 void 		draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vec4 **proj, int color);
 void		update_projections(t_map *map, t_map_info *infos);
+
+//map_scale.c
+void		scale_map(t_canvas *canvas, t_map *map);
 
 //mlx_draw.c
 void		mlx_set_pixel(t_canvas *canvas, int x, int y, int color);

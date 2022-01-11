@@ -14,6 +14,8 @@
 
 int	render(t_fdf *app)
 {
+	if (!app->map.has_scaled)
+		scale_map(&app->canvas, &app->map);
 	draw_map(&app->canvas, &app->map, get_color(0, 200, 200, 200));
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
 	clear_map(&app->canvas, &app->map, get_color(0, 30, 20, 51));
@@ -40,15 +42,15 @@ int	close_app(t_fdf *app)
 	{
 		free(app->map.infos.heights[i]);
 		free(app->map.verticies[i]);
+		free(app->map.projection[i]);
 		i++;
 	}
 	free(app->map.verticies);
+	free(app->map.projection);
 	free(app->map.infos.heights);
 	free(app->mlx);
 	exit(0);
 }
-
-
 
 void	check_args(int argc)
 {
@@ -58,7 +60,7 @@ void	check_args(int argc)
 		ft_error_exit("Too many arguments\n");
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_fdf	app;
 

@@ -19,8 +19,9 @@ void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color)
 	y = canvas->height - y;
 	if (x < 0 || x >= canvas->width || y < 0 || y >= canvas->height)
 		return ;
-	dst = canvas->addr + (y * canvas->line_length + x * (canvas->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = canvas->addr + (y * canvas->line_length + \
+							x * (canvas->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	clear_screen(t_canvas *canvas, int color)
@@ -34,29 +35,9 @@ void	clear_screen(t_canvas *canvas, int color)
 	bytes_pp = canvas->bits_per_pixel / 8;
 	while (i < total)
 	{
-		*((unsigned int*)(canvas->addr + i * bytes_pp)) = color;
+		*((unsigned int *)(canvas->addr + i * bytes_pp)) = color;
 		i++;
 	}
-}
-
-void	draw_circle(t_canvas *canvas, t_vec2 pos, int radius, int color)
-{
-	int	x;
-	int	y;
-
-	y = pos.y - radius;
-	while (y <= pos.y + radius)
-	{
-		x = pos.x - radius;
-		while (x <= pos.x + radius)
-		{
-			if (ft_pow2(pos.x - x) + ft_pow2(pos.y - y) < ft_pow2(radius))
-				mlx_set_pixel(canvas, x, y, color);
-			x++;
-		}
-		y++;
-	}
-
 }
 
 void	draw_line(t_canvas *canvas, t_vec2 start, t_vec2 end, int color)
