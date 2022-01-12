@@ -7,7 +7,7 @@ FSANITIZE	=		-fsanitize=address
 NAME		=		fdf
 
 LIBFT		=		Libft
-MINILIBX	=		minilibx_mac
+MINILIBX	=		minilibx_macos
 
 DEPS		=		fdf.h
 
@@ -20,16 +20,16 @@ SRCSBONUS	=		$(addprefix $(SRCDIR), $(SRCBONUS))
 
 OBJDIR		=		objs/
 OBJ			=		$(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
-OBJBONUS	=		$(addprefix $(OBJDIR), $(notdir $(SRCSBONUS:.c=.o)))
 
 OBJDIRD		=		objsd/
 OBJD		=		$(addprefix $(OBJDIRD), $(notdir $(SRCS:.c=d.o)))
+OBJBONUS	=		$(addprefix $(OBJDIRD), $(notdir $(SRCSBONUS:.c=d.o)))
 
 all:				$(NAME)
 
-bonus:				libs
+bonus:				libsd
 bonus:				$(OBJBONUS) Makefile
-					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
+					$(CC) -Llibft -L$(MINILIBX) -lftd -lmlx $(OBJBONUS) $(LDFLAGSD) -o $(NAME)
 
 debug:				libsd
 debug:				$(OBJD) Makefile

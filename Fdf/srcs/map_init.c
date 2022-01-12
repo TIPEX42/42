@@ -74,7 +74,7 @@ void	create_map(t_map *map, char *file)
 	high_color = vec3(255, 100, 100);
 	load_map(&map->infos, file);
 	map->pos = vec3_zero();
-	map->rotation = vec3(-PI / 5.7, PI / 3.3, -PI / 4.2);
+	map->rotation = vec3(-PI / 3, PI / 7, 0);
 	map->scale = vec3(1, 1, 1);
 	map->has_scaled = 0;
 	map->verticies = generate_verticies(&map->infos);

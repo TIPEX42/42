@@ -197,6 +197,8 @@ t_vec3		*vec3_divi(t_vec3 *self, long value);
 t_vec3		*vec3_divf(t_vec3 *self, float value);
 t_vec3		*vec3_divv3(t_vec3 *self, t_vec3 vec);
 t_vec3		*vec3_normalize(t_vec3 *vec);
+t_vec3		*vec3_clamp_max(t_vec3 *vec, int x, int y, int z);
+t_vec3		*vec3_clamp_min(t_vec3 *vec, int x, int y, int z);
 t_vec3		vec3_normalized(t_vec3 vec);
 t_vec3		vec3_lerpf(t_vec3 base, t_vec3 high, double value);
 float		vec3_mag(t_vec3 vec);

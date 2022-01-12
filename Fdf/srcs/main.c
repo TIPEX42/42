@@ -48,7 +48,6 @@ int	close_app(t_fdf *app)
 	free(app->map.verticies);
 	free(app->map.projection);
 	free(app->map.infos.heights);
-	free(app->mlx);
 	exit(0);
 }
 
