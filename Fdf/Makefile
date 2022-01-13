@@ -1,9 +1,6 @@
 CC			=		gcc
 CFLAGS		=		-Wall -Werror -Wextra -std=c11
-LDFLAGS		=		-Wall -Werror -Wextra -framework OpenGL -framework AppKit -std=c11
-CFLAGSD		=		$(CFLAGS) $(FSANITIZE)
-LDFLAGSD	=		$(LDFLAGS) $(FSANITIZE)
-FSANITIZE	=		-fsanitize=address
+LDFLAGS		=		-framework OpenGL -framework AppKit -std=c11
 NAME		=		fdf
 
 LIBFT		=		Libft
@@ -20,54 +17,41 @@ SRCSBONUS	=		$(addprefix $(SRCDIR), $(SRCBONUS))
 
 OBJDIR		=		objs/
 OBJ			=		$(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
+OBJBONUS	=		$(addprefix $(OBJDIR), $(notdir $(SRCSBONUS:.c=.o)))
 
-OBJDIRD		=		objsd/
-OBJD		=		$(addprefix $(OBJDIRD), $(notdir $(SRCS:.c=d.o)))
-OBJBONUS	=		$(addprefix $(OBJDIRD), $(notdir $(SRCSBONUS:.c=d.o)))
-
-all:				$(NAME)
-
-bonus:				libsd
-bonus:				$(OBJBONUS) Makefile
-					$(CC) -Llibft -L$(MINILIBX) -lftd -lmlx $(OBJBONUS) $(LDFLAGSD) -o $(NAME)
-
-debug:				libsd
-debug:				$(OBJD) Makefile
-					$(CC) -Llibft -L$(MINILIBX) -lftd -lmlx $(OBJD) $(LDFLAGSD) -o $(NAME)
-
-$(NAME):			libs
-$(NAME):			$(OBJ) Makefile
-					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
-
-run:				all
-					./$(NAME)
-
-libsd:
-					@make debug -C $(LIBFT)
-					@make all -C $(MINILIBX)
-
-libs:
-					@make all -C $(LIBFT)
-					@make all -C $(MINILIBX)
-
-$(OBJDIR)%.o:		$(SRCDIR)%.c $(DEPS)
+$(OBJDIR)%.o:		$(SRCDIR)%.c
 					@echo "Compiling $<"
 					@mkdir -p objs
 					@$(CC) -c $< $(CFLAGS) -o $@
 
-$(OBJDIRD)%d.o:		$(SRCDIR)%.c $(DEPS)
-					@echo "Compiling $<"
-					@mkdir -p objsd
-					@$(CC) -c $< $(CFLAGSD) -o $@
+all:				$(LIBFT)/libft.a $(OBJ)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
+
+$(NAME):			$(LIBFT)/libft.a $(OBJ)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
+
+bonus:				$(OBJBONUS) $(LIBFT)/libft.a
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
+
+$(LIBFT)/libft.a:	FORCE
+					@$(MAKE) -C libft
+
+FORCE:;
+
+build:				$(OBJ)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJ) $(LDFLAGS) -o $(NAME)
+
+build_bonus:		$(OBJBONUS)
+					$(CC) -Llibft -L$(MINILIBX) -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
+
+run:				all
+					./$(NAME)
 
 clean:
-					@make clean -C $(MINILIBX)
 					@make clean -C $(LIBFT)
-					rm -f $(OBJ)
-					rm -f $(OBJSD)
+					rm -f $(OBJBONUS)
 
 fclean:				clean
-					@make clean -C $(MINILIBX)
 					@make fclean -C $(LIBFT)
 					rm -f $(NAME)
 
