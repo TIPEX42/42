@@ -127,7 +127,7 @@ char		*ft_get_next_line(int fd);
 int			ft_printf(const char *str, ...);
 
 //Standard
-void	ft_error_exit(char *message);
+void		ft_error_exit(char *message);
 
 //Memory Management
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
