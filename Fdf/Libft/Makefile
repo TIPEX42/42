@@ -178,14 +178,10 @@ $(OBJSDIRD)%d.o:	$(STANDARDDIR)%.c $(DEPS)
 all:				$(NAME)
 
 debug:				$(OBJSD) Makefile
-					@rm -f $(NAMED)
 					@ar -rcs $(NAMED) $(OBJSD)
-					@ranlib $(NAMED)
 
 $(NAME):			$(OBJS) Makefile
-					@rm -f $(NAME)
 					@ar -rcs $(NAME) $(OBJS)
-					@ranlib $(NAME)
 
 clean:
 					@rm -f $(OBJSDIR)*.o
