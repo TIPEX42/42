@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 t_vec4	**generate_verticies(t_map_info *infos)
 {

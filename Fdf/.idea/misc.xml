@@ -2,8 +2,16 @@
 <project version="4">
   <component name="CidrRootsConfiguration">
     <sourceRoots>
-      <file path="$PROJECT_DIR$/srcs" />
+      <file path="$PROJECT_DIR$/Libft" />
+      <file path="$PROJECT_DIR$/Root" />
+      <file path="$PROJECT_DIR$/Root/srcs" />
+      <file path="$PROJECT_DIR$/minilibx" />
     </sourceRoots>
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/Libft/objs" />
+      <file path="$PROJECT_DIR$/Libft/objsd" />
+      <file path="$PROJECT_DIR$/Root/objs" />
+    </excludeRoots>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MakefileSettings">

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 void	mlx_set_pixel(t_canvas *canvas, int x, int y, int color)
 {

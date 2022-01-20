@@ -20,8 +20,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "Libft/libft.h"
-#include "minilibx_macos/mlx.h"
+#include "../Libft/libft.h"
+#include <mlx.h>
 
 # define WIN_WIDTH 900
 # define WIN_HEIGHT 600

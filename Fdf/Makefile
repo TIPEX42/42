@@ -1,55 +1,66 @@
-CC			=		gcc
-CFLAGS		=		-Wall -Werror -Wextra -std=c11
-LDFLAGS		=		-framework OpenGL -framework AppKit -std=c11
-NAME		=		fdf
-BONUS		=		bonus
+MAKE_DIR		:=		$(PWD)
 
-LIBFT		=		Libft
-MINILIBX	=		minilibx_macos
+ROOT_DIR		:=		$(MAKE_DIR)/Root
+LIBFT_DIR		:=		$(MAKE_DIR)/Libft
+MINILIBX_DIR	:=		$(MAKE_DIR)/minilibx
 
-DEPS		=		fdf.h
+INC_PATH		:=		-I$(ROOT_DIR)
+INC_PATH		+=		-I$(LIBFT_DIR)
+INC_PATH		+=		-I$(MINILIBX_DIR)
 
-SRCDIR		=		srcs/
-SRCBASE		=		main.c mlx_draw.c mlx_colors.c parsing.c map_init.c map_draw.c map_scale.c app_init.c
-SRCM		=		mlx_keys.c
-SRCBONUS	=		mlx_keys_bonus.c
+LIB_PATH		:=
+LIB_PATH		+=		-L$(LIBFT_DIR)
+LIB_PATH		+=		-L$(MINILIBX_DIR)
 
-SRCSBASE	=		$(addprefix $(SRCDIR), $(SRCBASE))
-SRCSM		=		$(addprefix $(SRCDIR), $(SRCBASE) $(SRCM))
-SRCSBONUS	=		$(addprefix $(SRCDIR), $(SRCBASE) $(SRCBONUS))
+LIBS			:=		-lft -lmlx
 
-OBJDIR		=		objs/
-OBJBASE		=		$(addprefix $(OBJDIR), $(notdir $(SRCSBASE:.c=.o)))
-OBJM		=		$(addprefix $(OBJDIR), $(notdir $(SRCSM:.c=.o)))
-OBJBONUS	=		$(addprefix $(OBJDIR), $(notdir $(SRCSBONUS:.c=.o)))
+BIN_CC			=		gcc
 
-all:				$(NAME)
+BIN_CFLAGS		:=
+BIN_CFLAGS		+=		$(INC_PATH)
+BIN_CFLAGS		+=		-MD
+BIN_CFLAGS		+=		-Wall -Werror -Wextra -std=c11
 
-$(NAME):			$(OBJM)
-					@$(MAKE) -C $(LIBFT)
-					@$(MAKE) -C $(MINILIBX)
-					@$(CC) -L$(LIBFT) -L$(MINILIBX) -lft -lmlx $(OBJM) $(LDFLAGS) -o $(NAME)
+BIN_LDFLAGS		:=
+BIN_LDFLAGS		+=		-framework OpenGL -framework AppKit
 
-$(BONUS):			$(OBJBONUS)
-					@$(MAKE) -C $(LIBFT)
-					@$(MAKE) -C $(MINILIBX)
-					@$(CC) -L$(LIBFT) -L$(MINILIBX) -lft -lmlx $(OBJBONUS) $(LDFLAGS) -o $(NAME)
+BIN				=		$(MAKE_DIR)/fdf
 
-$(OBJDIR)%.o:		$(SRCDIR)%.c $(DEPS)
-					@echo "Compiling $<"
-					@mkdir -p objs
-					@$(CC) -c $< $(CFLAGS) -o $@
+export MAKE_DIR
+export INC_PATH
+export LIB_PATH
+export LIBS
+export BIN_CC
+export BIN_CFLAGS
+export BIN_LDFLAGS
+export BIN
 
+.PHONY: all
+all:
+	@$(MAKE) -C Libft
+	@$(MAKE) -C minilibx
+	@$(MAKE) -C Root -f root.mk -r -R  --warn-undefined-variables
+
+.PHONY: bonus
+bonus:
+	@$(MAKE) -C Libft
+	@$(MAKE) -C minilibx
+	@$(MAKE) -C Root -f bonus.mk -r -R --warn-undefined-variables
+
+.PHONY: clean
 clean:
-					@make clean -C $(LIBFT)
-					@make clean -C $(MINILIBX)
-					rm -f $(OBJBONUS)
+	@$(MAKE) -C Libft clean
+	@$(MAKE) -C minilibx clean
+	@$(MAKE) -C Root -f root.mk clean
+	@$(MAKE) -C Root -f bonus.mk clean
 
-fclean:				clean
-					@make fclean -C $(LIBFT)
-					@make clean -C $(MINILIBX)
-					rm -f $(NAME)
+.PHONY: fclean
+fclean:
+	@$(MAKE) -C Libft fclean
+	@$(MAKE) -C minilibx clean
+	@$(MAKE) -C Root -f root.mk clean
+	@$(MAKE) -C Root -f bonus.mk clean
+	@rm -f $(BIN)
 
-re:					fclean $(NAME)
-
-.PHONY: all clean fclean re $(BONUS)
+.PHONY: re
+re: fclean all

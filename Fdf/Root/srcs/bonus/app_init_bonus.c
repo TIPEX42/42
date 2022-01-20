@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 t_window	create_window(void *mlx, int width, int height, char *title)
 {

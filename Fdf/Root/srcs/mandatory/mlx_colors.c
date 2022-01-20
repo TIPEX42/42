@@ -1,20 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_keys.c                                   :+:      :+:    :+:   */
+/*   mlx_color.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 13:29:19 by                   #+#    #+#             */
-/*   Updated: 2022/01/09 13:15:34 by                  ###   ########.fr       */
+/*   Created: 2022/01/06 13:23:47 by                   #+#    #+#             */
+/*   Updated: 2022/01/09 15:04:10 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
-int	key_callback(int key, t_fdf *app)
+int	get_color(int t, int r, int g, int b)
 {
-	if (key == 53)
-		close_app(app);
-	return (0);
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	get_t(int trgb)
+{
+	return ((trgb >> 24) & 0xFF);
+}
+
+int	get_r(int trgb)
+{
+	return ((trgb >> 16) & 0xFF);
+}
+
+int	get_g(int trgb)
+{
+	return ((trgb >> 8) & 0xFF);
+}
+
+int	get_b(int trgb)
+{
+	return (trgb & 0xFF);
 }

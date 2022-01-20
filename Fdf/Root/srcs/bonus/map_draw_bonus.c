@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 void	update_projections(t_map *map, t_map_info *infos)
 {

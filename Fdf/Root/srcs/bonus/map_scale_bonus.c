@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 int	pixels_outside_canvas(t_canvas *canvas, t_map *map, t_map_info *infos)
 {
