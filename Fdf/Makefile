@@ -1,6 +1,6 @@
 MAKE_DIR		:=		$(PWD)
 
-ROOT_DIR		:=		$(MAKE_DIR)/Root
+ROOT_DIR		:=		$(MAKE_DIR)/project
 LIBFT_DIR		:=		$(MAKE_DIR)/Libft
 MINILIBX_DIR	:=		$(MAKE_DIR)/minilibx
 
@@ -39,27 +39,27 @@ export BIN
 all:
 	@$(MAKE) -C Libft
 	@$(MAKE) -C minilibx
-	@$(MAKE) -C Root -f root.mk -r -R  --warn-undefined-variables
+	@$(MAKE) -C project -f root.mk -r -R  --warn-undefined-variables
 
 .PHONY: bonus
 bonus:
 	@$(MAKE) -C Libft
 	@$(MAKE) -C minilibx
-	@$(MAKE) -C Root -f bonus.mk -r -R --warn-undefined-variables
+	@$(MAKE) -C project -f bonus.mk -r -R --warn-undefined-variables
 
 .PHONY: clean
 clean:
 	@$(MAKE) -C Libft clean
 	@$(MAKE) -C minilibx clean
-	@$(MAKE) -C Root -f root.mk clean
-	@$(MAKE) -C Root -f bonus.mk clean
+	@$(MAKE) -C project -f root.mk clean
+	@$(MAKE) -C project -f bonus.mk clean
 
 .PHONY: fclean
 fclean:
 	@$(MAKE) -C Libft fclean
 	@$(MAKE) -C minilibx clean
-	@$(MAKE) -C Root -f root.mk clean
-	@$(MAKE) -C Root -f bonus.mk clean
+	@$(MAKE) -C project -f root.mk clean
+	@$(MAKE) -C project -f bonus.mk clean
 	@rm -f $(BIN)
 
 .PHONY: re

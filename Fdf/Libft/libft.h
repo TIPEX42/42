@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/09 14:50:04 by                  ###   ########.fr       */
+/*   Updated: 2022/01/20 15:47:52 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,5 +232,22 @@ t_mat4		mat4_rotate(t_vec3 vec);
 t_mat4		mat4_ortho(t_proj proj);
 t_mat4		mat4_scalef(float value);
 t_mat4		mat4_scalev3(t_vec3 vec);
+
+//Garbage collector
+typedef struct s_gc
+{
+	void	**pointers;
+	size_t	ptrs_count;
+	size_t	capacity;
+	size_t	first_free;
+	void	(*callback)(void *);
+	void	*param;
+}			t_gc;
+
+int		gc_grow(t_gc *gc);
+void	gc_clean(t_gc *gc);
+void	gc_free(t_gc *gc, void *ptr);
+void	gc_init(t_gc *gc, void (*callback)(void *), void *param);
+void	*gc_calloc(t_gc *gc, size_t count, size_t size);
 
 #endif
