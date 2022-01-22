@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/22 16:18:04 by                  ###   ########.fr       */
+/*   Updated: 2022/01/22 17:05:50 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void		ft_error_exit(char *message);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		ft_bzero(void *s, size_t n);
 void		*ft_memset(void *b, int c, size_t len);
+void		*ft_memseti(void *b, int c, size_t len);
+void		*ft_memsetf(void *b, float c, size_t len);
 void		*ft_memchr(const void *s, int c, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);

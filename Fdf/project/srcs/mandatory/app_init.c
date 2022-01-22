@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 15:33:37 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 14:30:12 by                  ###   ########.fr       */
+/*   Updated: 2022/01/22 17:06:38 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_canvas	create_canvas(t_gc *gc, void *mlx, t_window window)
 	i = 0;
 	while (i < canvas.height)
 	{
-		canvas.depth_buffer[i] = gc_calloc(gc, canvas.width, sizeof (float));
-		ft_memset(canvas.depth_buffer[i], INT_MAX, canvas.width);
+		canvas.depth_buffer[i] = gc_calloc(gc, canvas.width, sizeof(float));
+		ft_memsetf(canvas.depth_buffer[i], INT_MAX, canvas.width);
 		i++;
 	}
 	canvas.addr = mlx_get_data_addr(canvas.img, &canvas.bits_per_pixel, \

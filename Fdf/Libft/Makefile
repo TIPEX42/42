@@ -30,7 +30,8 @@ PRINTF				=		ft_print_char.c ft_print_hex.c ft_print_hex_big.c ft_print_integer.
 
 #Memory Management
 MEMORYDIR			=		memory/
-MEMORY				=		ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c
+MEMORY				=		ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c			\
+							ft_memseti.c ft_memsetf.c
 
 #C style strings
 CSTRINGSDIR			=		strings/cstrings/

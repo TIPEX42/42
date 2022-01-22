@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:51 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 16:48:51 by                  ###   ########.fr       */
+/*   Updated: 2022/01/22 16:50:57 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	render(t_fdf *app)
 		scale_map(&app->canvas, &app->map);
 	draw_map(&app->canvas, &app->map);
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
-	getchar();
 	clear_map(&app->canvas, &app->map);
 	return (0);
 }
