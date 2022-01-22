@@ -12,7 +12,7 @@
 
 #include "../../libft.h"
 
-void	gc_init(t_gc *gc, void (*callback)(void *), void *param)
+void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 {
 	if (!gc)
 		return ;

@@ -1,4 +1,5 @@
-objs/mandatory/main.o: srcs/mandatory/main.c srcs/mandatory/../../fdf.h \
+objs/mandatory/map_init.o: srcs/mandatory/map_init.c \
+  srcs/mandatory/../../fdf.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/stdlib.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/Availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/AvailabilityInternal.h \

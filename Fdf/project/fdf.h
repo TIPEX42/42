@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/20 16:12:13 by                  ###   ########.fr       */
+/*   Updated: 2022/01/22 16:42:01 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_canvas
 	char		*addr;
 	int			width;
 	int			height;
+	float		**depth_buffer;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -46,18 +47,25 @@ typedef struct s_window
 
 typedef struct s_map_info
 {
-	int	size_x;
-	int	size_z;
-	int	lowest_point;
-	int	highest_point;
-	int	**heights;
-}		t_map_info;
+	int			size_x;
+	int			size_z;
+	int			lowest_point;
+	int			highest_point;
+	int			**heights;
+	int			**colors;
+}				t_map_info;
+
+typedef struct s_vertex
+{
+	t_vec4		pos;
+	int			col;
+}				t_vertex;
 
 typedef struct s_map
 {
 	t_map_info	infos;
-	t_vec4		**verticies;
-	t_vec4		**projection;
+	t_vertex	**verticies;
+	t_vertex	**projection;
 	t_vec3		pos;
 	t_vec3		rotation;
 	t_vec3		scale;
@@ -84,17 +92,17 @@ t_canvas	create_canvas(t_gc *gc, void *mlx, t_window window);
 t_window	create_window(t_gc *gc, void *mlx, int width, int height, char *title);
 
 //map_init.c
-t_vec4		**generate_verticies(t_gc *gc, t_map_info *infos);
-t_vec4		**init_projections(t_gc *gc, t_map_info *infos);
+t_vertex	**generate_verticies(t_gc *gc, t_map_info *infos);
+t_vertex	**init_projections(t_gc *gc, t_map_info *infos);
 void		create_map(t_gc *gc, t_map *map, char *file);
 
 //map_draw.c
-void		clear_map(t_canvas *canvas, t_map *map, int color);
-void		draw_map(t_canvas *canvas, t_map *map, int color);
+void		clear_map(t_canvas *canvas, t_map *map);
+void		draw_map(t_canvas *canvas, t_map *map);
 void		draw_wf_y(t_canvas *canvas, t_map_info *infos, \
-				t_vec4 **proj, int color);
+				t_vertex **proj, int use_color);
 void		draw_wf_x(t_canvas *canvas, t_map_info *infos, \
-				t_vec4 **proj, int color);
+				t_vertex **proj, int use_color);
 void		update_projections(t_map *map, t_map_info *infos);
 
 //map_scale.c
@@ -103,14 +111,10 @@ void		scale_map(t_canvas *canvas, t_map *map);
 //mlx_draw.c
 void		mlx_set_pixel(t_canvas *canvas, int x, int y, int color);
 void		clear_screen(t_canvas *canvas, int color);
-void		draw_line(t_canvas *canvas, t_vec2 start, t_vec2 end, int color);
+void		draw_line(t_canvas *canvas, t_vertex start, t_vertex end, int use_color);
 
 //mlx_colors.c
 int			get_color(int t, int r, int g, int b);
-int			get_t(int trgb);
-int			get_r(int trgb);
-int			get_g(int trgb);
-int			get_b(int trgb);
 
 //mlx_keys.c
 int			key_callback(int key, t_fdf *app);

@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/20 15:47:52 by                  ###   ########.fr       */
+/*   Updated: 2022/01/22 16:18:04 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
 int			ft_atoi(const char *str);
-int			ft_atol(const char *str);
+long		ft_atol_base(char *str, char *base);
+long		ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
@@ -240,14 +241,14 @@ typedef struct s_gc
 	size_t	ptrs_count;
 	size_t	capacity;
 	size_t	first_free;
-	void	(*callback)(void *);
+	int		(*callback)(void *);
 	void	*param;
 }			t_gc;
 
 int		gc_grow(t_gc *gc);
 void	gc_clean(t_gc *gc);
 void	gc_free(t_gc *gc, void *ptr);
-void	gc_init(t_gc *gc, void (*callback)(void *), void *param);
+void	gc_init(t_gc *gc, int (*callback)(), void *param);
 void	*gc_calloc(t_gc *gc, size_t count, size_t size);
 
 #endif
