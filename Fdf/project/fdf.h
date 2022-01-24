@@ -115,6 +115,10 @@ void		draw_line(t_canvas *canvas, t_vertex start, t_vertex end, int use_color);
 
 //mlx_colors.c
 int			get_color(int t, int r, int g, int b);
+int			get_t(int trgb);
+int			get_r(int trgb);
+int			get_g(int trgb);
+int			get_b(int trgb);
 
 //mlx_keys.c
 int			key_callback(int key, t_fdf *app);

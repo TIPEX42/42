@@ -20,7 +20,7 @@ int	render(t_fdf *app)
 		scale_map(&app->canvas, &app->map);
 	draw_map(&app->canvas, &app->map);
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
-	clear_map(&app->canvas, &app->map);
+	clear_screen(&app->canvas, get_color(0, 30, 20, 51));
 	return (0);
 }
 

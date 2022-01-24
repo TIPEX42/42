@@ -81,26 +81,10 @@ void	draw_map(t_canvas *canvas, t_map *map)
 	update_projections(map, &map->infos);
 	draw_wf_x(canvas, &map->infos, map->projection, get_color(0, 255, 255, 255));
 	draw_wf_y(canvas, &map->infos, map->projection, get_color(0, 255, 255, 255));
-	//i = 0;
-	//while (i < canvas->height)
-	//{
-	//	ft_memsetf(canvas->depth_buffer[i], INT_MAX, canvas->width);
-	//	i++;
-	//}
-	(void)i;
-}
-
-void	clear_map(t_canvas *canvas, t_map *map)
-{
-	int	i;
-
-	draw_wf_x(canvas, &map->infos, map->projection, get_color(0, 30, 20, 51));
-	draw_wf_y(canvas, &map->infos, map->projection, get_color(0, 30, 20, 51));
 	i = 0;
-	//while (i < canvas->height)
-	//{
-	//	ft_memsetf(canvas->depth_buffer[i], INT_MAX, canvas->width);
-	//	i++;
-	//}
-	(void)i;
+	while (i < canvas->height)
+	{
+		ft_memsetf(canvas->depth_buffer[i], INT_MIN, canvas->width);
+		i++;
+	}
 }

@@ -67,8 +67,8 @@ void	create_map(t_gc *gc, t_map *map, char *file)
 	high_color = vec3(255, 100, 100);
 	load_map(gc, &map->infos, file);
 	map->pos = vec3_zero();
-	map->rotation = vec3(0, PI / 4, PI / 6);
-	map->scale = vec3(1, 1, 1);
+	map->rotation = vec3(PI / 8, PI / 4, PI / 6);
+	map->scale = vec3(1, 0.1f, 1);
 	map->has_scaled = 0;
 	map->verticies = generate_verticies(gc, &map->infos);
 	map->projection = init_projections(gc, &map->infos);

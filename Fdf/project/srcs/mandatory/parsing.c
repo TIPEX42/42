@@ -70,6 +70,7 @@ void	add_heights(t_gc *gc, t_map_info *map, char *line)
 		gc->callback(gc->param);
 	}
 	size = ft_split_size(heights_split);
+	printf("size: %d\n", size);
 	map->size_x = size;
 	new_heights = gc_calloc(gc, size, sizeof(int));
 	new_colors = gc_calloc(gc, size, sizeof(int));

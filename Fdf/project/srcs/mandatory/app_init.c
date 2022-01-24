@@ -45,7 +45,7 @@ t_canvas	create_canvas(t_gc *gc, void *mlx, t_window window)
 	while (i < canvas.height)
 	{
 		canvas.depth_buffer[i] = gc_calloc(gc, canvas.width, sizeof(float));
-		ft_memsetf(canvas.depth_buffer[i], INT_MAX, canvas.width);
+		ft_memsetf(canvas.depth_buffer[i], INT_MIN, canvas.width);
 		i++;
 	}
 	canvas.addr = mlx_get_data_addr(canvas.img, &canvas.bits_per_pixel, \

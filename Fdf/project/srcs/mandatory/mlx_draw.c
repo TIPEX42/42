@@ -40,34 +40,45 @@ void	clear_screen(t_canvas *canvas, int color)
 	}
 }
 
+int	color_lerp(int col1, int col2, float value)
+{
+	t_vec3	new_color;
+
+	new_color.x = get_r(col1) + value * (get_r(col2) - get_r(col1));
+	new_color.y = get_g(col1) + value * (get_g(col2) - get_g(col1));
+	new_color.z = get_b(col1) + value * (get_b(col2) - get_b(col1));
+	return get_color(0, new_color.x, new_color.y, new_color.z);
+}
+
 void	draw_line(t_canvas *canvas, t_vertex start, t_vertex end, int use_color)
 {
 	double	pixels_to_draw;
 	double	pixels_drawn;
 	t_vec3	pixel_pos;
+	t_vec3	delta;
 
-	pixels_to_draw = ft_sqrt((ft_pow2(start.pos.x)) + ft_pow2(end.pos.y));
+	pixels_to_draw = ft_sqrt((ft_pow2(end.pos.x - start.pos.x)) + ft_pow2(end.pos.y - start.pos.y));
+	delta.x = (end.pos.x - start.pos.x) / pixels_to_draw;
+	delta.y = (end.pos.y - start.pos.y) / pixels_to_draw;
+	delta.z = (end.pos.z - start.pos.z) / pixels_to_draw;
+	pixel_pos = vec3(start.pos.x, start.pos.y, start.pos.z);
 	pixels_drawn = 0;
-	(void)use_color;
 	while (pixels_drawn < pixels_to_draw)
 	{
-		//TODO: benchmark et tester avec l'ancienne technique qui incremente au lieu de div
-		pixel_pos.x = ft_lerpf(start.pos.x, end.pos.x, pixels_drawn / pixels_to_draw);
-		pixel_pos.y = ft_lerpf(start.pos.y, end.pos.y, pixels_drawn / pixels_to_draw);
-		pixel_pos.z = ft_lerpf(start.pos.z, end.pos.z, pixels_drawn / pixels_to_draw);
-		//if ((int)pixel_pos.x < 0 || (int)pixel_pos.x >= canvas->width ||
-		//(int)pixel_pos.y < 0 || (int)pixel_pos.y >= canvas->height)
-		//{
-		//	pixels_drawn++;
-		//	continue ;
-		//}
-		//if (!use_color)
+		pixel_pos.x += delta.x;
+		pixel_pos.y += delta.y;
+		pixel_pos.z += delta.z;
+		if ((int)pixel_pos.x < 0 || (int)pixel_pos.x >= canvas->width ||
+		(int)pixel_pos.y < 0 || (int)pixel_pos.y >= canvas->height)
+			return ;
+		if (!use_color)
 			mlx_set_pixel(canvas, pixel_pos.x, pixel_pos.y, use_color);
-		//else if (pixel_pos.z < canvas->depth_buffer[(int)pixel_pos.y][(int)pixel_pos.x])
-		//{
-		//	canvas->depth_buffer[(int)pixel_pos.y][(int)pixel_pos.x] = pixel_pos.z;
-		//	mlx_set_pixel(canvas, pixel_pos.x, pixel_pos.y, end.col);
-		//}
+		else if (pixel_pos.z > canvas->depth_buffer[(int)pixel_pos.y][(int)pixel_pos.x])
+		{
+			canvas->depth_buffer[(int)pixel_pos.y][(int)pixel_pos.x] = pixel_pos.z;
+			mlx_set_pixel(canvas, pixel_pos.x, pixel_pos.y,
+						  color_lerp(start.col, end.col, pixels_drawn / pixels_to_draw));
+		}
 		pixels_drawn++;
 	}
 }

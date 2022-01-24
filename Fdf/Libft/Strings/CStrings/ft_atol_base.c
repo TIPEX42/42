@@ -17,7 +17,7 @@ static int	get_index(char c, char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (str[i] && str[i] != ft_tolower(c) && str[i] != ft_toupper(c))
 		i++;
 	return (i);
 }
@@ -50,7 +50,7 @@ long	ft_atol_base(char *str, char *base)
 		i++;
 	}
 	base_len = ft_strlen(base);
-	while (str[i] && ft_isdigit(str[i]))
+	while (str[i] && ft_isalnum(str[i]))
 	{
 		result = result * base_len + get_index(str[i], base);
 		i++;

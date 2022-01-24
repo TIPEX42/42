@@ -19,7 +19,7 @@ BIN_CC			=		gcc
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		$(INC_PATH)
 BIN_CFLAGS		+=		-MD
-BIN_CFLAGS		+=		-Wall -Werror -Wextra -std=c11
+BIN_CFLAGS		+=		-Wall -Werror -Wextra -std=c11 -O2
 
 BIN_LDFLAGS		:=
 BIN_LDFLAGS		+=		-framework OpenGL -framework AppKit
