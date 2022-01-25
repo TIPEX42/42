@@ -12,7 +12,7 @@ DEPENDSBONUS=		$(addprefix $(OBJDIR)bonus/, $(notdir $(SRCSBONUS:.c=.d)))
 .PHONY: all
 all:				$(BIN)
 
-$(BIN):				$(OBJSBONUS) ../Libft/libft.a bonus.mk
+$(BIN):				$(OBJSBONUS) ../Libft/libft.a bonus.mk ../Makefile
 					@echo "Linking $(notdir $(BIN))..."
 					$(BIN_CC) $(LIB_PATH) $(LIBS) $(OBJSBONUS) $(BIN_LDFLAGS) -o $(BIN)
 					@sleep 1.1

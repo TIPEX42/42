@@ -12,7 +12,7 @@ DEPENDSMAND	=		$(addprefix $(OBJDIR)mandatory/, $(notdir $(SRCSMAND:.c=.d)))
 .PHONY: all
 all:				$(BIN)
 
-$(BIN):				$(OBJSMAND) ../Libft/libft.a root.mk
+$(BIN):				$(OBJSMAND) ../Libft/libft.a root.mk ../Makefile
 					@echo "Linking $(notdir $(BIN))..."
 					$(BIN_CC) $(LIB_PATH) $(LIBS) $(OBJSMAND) $(BIN_LDFLAGS) -o $(BIN)
 					@sleep 1.1

@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 14:54:44 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 17:24:34 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 18:56:54 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	update_projections(t_map *map, t_map_info *infos)
 		j = 0;
 		while (j < infos->size_x)
 		{
-			map->projection[i][j].pos = mat4_multv4(model, map->verticies[i][j].pos);
+			map->projection[i][j].pos = mat4_multv4(model,
+					map->verticies[i][j].pos);
 			map->projection[i][j].col = map->verticies[i][j].col;
 			j++;
 		}
@@ -38,7 +39,7 @@ void	update_projections(t_map *map, t_map_info *infos)
 	}
 }
 
-void	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vertex **proj, int use_color)
+void	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vertex **proj)
 {
 	int	i;
 	int	j;
@@ -49,14 +50,14 @@ void	draw_wf_x(t_canvas *canvas, t_map_info *infos, t_vertex **proj, int use_col
 		j = 0;
 		while (j < infos->size_x - 1)
 		{
-			draw_line(canvas, proj[i][j], proj[i][j + 1], use_color);
+			draw_line(canvas, proj[i][j], proj[i][j + 1]);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vertex **proj, int use_color)
+void	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vertex **proj)
 {
 	int	i;
 	int	j;
@@ -67,7 +68,7 @@ void	draw_wf_y(t_canvas *canvas, t_map_info *infos, t_vertex **proj, int use_col
 		j = 0;
 		while (j < infos->size_x)
 		{
-			draw_line(canvas, proj[i][j], proj[i + 1][j], use_color);
+			draw_line(canvas, proj[i][j], proj[i + 1][j]);
 			j++;
 		}
 		i++;
@@ -79,8 +80,8 @@ void	draw_map(t_canvas *canvas, t_map *map)
 	int	i;
 
 	update_projections(map, &map->infos);
-	draw_wf_x(canvas, &map->infos, map->projection, get_color(0, 255, 255, 255));
-	draw_wf_y(canvas, &map->infos, map->projection, get_color(0, 255, 255, 255));
+	draw_wf_x(canvas, &map->infos, map->projection);
+	draw_wf_y(canvas, &map->infos, map->projection);
 	i = 0;
 	while (i < canvas->height)
 	{

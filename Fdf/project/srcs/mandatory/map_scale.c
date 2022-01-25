@@ -25,8 +25,10 @@ int	pixels_outside_canvas(t_canvas *canvas, t_map *map, t_map_info *infos)
 		j = 0;
 		while (j < infos->size_x)
 		{
-			if (proj[i][j].pos.x >= canvas->width - 10 || proj[i][j].pos.x < 10 ||
-				proj[i][j].pos.y >= canvas->height - 10 || proj[i][j].pos.y < 10)
+			if (proj[i][j].pos.x >= canvas->width - 10 ||
+				proj[i][j].pos.x < 10 ||
+				proj[i][j].pos.y >= canvas->height - 10 ||
+				proj[i][j].pos.y < 10)
 				return (1);
 			j++;
 		}

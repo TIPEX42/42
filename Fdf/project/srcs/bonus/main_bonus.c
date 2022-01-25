@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:51 by                   #+#    #+#             */
-/*   Updated: 2022/01/20 16:25:48 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 19:02:59 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	render(t_fdf *app)
 		exit(1);
 	if (!app->map.has_scaled)
 		scale_map(&app->canvas, &app->map);
-	draw_map(&app->canvas, &app->map, get_color(0, 200, 200, 200));
+	draw_map(&app->canvas, &app->map);
 	mlx_put_image_to_window(app->mlx, app->window.ptr, app->canvas.img, 0, 0);
-	clear_map(&app->canvas, &app->map, get_color(0, 30, 20, 51));
+	clear_screen(&app->canvas, get_color(0, 30, 20, 51));
 	return (0);
 }
 

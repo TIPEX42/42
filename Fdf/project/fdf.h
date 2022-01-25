@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 10:54:33 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 17:01:33 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 17:41:07 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "../Libft/libft.h"
 # include <mlx.h>
 
-# define WIN_WIDTH 900
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1200
+# define WIN_HEIGHT 800
 
 typedef struct s_canvas
 {
@@ -89,7 +89,7 @@ int			render(t_fdf *app);
 void		init_app(t_gc *gc, t_fdf *app);
 void		init_callbacks(t_fdf *app);
 t_canvas	create_canvas(t_gc *gc, void *mlx, t_window window);
-t_window	create_window(t_gc *gc, void *mlx, int width, int height, char *title);
+t_window	create_window(t_gc *gc, void *mlx, int width, int height);
 
 //map_init.c
 t_vertex	**generate_verticies(t_gc *gc, t_map_info *infos);
@@ -100,9 +100,9 @@ void		create_map(t_gc *gc, t_map *map, char *file);
 void		clear_map(t_canvas *canvas, t_map *map);
 void		draw_map(t_canvas *canvas, t_map *map);
 void		draw_wf_y(t_canvas *canvas, t_map_info *infos, \
-				t_vertex **proj, int use_color);
+				t_vertex **proj);
 void		draw_wf_x(t_canvas *canvas, t_map_info *infos, \
-				t_vertex **proj, int use_color);
+				t_vertex **proj);
 void		update_projections(t_map *map, t_map_info *infos);
 
 //map_scale.c
@@ -111,7 +111,7 @@ void		scale_map(t_canvas *canvas, t_map *map);
 //mlx_draw.c
 void		mlx_set_pixel(t_canvas *canvas, int x, int y, int color);
 void		clear_screen(t_canvas *canvas, int color);
-void		draw_line(t_canvas *canvas, t_vertex start, t_vertex end, int use_color);
+void		draw_line(t_canvas *canvas, t_vertex start, t_vertex end);
 
 //mlx_colors.c
 int			get_color(int t, int r, int g, int b);

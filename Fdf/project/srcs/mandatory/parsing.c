@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 10:37:26 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 16:17:59 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 18:50:06 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	**grow_tab(t_gc *gc, int **old_tab, int old_cap)
 {
 	int	**new_tab;
 
-	new_tab = gc_calloc(gc,old_cap + 1, sizeof(int **));
+	new_tab = gc_calloc(gc, old_cap + 1, sizeof(int **));
 	if (old_tab)
 	{
 		ft_memmove(new_tab, old_tab, old_cap * sizeof(int **));
@@ -25,7 +25,8 @@ int	**grow_tab(t_gc *gc, int **old_tab, int old_cap)
 	return (new_tab);
 }
 
-void	populate_new_heights(t_map_info *map, int *heights, int *colors, char **split)
+void	populate_heights(t_map_info *map, int *heights,
+							int *colors, char **split)
 {
 	int	size;
 	int	i;
@@ -70,11 +71,10 @@ void	add_heights(t_gc *gc, t_map_info *map, char *line)
 		gc->callback(gc->param);
 	}
 	size = ft_split_size(heights_split);
-	printf("size: %d\n", size);
 	map->size_x = size;
 	new_heights = gc_calloc(gc, size, sizeof(int));
 	new_colors = gc_calloc(gc, size, sizeof(int));
-	populate_new_heights(map, new_heights, new_colors, heights_split);
+	populate_heights(map, new_heights, new_colors, heights_split);
 	map->heights[map->size_z] = new_heights;
 	map->colors[map->size_z] = new_colors;
 	ft_split_free(heights_split);
@@ -96,6 +96,7 @@ void	load_map(t_gc *gc, t_map_info *infos, char *file)
 	infos->highest_point = INT_MIN;
 	while (line)
 	{
+		ft_trimr(line);
 		add_heights(gc, infos, line);
 		infos->size_z++;
 		line = ft_get_next_line(fd);

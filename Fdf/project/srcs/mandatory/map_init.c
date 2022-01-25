@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 14:26:50 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 14:36:19 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 18:37:51 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_vertex	**generate_verticies(t_gc *gc, t_map_info *infos)
 {
 	t_vertex	**tab;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	tab = gc_calloc(gc, infos->size_z, sizeof(t_vertex));
 	i = 0;
@@ -39,7 +39,7 @@ t_vertex	**generate_verticies(t_gc *gc, t_map_info *infos)
 t_vertex	**init_projections(t_gc *gc, t_map_info *infos)
 {
 	t_vertex	**tab;
-	int		i;
+	int			i;
 
 	tab = gc_calloc(gc, infos->size_z, sizeof(t_vertex));
 	i = 0;
@@ -60,15 +60,10 @@ float	max(float a, float b)
 
 void	create_map(t_gc *gc, t_map *map, char *file)
 {
-	t_vec3	base_color;
-	t_vec3	high_color;
-
-	base_color = vec3(200, 200, 200);
-	high_color = vec3(255, 100, 100);
 	load_map(gc, &map->infos, file);
 	map->pos = vec3_zero();
-	map->rotation = vec3(PI / 8, PI / 4, PI / 6);
-	map->scale = vec3(1, 0.1f, 1);
+	map->rotation = vec3(2.58f, 0.63f, -0.47f);
+	map->scale = vec3(1, 1, 1);
 	map->has_scaled = 0;
 	map->verticies = generate_verticies(gc, &map->infos);
 	map->projection = init_projections(gc, &map->infos);

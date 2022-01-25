@@ -6,19 +6,19 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 15:33:37 by                   #+#    #+#             */
-/*   Updated: 2022/01/22 17:06:38 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 18:57:50 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-t_window	create_window(t_gc *gc, void *mlx, int width, int height, char *title)
+t_window	create_window(t_gc *gc, void *mlx, int width, int height)
 {
 	t_window	window;
 
 	window.width = width;
 	window.height = height;
-	window.ptr = mlx_new_window(mlx, width, height, title);
+	window.ptr = mlx_new_window(mlx, width, height, "fdf");
 	if (!window.ptr)
 	{
 		ft_printf("Couldn't create a window\n");
@@ -68,7 +68,7 @@ void	init_app(t_gc *gc, t_fdf *app)
 		printf("Couldn't initialize mlx\n");
 		gc->callback(gc->param);
 	}
-	app->window = create_window(gc, app->mlx, WIN_WIDTH, WIN_HEIGHT, "Fdf");
+	app->window = create_window(gc, app->mlx, WIN_WIDTH, WIN_HEIGHT);
 	app->canvas = create_canvas(gc, app->mlx, app->window);
 	app->should_close = 0;
 	init_callbacks(app);

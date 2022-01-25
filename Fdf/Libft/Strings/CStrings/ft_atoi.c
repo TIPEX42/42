@@ -23,15 +23,6 @@ static	int	ft_check(long long nb, int signe)
 	return ((int)nb * signe);
 }
 
-static int	ft_isspace(int c)
-{
-	if (c == '\t' || c == '\n' || c == '\v')
-		return (1);
-	if (c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
-
 int	ft_atoi(const char *str)
 {
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/22 17:05:50 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 17:54:41 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,15 @@ int			ft_isdigit(int c);
 int			ft_isalnum(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
+int			ft_isspace(int c);
 
 //C style Strings Manipulation
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
+void		ft_triml(char *str);
+void		ft_trimr(char *str);
+void		ft_trim(char *str);
 int			ft_atoi(const char *str);
 long		ft_atol_base(char *str, char *base);
 long		ft_atol(const char *str);
@@ -232,6 +236,7 @@ t_mat4		mat4_rotatex(t_mat4 self, float value);
 t_mat4		mat4_rotatey(t_mat4 self, float value);
 t_mat4		mat4_rotatez(t_mat4 self, float value);
 t_mat4		mat4_rotate(t_vec3 vec);
+t_mat4		mat4_rotate_axis(float angle, t_vec3 axis);
 t_mat4		mat4_ortho(t_proj proj);
 t_mat4		mat4_scalef(float value);
 t_mat4		mat4_scalev3(t_vec3 vec);
@@ -247,10 +252,10 @@ typedef struct s_gc
 	void	*param;
 }			t_gc;
 
-int		gc_grow(t_gc *gc);
-void	gc_clean(t_gc *gc);
-void	gc_free(t_gc *gc, void *ptr);
-void	gc_init(t_gc *gc, int (*callback)(), void *param);
-void	*gc_calloc(t_gc *gc, size_t count, size_t size);
+int			gc_grow(t_gc *gc);
+void		gc_clean(t_gc *gc);
+void		gc_free(t_gc *gc, void *ptr);
+void		gc_init(t_gc *gc, int (*callback)(), void *param);
+void		*gc_calloc(t_gc *gc, size_t count, size_t size);
 
 #endif
