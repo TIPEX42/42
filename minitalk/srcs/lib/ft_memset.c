@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 14:30:51 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/04 14:30:55 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/04 14:12:14 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/04 14:12:21 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "libtalk.h"
+
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	size_t			i;
+	unsigned char	*bcpy;
+
+	bcpy = b;
+	i = 0;
+	while (i < len)
+	{
+		bcpy[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
 }

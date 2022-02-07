@@ -13,7 +13,7 @@ $(CLIENT_BIN):		$(OBJS) $(LIBTALK_LIB) $(MASTER_MAKE)
 					@$(BIN_CC) $(LIB_PATH) $(LIBS) $(OBJS) $(BIN_LDFLAGS) -o $(CLIENT_BIN)
 
 $(OBJDIR)%.o:		%.c
-					@echo "Compiling $<"
+					@echo "[Client] Compiling $<"
 					@mkdir -p $(OBJDIR)
 					@$(BIN_CC) -c $< $(BIN_CFLAGS) -o $@
 

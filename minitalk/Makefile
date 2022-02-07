@@ -21,7 +21,7 @@ BIN_CC			:=		gcc
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		$(INC_PATH)
 BIN_CFLAGS		+=		-MD
-BIN_CFLAGS		+=		-Wall -Werror -Wextra -O2 -fsanitize=address
+BIN_CFLAGS		+=		-Wall -Werror -Wextra -fsanitize=address
 
 BIN_LDFLAGS		:=
 BIN_LDFLAGS		+=		-fsanitize=address

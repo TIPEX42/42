@@ -21,17 +21,19 @@
 
 typedef struct s_infos
 {
+	int					server_pid;
 	int					sigs;
 	int					last;
 	int					handling;
 	int					got_hash;
 	int					server_hash;
+	int					send_mode;
+	int					can_send;
 	struct sigaction	sa;
 }						t_infos;
 
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 void	*ft_calloc(size_t n, size_t size);
-void	ft_memset(void *dest, int value, size_t len);
 
 #endif

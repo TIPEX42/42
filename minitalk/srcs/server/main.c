@@ -11,48 +11,139 @@
 /* ************************************************************************** */
 
 #include "server.h"
+#include "../lib/libtalk.h"
 
-char	result = 0;
-int		sigs = 0;
-int		last = 0;
-int		handling = 0;
+t_infos	g_infos;
 
-void	signal_handler(int signo)
+int	error_exit(char *message, int code)
 {
-	while (handling);
-	handling = 1;
-	if (signo == SIGUSR2 && last != SIGUSR1)
+	ft_printf("%s\n", message);
+	exit(code);
+}
+
+void	handle_byte()
+{
+	if (!g_infos.got_length)
 	{
-		result = result * 2;
-		sigs++;
+		if (g_infos.current == 0)
+		{
+			g_infos.got_length = 1;
+			ft_printf("Length received: %d\n", g_infos.str_length);
+			if (g_infos.str_length < 0 || g_infos.str_length > g_infos.max_length)
+				g_infos.str_length = 0;
+			g_infos.str = ft_calloc(g_infos.str_length + 1, sizeof(char));
+			if (!g_infos.str)
+				error_exit("Allocation error!\n", 1);
+			return ;
+		}
+		ft_printf("Got: %d\n", g_infos.current);
+		ft_printf("curr length %d\n", g_infos.str_length);
+		g_infos.max_length = g_infos.max_length * 10 + 9;
+		g_infos.str_length *= 10;
+		g_infos.str_length += g_infos.current - '0';
 	}
-	else if (signo == SIGUSR1)
+	else if (!g_infos.got_str)
 	{
-		result = result * 2 + 1;
-		sigs++;
+		if (g_infos.curr_length < g_infos.str_length)
+			g_infos.str[g_infos.curr_length] = g_infos.current;
+		g_infos.curr_length++;
+		if (g_infos.current == 0)
+			g_infos.got_str = 1;
 	}
-	last = signo;
-	if (sigs == 8)
+	else if (!g_infos.got_hash)
 	{
-		ft_printf("%c", result);
-		result = 0;
-		sigs = 0;
+		if (g_infos.current == 0)
+			g_infos.got_hash = 1;
+		else
+			g_infos.hash = g_infos.current;
 	}
-	handling = 0;
+}
+
+void	signal_handler(int signo, siginfo_t *siginfo, void *content)
+{
+	(void)content;
+	ft_printf("callback\n");
+	while (g_infos.handling)
+		usleep(1);
+	ft_printf("after sleep\n");
+	g_infos.handling = 1;
+	if (g_infos.send_mode)
+	{
+		if (signo == SIGUSR1)
+		{
+			ft_printf("oups\n");
+			g_infos.can_send = 1;
+			g_infos.handling = 0;
+		}
+		return ;
+	}
+	ft_printf("%d ", signo);
+	g_infos.client_pid = siginfo->si_pid;
+	if (signo == SIGUSR2 && g_infos.last != SIGUSR1)
+	{
+		g_infos.current = g_infos.current * 2;
+		g_infos.sigs++;
+	}
+	else if (signo == SIGUSR2 && g_infos.last == SIGUSR1)
+	{
+		g_infos.current = g_infos.current * 2 + 1;
+		g_infos.sigs++;
+	}
+	g_infos.last = signo;
+	if (g_infos.sigs == 8)
+	{
+		handle_byte();
+		g_infos.current = 0;
+		g_infos.sigs = 0;
+	}
+	g_infos.handling = 0;
+	ft_printf("Sending back signal\n");
+	usleep(5);
+	kill(g_infos.client_pid, SIGUSR1);
 	return;
 }
 
-void	ft_memset(void *dest, int value, size_t len)
+void	init_global()
 {
-	char	*dest_cp;
-	size_t	i;
+	ft_memset(&g_infos, 0, sizeof (t_infos));
+	sigemptyset(&g_infos.sa.sa_mask);
+	g_infos.sa.sa_flags = SA_SIGINFO;
+	g_infos.sa.sa_sigaction = signal_handler;
+}
 
-	dest_cp = (char *)dest;
+int	hash_str(const char *str)
+{
+	int	i;
+	int	hash;
+
+	hash = 0;
 	i = 0;
-	while (i < len)
+	while (str[i])
 	{
-		dest_cp[i] = value;
+		hash += str[i];
+		hash = hash % 255;
 		i++;
+	}
+	return (hash);
+}
+
+void	send_char(int pid, char c)
+{
+	int	one;
+	int	i;
+
+	one = 1;
+	i = 7;
+	while (i >= 0)
+	{
+		if (c & (one << i))
+		{
+			kill(pid, SIGUSR1);
+			usleep(50);
+		}
+		kill(pid, SIGUSR2);
+		usleep(50);
+		i--;
 	}
 }
 
@@ -62,14 +153,22 @@ int main()
 
 	pid = getpid();
 
-	struct sigaction sa;
-	ft_memset(&sa, 0, sizeof (struct sigaction));
-	sa.sa_handler = signal_handler;
-	//sigaction (SIGUSR1, &sa, NULL);
-	//sigaction (SIGUSR2, &sa, NULL);
-	signal(SIGUSR2, signal_handler);
-	signal(SIGUSR1, signal_handler);
+	init_global();
+	sigaction(SIGUSR1, &g_infos.sa, NULL);
+	sigaction(SIGUSR2, &g_infos.sa, NULL);
 	ft_printf("%d\n", pid);
 	while (1)
-		sleep(1);
+	{
+		init_global();
+		ft_printf("after init\n");
+		while (!g_infos.got_hash)
+			usleep(1);
+		ft_printf("after hash\n");
+		if (g_infos.hash == hash_str(g_infos.str))
+			ft_printf("%s\n", g_infos.str);
+		g_infos.send_mode = 1;
+		g_infos.can_send = 1;
+		send_char(g_infos.client_pid, g_infos.hash);
+		free(g_infos.str);
+	}
 }

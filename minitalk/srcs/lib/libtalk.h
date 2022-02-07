@@ -35,8 +35,9 @@ void	ft_putnbr_fd(long n, int fd, int *chars_printed);
 
 //other
 int		ft_atoi(const char *str);
-int		ft_isdigit(char c);
+int		ft_isdigit(int c);
 void	*ft_calloc(size_t count, size_t size);
+void	*ft_memset(void *b, int c, size_t len);
 char	*ft_itoa(int n);
 size_t	ft_strlen(const char *str);
 
