@@ -1,56 +1,71 @@
-CC			=		gcc
-CFLAGS		=		-Wall -Werror -Wextra -fsanitize=address
-LDFLAGS		=		-fsanitize=address
+MAKE_DIR		:=		$(PWD)
 
-SERVER		=		server
-CLIENT		=		client
-NAME		=		$(SERVER)
+MASTER_MAKE		:=		$(MAKE_DIR)/Makefile
 
-SRCDIR		=		srcs/
-SERVERSRC	=		main.c Printf/ft_print_char.c Printf/ft_print_hex.c Printf/ft_print_hex_big.c						\
-					Printf/ft_print_integer.c Printf/ft_print_ptr.c Printf/ft_print_str.c Printf/ft_print_uinteger.c	\
-					Printf/ft_printf.c Printf/ft_putnbr_base.c Printf/ft_putnbr_fd.c Printf/ft_strlen.c
+SRCS_DIR		:=		$(MAKE_DIR)/srcs
 
-CLIENTSRC	=		main.c ft_atoi.c ft_isdigit.c
+CLIENT_DIR		:=		$(SRCS_DIR)/client
+SERVER_DIR		:=		$(SRCS_DIR)/server
+LIB_DIR			:=		$(SRCS_DIR)/lib
 
-SERVERSRCS	=		$(addprefix $(SRCDIR)$(SERVER)/, $(SERVERSRC))
-CLIENTSRCS	=		$(addprefix $(SRCDIR)$(CLIENT)/, $(CLIENTSRC))
+INC_PATH		:=		-I$(CLIENT_DIR)
+INC_PATH		+=		-I$(SERVER_DIR)
+INC_PATH		+=		-I$(LIB_DIR)
 
-OBJDIR		=		objs/
-SERVEROBJS	=		$(addprefix $(OBJDIR)$(SERVER)/, $(notdir $(SERVERSRCS:.c=.o)))
-CLIENTOBJS	=		$(addprefix $(OBJDIR)$(CLIENT)/, $(notdir $(CLIENTSRCS:.c=.o)))
+LIB_PATH		:=		-L$(LIB_DIR)
 
-all:				$(CLIENT) $(SERVER)
+LIBS			:=		-ltalk
 
-$(NAME):			$(SERVEROBJS)
-					@echo "compiling server ..."
-					@$(CC) $(SERVEROBJS) $(LDFLAGS) -o $(NAME)
+BIN_CC			:=		gcc
 
-$(CLIENT):			$(CLIENTOBJS)
-					@echo "compiling client"
-					@$(CC) $(CLIENTOBJS) $(LDFLAGS) -o $(CLIENT)
+BIN_CFLAGS		:=
+BIN_CFLAGS		+=		$(INC_PATH)
+BIN_CFLAGS		+=		-MD
+BIN_CFLAGS		+=		-Wall -Werror -Wextra -O2 -fsanitize=address
 
-$(OBJDIR)$(SERVER)/%.o:		$(SRCDIR)$(SERVER)/%.c $(SERVER).h
-							@echo "Compiling $<"
-							@mkdir -p objs
-							@$(CC) -c $< $(CFLAGS) -o $@
+BIN_LDFLAGS		:=
+BIN_LDFLAGS		+=		-fsanitize=address
 
-$(OBJDIR)$(SERVER)/%.o:		$(SRCDIR)$(SERVER)/Printf/%.c $(SERVER).h
-							@echo "Compiling $<"
-							@mkdir -p objs
-							@$(CC) -c $< $(CFLAGS) -o $@
+CLIENT_BIN		:=		$(MAKE_DIR)/client
+SERVER_BIN		:=		$(MAKE_DIR)/server
+LIBTALK_LIB		:=		$(LIB_DIR)/libtalk.a
 
-$(OBJDIR)$(CLIENT)/%.o:		$(SRCDIR)$(CLIENT)/%.c $(CLIENT).h
-							@echo "Compiling $<"
-							@mkdir -p objs
-							@$(CC) -c $< $(CFLAGS) -o $@
+export MAKE_DIR
+export MASTER_MAKE
+export INC_PATH
+export LIB_PATH
+export LIBS
+export BIN_CC
+export BIN_CFLAGS
+export BIN_LDFLAGS
+export CLIENT_BIN
+export SERVER_BIN
+export LIBTALK_LIB
 
+.PHONY: all
+all:
+	@$(MAKE) -C $(LIB_DIR) -f libtalk.mk
+	@$(MAKE) -C $(CLIENT_DIR) -f client.mk -r -R --warn-undefined-variables
+	@$(MAKE) -C $(SERVER_DIR) -f server.mk -r -R --warn-undefined-variables
+
+.PHONY: bonus
+bonus:
+	@$(MAKE) -C $(LIB_DIR) -f libtalk.mk
+	@$(MAKE) -C $(CLIENT_DIR) -f client.mk -r -R --warn-undefined-variables
+	@$(MAKE) -C $(SERVER_DIR) -f server.mk -r -R --warn-undefined-variables
+
+.PHONY: clean
 clean:
-					rm -f $(CLIENTOBJS) $(SERVEROBJS)
+	@$(MAKE) -C $(LIB_DIR) -f libtalk.mk clean
+	@$(MAKE) -C $(CLIENT_DIR) -f client.mk clean
+	@$(MAKE) -C $(SERVER_DIR) -f server.mk clean
 
-fclean:				clean
-					rm -f $(NAME)
+.PHONY: fclean
+fclean:
+	@$(MAKE) -C $(LIB_DIR) -f libtalk.mk clean
+	@$(MAKE) -C $(CLIENT_DIR) -f client.mk clean
+	@$(MAKE) -C $(SERVER_DIR) -f server.mk clean
+	@rm -f $(BIN)
 
-re:					fclean all
-
-.PHONY: all clean fclean re
+.PHONY: re
+re: fclean all

@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_print_ptr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:11 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/25 17:28:39 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/24 14:41:05 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/24 15:32:17 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <limits.h>
+#include "libtalk.h"
 
-void	ft_print_hex(va_list *parameters_infos, int *chars_printed)
+void	ft_print_ptr(va_list *parameters_infos, int *chars_printed)
 {
-	unsigned int	integer;
+	long	ptr;
 
-	integer = (unsigned int)va_arg(*parameters_infos, unsigned int);
-	ft_putnbr_base(integer, "0123456789abcdef", chars_printed);
+	ptr = (long)va_arg(*parameters_infos, size_t);
+	write(1, "0x", 2);
+	(*chars_printed) += 2;
+	ft_putnbr_base(ptr, "0123456789abcdef", chars_printed);
 }

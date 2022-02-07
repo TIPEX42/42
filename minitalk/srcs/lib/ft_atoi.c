@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../client.h"
+#include "../client/client.h"
 
 static	int	ft_check(long long nb, int signe)
 {

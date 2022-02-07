@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex_big.c                                 :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:13 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/25 17:28:47 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/04 14:13:03 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/04 14:13:09 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <limits.h>
+#include "../libft.h"
 
-void	ft_print_hex_big(va_list *parameters_infos, int *chars_printed)
+void	*ft_calloc(size_t count, size_t size)
 {
-	unsigned int	integer;
+	void	*new;
 
-	integer = (unsigned int)va_arg(*parameters_infos, unsigned int);
-	ft_putnbr_base(integer, "0123456789ABCDEF", chars_printed);
+	new = malloc(count * size);
+	if (!new)
+		return (NULL);
+	ft_memset(new, 0, count * size);
+	return (new);
 }

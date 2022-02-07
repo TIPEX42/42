@@ -19,6 +19,16 @@
 #include <signal.h>
 #include <stdlib.h>
 
+typedef struct s_infos
+{
+	int					sigs;
+	int					last;
+	int					handling;
+	int					got_hash;
+	int					server_hash;
+	struct sigaction	sa;
+}						t_infos;
+
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 void	*ft_calloc(size_t n, size_t size);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../server.h"
+#include "server.h"
 
 char	result = 0;
 int		sigs = 0;
@@ -71,7 +71,5 @@ int main()
 	signal(SIGUSR1, signal_handler);
 	ft_printf("%d\n", pid);
 	while (1)
-	{
 		sleep(1);
-	}
 }

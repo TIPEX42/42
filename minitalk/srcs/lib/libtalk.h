@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stddef.h>
 
+//Printf
 int		ft_printf(const char *str, ...);
 
 void	ft_print_char(va_list *parameters_infos, int *chars_printed);
@@ -31,6 +32,12 @@ void	ft_print_hex_big(va_list *parameters_infos, int *chars_printed);
 void	ft_print_ptr(va_list *parameters_infos, int *chars_printed);
 void	ft_putnbr_base(size_t nbr, char *base, int *chars_printed);
 void	ft_putnbr_fd(long n, int fd, int *chars_printed);
+
+//other
+int		ft_atoi(const char *str);
+int		ft_isdigit(char c);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_itoa(int n);
 size_t	ft_strlen(const char *str);
 
 #endif

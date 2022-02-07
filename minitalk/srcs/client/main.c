@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../client.h"
+#include "client.h"
+#include "../lib/libtalk.h"
+
+t_infos	g_infos;
 
 void	ft_memset(void *dest, int value, size_t len)
 {
@@ -24,15 +27,6 @@ void	ft_memset(void *dest, int value, size_t len)
 		dest_cp[i] = value;
 		i++;
 	}
-}
-
-void	*ft_calloc(size_t n, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(n * size);
-	ft_memset(ptr, 0, n * size);
-	return (ptr);
 }
 
 void	send_char(int pid, char c)
@@ -53,22 +47,109 @@ void	send_char(int pid, char c)
 		usleep(50);
 		i--;
 	}
-	printf("\n");
+}
+
+int	error_exit(const char *message, int code)
+{
+	ft_printf("%s\n", message);
+	exit(code);
+}
+
+int	check_args(int argc)
+{
+	if (argc < 3)
+		return (error_exit("Too few args!"), 1);
+	if (argc > 3)
+		return (error_exit("Too many args!"), 1);
+	return (0);
+}
+
+void	send_str(int pid, const char *message)
+{
+	int	i;
+
+	i = 0;
+	while (message[i])
+	{
+		send_char(pid, message[i]);
+		i++;
+	}
+}
+
+int	send_length(int pid, const char *message)
+{
+	int		length;
+	char	*str;
+
+	length = ft_strlen(message);
+	str = ft_itoa(length);
+	if (!str)
+		return (error_exit("Allocaton error!\n", 1));
+	send_str(pid, str);
+	free(str);
+	return (0);
+}
+
+int	send_hash(int pid, int hash)
+{
+	char	*str;
+
+	str = ft_itoa(hash);
+	if (!str)
+		return (error_exit("Allocation error!\n", 1));
+	send_str(pid, str);
+	free(str);
+	return (0);
+}
+
+int	hash_str(const char *str)
+{
+	int	i;
+	int	hash;
+
+	hash = 0;
+	i = 0;
+	while (str[i])
+	{
+		hash += str[i];
+		hash = hash % 255;
+		i++;
+	}
+	return (hash);
+}
+
+void	handler()
+{
+	if (g_infos.server_hash == 500)
+		g_infos.server_hash = 0;
+
+}
+
+void	init_global(int hash)
+{
+	ft_memset(&g_infos, 0, sizeof (t_infos));
+	sigemptyset(&g_infos.sa.sa_mask);
+	g_infos.sa.sa_handler = handler;
+	g_infos.sa.sa_flags = SA_SIGINFO;
+	g_infos.server_hash = 500;
 }
 
 int main(int argc, char **argv)
 {
-	int	i;
 	int	pid;
+	int	hash;
 
-	if (argc != 3)
-		return (1);
+	check_args(argc);
 	pid = ft_atoi(argv[1]);
-	i = 0;
-	while (argv[2][i])
+	hash = hash_str(argv[2]);
+	init_global(hash);
+	while (hash != g_infos.server_hash)
 	{
-		send_char(pid, argv[2][i]);
-		i++;
+		send_length(pid, argv[2]);
+		send_str(pid, argv[2]);
+		send_hash(pid, hash);
+		while (!g_infos.got_hash)
+			pause();
 	}
 	return (0);
 }

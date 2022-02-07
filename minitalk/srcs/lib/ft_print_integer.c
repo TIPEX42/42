@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_char.c                                    :+:      :+:    :+:   */
+/*   ft_print_integer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:18 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/24 15:06:40 by njennes          ###   ########lyon.fr   */
+/*   Created: 2021/11/24 14:41:09 by njennes           #+#    #+#             */
+/*   Updated: 2021/11/24 15:16:21 by njennes          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libtalk.h"
 
-void	ft_print_char(va_list *parameters_infos, int *chars_printed)
+void	ft_print_integer(va_list *parameters_infos, int *chars_printed)
 {
-	char	c;
+	int	integer;
 
-	c = (char)va_arg(*parameters_infos, int);
-	write(1, &c, 1);
-	(*chars_printed)++;
+	integer = (int)va_arg(*parameters_infos, int);
+	ft_putnbr_fd(integer, 1, chars_printed);
 }
