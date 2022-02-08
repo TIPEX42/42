@@ -62,32 +62,32 @@ void	handle_byte()
 void	signal_handler(int signo, siginfo_t *siginfo, void *content)
 {
 	(void)content;
-	ft_printf("callback\n");
 	while (g_infos.handling)
 		usleep(1);
-	ft_printf("after sleep\n");
 	g_infos.handling = 1;
 	if (g_infos.send_mode)
 	{
 		if (signo == SIGUSR1)
 		{
-			ft_printf("oups\n");
 			g_infos.can_send = 1;
 			g_infos.handling = 0;
 		}
 		return ;
 	}
-	ft_printf("%d ", signo);
+	if (g_infos.got_hash)
+		g_infos.send_mode = 1;
 	g_infos.client_pid = siginfo->si_pid;
 	if (signo == SIGUSR2 && g_infos.last != SIGUSR1)
 	{
 		g_infos.current = g_infos.current * 2;
 		g_infos.sigs++;
+		ft_printf("0");
 	}
 	else if (signo == SIGUSR2 && g_infos.last == SIGUSR1)
 	{
 		g_infos.current = g_infos.current * 2 + 1;
 		g_infos.sigs++;
+		ft_printf("1");
 	}
 	g_infos.last = signo;
 	if (g_infos.sigs == 8)
@@ -95,10 +95,9 @@ void	signal_handler(int signo, siginfo_t *siginfo, void *content)
 		handle_byte();
 		g_infos.current = 0;
 		g_infos.sigs = 0;
+		ft_printf("\n");
 	}
 	g_infos.handling = 0;
-	ft_printf("Sending back signal\n");
-	usleep(5);
 	kill(g_infos.client_pid, SIGUSR1);
 	return;
 }
@@ -109,6 +108,8 @@ void	init_global()
 	sigemptyset(&g_infos.sa.sa_mask);
 	g_infos.sa.sa_flags = SA_SIGINFO;
 	g_infos.sa.sa_sigaction = signal_handler;
+	sigaction(SIGUSR1, &g_infos.sa, NULL);
+	sigaction(SIGUSR2, &g_infos.sa, NULL);
 }
 
 int	hash_str(const char *str)
@@ -127,20 +128,24 @@ int	hash_str(const char *str)
 	return (hash);
 }
 
-void	send_char(int pid, char c)
+void	send_char(int pid, unsigned char c)
 {
 	int	one;
 	int	i;
 
 	one = 1;
 	i = 7;
+	ft_printf("%d\n", (int)c);
 	while (i >= 0)
 	{
 		if (c & (one << i))
 		{
 			kill(pid, SIGUSR1);
+			ft_printf("Sending 1\n");
 			usleep(50);
 		}
+		else
+			ft_printf("Sending 0\n");
 		kill(pid, SIGUSR2);
 		usleep(50);
 		i--;
@@ -154,19 +159,16 @@ int main()
 	pid = getpid();
 
 	init_global();
-	sigaction(SIGUSR1, &g_infos.sa, NULL);
-	sigaction(SIGUSR2, &g_infos.sa, NULL);
 	ft_printf("%d\n", pid);
 	while (1)
 	{
 		init_global();
 		ft_printf("after init\n");
-		while (!g_infos.got_hash)
+		while (!g_infos.send_mode)
 			usleep(1);
 		ft_printf("after hash\n");
 		if (g_infos.hash == hash_str(g_infos.str))
 			ft_printf("%s\n", g_infos.str);
-		g_infos.send_mode = 1;
 		g_infos.can_send = 1;
 		send_char(g_infos.client_pid, g_infos.hash);
 		free(g_infos.str);

@@ -18,13 +18,10 @@ t_infos	g_infos;
 void	wait_for(int *value)
 {
 	while (!(*value))
-	{
-		ft_printf("waiting...\n");
-		usleep(10000);
-	}
+		usleep(1);
 }
 
-void	send_char(int pid, char c)
+void	send_char(int pid, unsigned char c)
 {
 	int	one;
 	int	i;
@@ -44,8 +41,8 @@ void	send_char(int pid, char c)
 		else
 			ft_printf("0");
 		wait_for(&g_infos.can_send);
-		ft_printf("killlll\n");
 		g_infos.can_send = 0;
+		ft_printf("Sending to pid:%d\n", pid);
 		kill(pid, SIGUSR2);
 		usleep(50);
 		i--;
@@ -88,7 +85,6 @@ int	send_length(int pid, const char *message)
 
 	length = ft_strlen(message);
 	str = ft_itoa(length);
-	ft_printf("Length : %s\n", str);
 	if (!str)
 		return (error_exit("Allocaton error!\n", 1));
 	send_str(pid, str);
@@ -129,11 +125,12 @@ void	handler(int signo, siginfo_t *siginfo, void *content)
 	while (g_infos.handling)
 		pause();
 	g_infos.handling = 1;
+	ft_printf("Server hqash: %d\n", g_infos.server_hash);
+	ft_printf("Receiving %d\n", signo);
 	if (g_infos.send_mode)
 	{
 		if (signo == SIGUSR1)
 		{
-			ft_printf("can send\n");
 			g_infos.can_send = 1;
 			g_infos.handling = 0;
 		}
@@ -156,6 +153,7 @@ void	handler(int signo, siginfo_t *siginfo, void *content)
 	{
 		g_infos.got_hash = 1;
 		g_infos.sigs = 0;
+		ft_printf("\n");
 	}
 	g_infos.handling = 0;
 	kill(g_infos.server_pid, SIGUSR1);
@@ -178,9 +176,9 @@ int main(int argc, char **argv)
 	int	hash;
 
 	check_args(argc);
+	init_global();
 	g_infos.server_pid = ft_atoi(argv[1]);
 	hash = hash_str(argv[2]);
-	init_global();
 	sigaction(SIGUSR1, &g_infos.sa, NULL);
 	sigaction(SIGUSR2, &g_infos.sa, NULL);
 	while (hash != g_infos.server_hash)
@@ -188,14 +186,15 @@ int main(int argc, char **argv)
 		printf("retry\n");
 		g_infos.server_hash = 500;
 		g_infos.got_hash = 0;
+		g_infos.send_mode = 1;
 		send_length(g_infos.server_pid, argv[2]);
 		send_str(g_infos.server_pid, argv[2]);
 		send_hash(g_infos.server_pid, hash);
 		g_infos.send_mode = 0;
+		ft_printf("Finish sending\n");
 		while (!g_infos.got_hash)
 			pause();
 		printf("Hash got: %d instead of %d\n", g_infos.server_hash, hash);
-		getchar();
 	}
 	ft_printf("Message sent successfully!\n");
 	return (0);
