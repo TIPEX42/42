@@ -13,22 +13,17 @@
 #ifndef CLIENT_H
 # define CLIENT_H
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
+# include <sys/types.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <signal.h>
+# include <stdlib.h>
 
 typedef struct s_infos
 {
+	int					server_response;
 	int					server_pid;
-	int					sigs;
-	int					last;
 	int					handling;
-	int					got_hash;
-	int					server_hash;
-	int					send_mode;
-	int					can_send;
 	struct sigaction	sa;
 }						t_infos;
 

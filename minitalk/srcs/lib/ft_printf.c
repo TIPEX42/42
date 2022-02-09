@@ -64,3 +64,9 @@ int	ft_printf(const char *str, ...)
 	va_end(parameters_infos);
 	return (chars_printed);
 }
+
+int	error_exit(char *message, int code)
+{
+	ft_printf("%s\n", message);
+	exit(code);
+}

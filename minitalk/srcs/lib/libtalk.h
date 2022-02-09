@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef LIBTALK_H
+# define LIBTALK_H
 
 # include <stdlib.h>
 # include <stdarg.h>
@@ -21,6 +21,7 @@
 
 //Printf
 int		ft_printf(const char *str, ...);
+int		error_exit(char *message, int code);
 
 void	ft_print_char(va_list *parameters_infos, int *chars_printed);
 void	ft_print_str(va_list *parameters_infos, int *chars_printed);

@@ -21,10 +21,10 @@ BIN_CC			:=		gcc
 BIN_CFLAGS		:=
 BIN_CFLAGS		+=		$(INC_PATH)
 BIN_CFLAGS		+=		-MD
-BIN_CFLAGS		+=		-Wall -Werror -Wextra -fsanitize=address
+BIN_CFLAGS		+=		-Wall -Werror -Wextra
 
 BIN_LDFLAGS		:=
-BIN_LDFLAGS		+=		-fsanitize=address
+BIN_LDFLAGS		+=
 
 CLIENT_BIN		:=		$(MAKE_DIR)/client
 SERVER_BIN		:=		$(MAKE_DIR)/server
@@ -65,7 +65,9 @@ fclean:
 	@$(MAKE) -C $(LIB_DIR) -f libtalk.mk clean
 	@$(MAKE) -C $(CLIENT_DIR) -f client.mk clean
 	@$(MAKE) -C $(SERVER_DIR) -f server.mk clean
-	@rm -f $(BIN)
+	@rm -f $(CLIENT_BIN)
+	@rm -f $(SERVER_BIN)
+	@rm -f $(LIBTALK_LIB)
 
 .PHONY: re
 re: fclean all
