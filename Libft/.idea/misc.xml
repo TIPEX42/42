@@ -10,14 +10,12 @@
     </sourceRoots>
     <excludeRoots>
       <file path="$PROJECT_DIR$/objs" />
-      <file path="$PROJECT_DIR$/objsd" />
     </excludeRoots>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MakefileSettings">
     <option name="linkedExternalProjectsSettings">
       <MakefileProjectSettings>
-        <option name="cleanTarget" value="fclean" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>

@@ -29,6 +29,8 @@ t_vec3	vec3_normalized(t_vec3 vec)
 	t_vec3	normalized;
 
 	magnitude = vec3_mag(vec);
+	if (magnitude < 0.0001)
+		return (vec3_zero());
 	normalized.x = vec.x / magnitude;
 	normalized.y = vec.y / magnitude;
 	normalized.z = vec.z / magnitude;

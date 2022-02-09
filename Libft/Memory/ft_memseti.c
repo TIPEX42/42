@@ -1,49 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_trim.c                                          :+:      :+:    :+:   */
+/*   ft_memseti.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 17:49:56 by                   #+#    #+#             */
-/*   Updated: 2022/01/25 17:54:18 by                  ###   ########.fr       */
+/*   Created: 2022/01/22 17:04:27 by                   #+#    #+#             */
+/*   Updated: 2022/01/22 17:04:51 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "../libft.h"
 
-char	*ft_trimr(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (NULL);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i--;
-	}
-	return (str);
-}
-
-char	*ft_triml(char *str)
+void	*ft_memseti(void *b, int c, size_t len)
 {
 	size_t	i;
+	int		*bcpy;
 
-	if (!str)
-		return (NULL);
+	bcpy = b;
 	i = 0;
-	while (str[i] && ft_isspace(str[i]))
+	while (i < len)
 	{
-		str[i] = 0;
+		bcpy[i] = c;
 		i++;
 	}
-	return (&str[i]);
-}
-
-char	*ft_trim(char *str)
-{
-	ft_trimr(str);
-	return (ft_triml(str));
+	return (b);
 }

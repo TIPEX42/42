@@ -10,66 +10,67 @@ DEPS				=		libft.h
 #===========SRCS==========
 #=========================
 #LinkLists
-LINKLISTDIR			=		DataStructures/LinkList/
+LINKLISTDIR			=		data_structures/link_list/
 LINKLIST			=		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstize.c	\
 							ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 
 #Dynamic Arrays
-DARRAYDIR			=		DataStructures/DynamicArray/
+DARRAYDIR			=		data_structures/dynamic_array/
 DARRAY				=		darray_create.c darray_add.c darray_remove.c darray_get.c darray_free.c darray_utils.c		\
 
-#Dictionary
-DICTIONARYDIR		=		DataStructures/Dictionary/
-DICTIONARY			=		dict_create.c dict_add.c dict_get.c dict_remove.c dict_free.c								\
-
 #IO
-IODIR				=		IO/
+IODIR				=		io/
 IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c			\
 							ft_putnbr_base_fd.c
 
 #Printf
-PRINTFDIR			=		IO/Printf/
+PRINTFDIR			=		io/printf/
 PRINTF				=		ft_print_char.c ft_print_hex.c ft_print_hex_big.c ft_print_integer.c ft_print_ptr.c			\
 							ft_print_str.c ft_print_uinteger.c ft_printf.c
 
 #Memory Management
-MEMORYDIR			=		Memory/
-MEMORY				=		ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c
+MEMORYDIR			=		memory/
+MEMORY				=		ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c			\
+							ft_memseti.c ft_memsetf.c
 
 #C style strings
-CSTRINGSDIR			=		Strings/CStrings/
+CSTRINGSDIR			=		strings/cstrings/
 CSTRINGS			=		ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c		\
  							ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c 	\
  							ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c 	\
- 							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c
+ 							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c ft_atol_base.c ft_trim.c 			\
+ 							ft_isspace.c
 
 #Stringviews
-STRINGVIEWDIR		=		Strings/StringView/
+STRINGVIEWDIR		=		strings/string_view/
 STRINGVIEW			=		sv_create.c
 
 #Basic Maths
-BASICMATHDIR		=		Maths/Basics/
+BASICMATHDIR		=		maths/basics/
 BASICMATH			=		ft_factorial.c ft_pow2.c ft_sqrt.c ft_trig.c ft_modf.c ft_lerp.c
 
 #Vectors
-VECTORSDIR			=		Maths/Vectors/
+VECTORSDIR			=		maths/vectors/
 VECTORS				=		vec2_init.c vec2_add.c vec2_div.c vec2_magnitude.c vec2_mult.c vec2_normalize.c				\
 							vec3_init.c vec3_add.c vec3_div.c vec3_magnitude.c vec3_mult.c vec3_normalize.c				\
-							vec3_lerpf.c																				\
+							vec3_lerpf.c vec3_clamp.c																	\
 							vec4_init.c vec4_add.c vec4_div.c vec4_mult.c												\
 
 #Matrix
-MATRIXDIR			=		Maths/Matrix/
+MATRIXDIR			=		maths/matrix/
 MATRIX				=		mat4_init.c mat4_mult.c mat4_mvp.c mat4_rotation.c mat4_scale.c
 
 #Standard
-STANDARDDIR			=		Standard/
+STANDARDDIR			=		standard/
 STANDARD			=		ft_error_exit.c
+
+#Garbage collector
+GCDIR				=		memory/garbage_collector/
+GC					=		gc_init.c gc_calloc.c gc_free.c
 
 
 SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(DARRAYDIR), $(DARRAY)) 														\
-							$(addprefix $(DICTIONARYDIR), $(DICTIONARY)) 												\
 							$(addprefix $(IODIR), $(IO)) 																\
 							$(addprefix $(PRINTFDIR), $(PRINTF)) 														\
 							$(addprefix $(MEMORYDIR), $(MEMORY)) 														\
@@ -78,6 +79,7 @@ SRCS				=		$(addprefix $(LINKLISTDIR), $(LINKLIST))													\
 							$(addprefix $(VECTORSDIR), $(VECTORS)) 														\
 							$(addprefix $(MATRIXDIR), $(MATRIX)) 														\
 							$(addprefix $(STANDARDDIR), $(STANDARD)) 													\
+							$(addprefix $(GCDIR), $(GC)) 																\
 
 
 OBJSDIR				=		objs/
@@ -93,10 +95,6 @@ $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(DARRAYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
-					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
-$(OBJSDIR)%.o:		$(DICTIONARYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
@@ -136,6 +134,10 @@ $(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
+$(OBJSDIR)%.o:		$(GCDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIR)
+					@$(CC) -c $< $(CFLAGS) -o $@
 
 #DEBUG
 $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
@@ -143,10 +145,6 @@ $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
 $(OBJSDIRD)%d.o:	$(DARRAYDIR)%.c $(DEPS)
-					@echo "Compiling $<"
-					@mkdir -p $(OBJSDIRD)
-					@$(CC) -c $< $(CFLAGSD) -o $@
-$(OBJSDIRD)%d.o:	$(DICTIONARYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
@@ -186,22 +184,19 @@ $(OBJSDIRD)%d.o:	$(STANDARDDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIRD)
 					@$(CC) -c $< $(CFLAGSD) -o $@
+$(OBJSDIRD)%d.o:	$(GCDIR)%.c $(DEPS)
+					@echo "Compiling $<"
+					@mkdir -p $(OBJSDIRD)
+					@$(CC) -c $< $(CFLAGSD) -o $@
 
 
 all:				$(NAME)
 
-debug:				$(NAMED)
-
+debug:				$(OBJSD) Makefile
+					@ar -rcs $(NAMED) $(OBJSD)
 
 $(NAME):			$(OBJS) Makefile
-					@rm -f $(NAME)
 					@ar -rcs $(NAME) $(OBJS)
-					@ranlib $(NAME)
-
-$(NAMED):			$(OBJSD) Makefile
-					@rm -f $(NAMED)
-					@ar -rcs $(NAMED) $(OBJSD)
-					@ranlib $(NAMED)
 
 clean:
 					@rm -f $(OBJSDIR)*.o

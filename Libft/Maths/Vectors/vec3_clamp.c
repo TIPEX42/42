@@ -1,49 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_trim.c                                          :+:      :+:    :+:   */
+/*   vec3_clamp.c.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 17:49:56 by                   #+#    #+#             */
-/*   Updated: 2022/01/25 17:54:18 by                  ###   ########.fr       */
+/*   Created: 2022/01/06 10:54:51 by                   #+#    #+#             */
+/*   Updated: 2022/01/09 15:38:04 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-char	*ft_trimr(char *str)
+t_vec3	*vec3_clamp_max(t_vec3 *vec, int x, int y, int z)
 {
-	int	i;
-
-	if (!str)
-		return (NULL);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i--;
-	}
-	return (str);
+	if (vec->x > x)
+		vec->x = x;
+	if (vec->y > y)
+		vec->y = y;
+	if (vec->z > z)
+		vec->z = z;
+	return (vec);
 }
 
-char	*ft_triml(char *str)
+t_vec3	*vec3_clamp_min(t_vec3 *vec, int x, int y, int z)
 {
-	size_t	i;
-
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (str[i] && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i++;
-	}
-	return (&str[i]);
-}
-
-char	*ft_trim(char *str)
-{
-	ft_trimr(str);
-	return (ft_triml(str));
+	if (vec->x < x)
+		vec->x = x;
+	if (vec->y < y)
+		vec->y = y;
+	if (vec->z < z)
+		vec->z = z;
+	return (vec);
 }

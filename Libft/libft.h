@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/09 18:59:38 by                  ###   ########.fr       */
+/*   Updated: 2022/01/25 17:54:41 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,24 @@ typedef struct s_darray
 	size_t	size;
 }			t_darray;
 
-typedef struct s_dict_node
-{
-	char	*key;
-	double	value;
-}			t_dict_node;
-
-typedef struct s_dict
-{
-	t_dict_node	*items;
-	size_t		capacity;
-	size_t		cap_size_ratio;
-	size_t		size;
-}				t_dict;
-
 //Character Testing
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
 int			ft_isalnum(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
+int			ft_isspace(int c);
 
 //C style Strings Manipulation
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
+void		ft_triml(char *str);
+void		ft_trimr(char *str);
+void		ft_trim(char *str);
 int			ft_atoi(const char *str);
-int			ft_atol(const char *str);
+long		ft_atol_base(char *str, char *base);
+long		ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
@@ -147,6 +138,8 @@ void		ft_error_exit(char *message);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		ft_bzero(void *s, size_t n);
 void		*ft_memset(void *b, int c, size_t len);
+void		*ft_memseti(void *b, int c, size_t len);
+void		*ft_memsetf(void *b, float c, size_t len);
 void		*ft_memchr(const void *s, int c, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);
@@ -171,15 +164,6 @@ void		*darray_get(t_darray *array, size_t index);
 void		darray_remove(t_darray *array, size_t index);
 size_t		darray_size(t_darray *array);
 void		darray_free(t_darray *array);
-
-//Dictionary
-t_dict		dict_create();
-int			dict_exists(t_dict *dict);
-int			dict_key_exists(t_dict *dict, char *key);
-int			dict_add(t_dict *dict, char *key, double value);
-int			dict_remove(t_dict *dict, char *key);
-double		dict_get(t_dict *dict, char *key);
-int			dict_free(t_dict *dict);;
 
 //Maths Basics
 double		ft_abs(double nb);
@@ -220,6 +204,8 @@ t_vec3		*vec3_divi(t_vec3 *self, long value);
 t_vec3		*vec3_divf(t_vec3 *self, float value);
 t_vec3		*vec3_divv3(t_vec3 *self, t_vec3 vec);
 t_vec3		*vec3_normalize(t_vec3 *vec);
+t_vec3		*vec3_clamp_max(t_vec3 *vec, int x, int y, int z);
+t_vec3		*vec3_clamp_min(t_vec3 *vec, int x, int y, int z);
 t_vec3		vec3_normalized(t_vec3 vec);
 t_vec3		vec3_lerpf(t_vec3 base, t_vec3 high, double value);
 float		vec3_mag(t_vec3 vec);
@@ -250,8 +236,26 @@ t_mat4		mat4_rotatex(t_mat4 self, float value);
 t_mat4		mat4_rotatey(t_mat4 self, float value);
 t_mat4		mat4_rotatez(t_mat4 self, float value);
 t_mat4		mat4_rotate(t_vec3 vec);
+t_mat4		mat4_rotate_axis(float angle, t_vec3 axis);
 t_mat4		mat4_ortho(t_proj proj);
 t_mat4		mat4_scalef(float value);
 t_mat4		mat4_scalev3(t_vec3 vec);
+
+//Garbage collector
+typedef struct s_gc
+{
+	void	**pointers;
+	size_t	ptrs_count;
+	size_t	capacity;
+	size_t	first_free;
+	int		(*callback)(void *);
+	void	*param;
+}			t_gc;
+
+int			gc_grow(t_gc *gc);
+void		gc_clean(t_gc *gc);
+void		gc_free(t_gc *gc, void *ptr);
+void		gc_init(t_gc *gc, int (*callback)(), void *param);
+void		*gc_calloc(t_gc *gc, size_t count, size_t size);
 
 #endif

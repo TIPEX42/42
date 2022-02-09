@@ -60,7 +60,7 @@ char	*find_line(int fd, char *buffer, char **line)
 
 int	ft_get_line_length(char *line, int bytes_read)
 {
-	int	i;
+	uint32_t	i;
 
 	i = 0;
 	while (i < bytes_read && line[i] != '\n' && line[i] != EOF)

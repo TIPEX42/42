@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 14:21:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 16:43:43 by njennes          ###   ########lyon.fr   */
+/*   Created: 2022/01/22 16:10:13 by                   #+#    #+#             */
+/*   Updated: 2022/01/25 17:52:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-static	int	ft_check(long long nb, int signe)
+static int	get_index(char c, char *str)
 {
-	if (nb > 2147483648 || nb < -2147483649)
-	{
-		if (signe == 1)
-			return (-1);
-		return (0);
-	}
-	return ((int)nb * signe);
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != ft_tolower(c) && str[i] != ft_toupper(c))
+		i++;
+	return (i);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol_base(char *str, char *base)
 {
-	int			i;
-	int			negative;
-	long long	result;
+	int		i;
+	int		base_len;
+	long	result;
+	int		negative;
 
 	i = 0;
 	result = 0;
@@ -40,10 +40,11 @@ int	ft_atoi(const char *str)
 			negative = -1;
 		i++;
 	}
-	while (str[i] && ft_isdigit(str[i]))
+	base_len = ft_strlen(base);
+	while (str[i] && ft_isalnum(str[i]))
 	{
-		result = result * 10 + str[i] - '0';
+		result = result * base_len + get_index(str[i], base);
 		i++;
 	}
-	return (ft_check(result, negative));
+	return (result * negative);
 }

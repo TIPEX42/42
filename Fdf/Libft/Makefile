@@ -21,7 +21,7 @@ DARRAY				=		darray_create.c darray_add.c darray_remove.c darray_get.c darray_fr
 #IO
 IODIR				=		io/
 IO					=		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_get_next_line.c			\
-							ft_putnbr_base_fd.c
+							ft_putnbr_base_fd.c ft_format_valid.c ft_valid_args.c
 
 #Printf
 PRINTFDIR			=		io/printf/
@@ -39,7 +39,7 @@ CSTRINGS			=		ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_i
  							ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c 	\
  							ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c 	\
  							ft_tolower.c ft_toupper.c ft_split_size.c ft_split_free.c ft_atol_base.c ft_trim.c 			\
- 							ft_isspace.c
+ 							ft_isspace.c ft_str_count.c
 
 #Stringviews
 STRINGVIEWDIR		=		strings/string_view/

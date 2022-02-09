@@ -1,49 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_trim.c                                          :+:      :+:    :+:   */
+/*   gc_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 17:49:56 by                   #+#    #+#             */
-/*   Updated: 2022/01/25 17:54:18 by                  ###   ########.fr       */
+/*   Created: 2022/01/20 15:13:47 by                   #+#    #+#             */
+/*   Updated: 2022/01/20 15:52:11 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-char	*ft_trimr(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (NULL);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i--;
-	}
-	return (str);
-}
-
-char	*ft_triml(char *str)
+void	gc_free(t_gc *gc, void *ptr)
 {
 	size_t	i;
 
-	if (!str)
-		return (NULL);
+	if (!gc)
+		return ;
 	i = 0;
-	while (str[i] && ft_isspace(str[i]))
-	{
-		str[i] = 0;
+	while (i < gc->capacity && gc->pointers[i] != ptr)
 		i++;
-	}
-	return (&str[i]);
+	if (i < gc->capacity)
+		gc->pointers[i] = NULL;
+	if (i < gc->first_free)
+		gc->first_free = i;
+	gc->ptrs_count--;
+	free(ptr);
 }
 
-char	*ft_trim(char *str)
+void	gc_clean(t_gc *gc)
 {
-	ft_trimr(str);
-	return (ft_triml(str));
+	size_t	i;
+
+	if (!gc)
+		return ;
+	i = 0;
+	while (i < gc->capacity)
+	{
+		if (gc->pointers[i])
+			free(gc->pointers[i]);
+		i++;
+	}
+	free(gc->pointers);
 }

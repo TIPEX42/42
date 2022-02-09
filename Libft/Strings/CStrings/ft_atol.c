@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:21:30 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 16:43:43 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2022/01/22 16:20:32 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-static	int	ft_check(long long nb, int signe)
-{
-	if (nb > 2147483648 || nb < -2147483649)
-	{
-		if (signe == 1)
-			return (-1);
-		return (0);
-	}
-	return ((int)nb * signe);
-}
-
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int			i;
 	int			negative;
@@ -45,5 +34,5 @@ int	ft_atoi(const char *str)
 		result = result * 10 + str[i] - '0';
 		i++;
 	}
-	return (ft_check(result, negative));
+	return (result * negative);
 }
