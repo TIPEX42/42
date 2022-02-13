@@ -1,7 +1,7 @@
 NAME		=		philo
 CC			=		gcc
-CFLAGS		=		-Wall -Werror -Wextra -fsanitize=address -O2 -MD
-LD_FLAGS	=		-fsanitize=address
+CFLAGS		=		-Wall -Werror -Wextra -O2 -MD
+LD_FLAGS	=
 
 SRCS		=							\
 					ft_printf.c			\
@@ -20,6 +20,9 @@ SRCS		=							\
 					ft_atoi.c			\
 					ft_isspace.c		\
 					ft_isdigit.c		\
+					init.c				\
+					timestamp.c			\
+					philo.c				\
 
 OBJDIR		=		objs/
 OBJS		=		$(addprefix $(OBJDIR), $(SRCS:.c=.o))

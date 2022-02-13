@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   timestamp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,35 +12,32 @@
 
 #include "philo.h"
 
-void	philo_sleep(t_philo *philo, uint64_t time)
+void	set_timestamp(t_timestamp *timestamp)
 {
-	uint64_t	t;
+	struct timeval	time;
 
-	t = 0;
-	while (t < time)
-	{
-		usleep(1000);
-		if (philo->is_dead)
-			return ;
-		t += 1000;
-	}
+	gettimeofday(&time, NULL);
+	timestamp->usecs = time.tv_usec;
+	timestamp->secs = time.tv_sec;
 }
 
-int	main(int argc, char **argv)
+int	time_elapsed_since(t_timestamp ts, uint64_t time)
 {
-	t_philo	*philos;
+	struct timeval	current_time;
+	uint64_t		elapsedms;
 
-	if (!check_args(argc, argv))
+	gettimeofday(&current_time, NULL);
+	elapsedms = (current_time.tv_sec - ts.secs) * 1000;
+	if ((int64_t)current_time.tv_usec - (int64_t)ts.usecs < 0)
 	{
-		ft_printf("Invalid arguments\n");
-		return (1);
+		elapsedms -= 1000;
+		elapsedms += (current_time.tv_usec + 1000000 - ts.usecs) / 1000;
 	}
-	if (ft_atoi(argv[1]) == 0)
-		return (0);
-	philos = init_philos(ft_atoi(argv[1]), argv);
-	if (philos == NULL)
+	else
+		elapsedms += (current_time.tv_usec - ts.usecs) / 1000;
+	//printf("time: %ld,%d\n", current_time.tv_sec, current_time.tv_usec);
+	//printf("elapsedms: %llu\n", elapsedms);
+	if (elapsedms > time / 1000)
 		return (1);
-	simulate(philos, ft_atoi(argv[1]));
-	free(philos);
 	return (0);
 }
