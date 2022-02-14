@@ -35,8 +35,6 @@ int	time_elapsed_since(t_timestamp ts, uint64_t time)
 	}
 	else
 		elapsedms += (current_time.tv_usec - ts.usecs) / 1000;
-	//printf("time: %ld,%d\n", current_time.tv_sec, current_time.tv_usec);
-	//printf("elapsedms: %llu\n", elapsedms);
 	if (elapsedms > time / 1000)
 		return (1);
 	return (0);

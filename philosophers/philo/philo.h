@@ -43,8 +43,10 @@ typedef struct s_timestamp
 typedef struct s_philo
 {
 	int			id;
-	int         state;
+	int			done;
 	uint64_t	tmax_since_eat;
+	int64_t		eats;
+	int64_t		max_eats;
 	t_timestamp ts_eat;
 	uint64_t	tt_eat;
 	t_timestamp	ts_sleep;
@@ -74,7 +76,7 @@ void	*ft_calloc(size_t count, size_t size);
 
 int		check_args(size_t argc, char **argv);
 void	simulate(t_philo *philos, size_t n);
-t_philo	*init_philos(size_t n, char **argv);
+t_philo	*init_philos(size_t n, char **argv, int args);
 void	destroy_forks(t_mutex *forks, size_t n);
 t_mutex	*init_forks(size_t n);
 

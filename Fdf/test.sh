@@ -1,6 +1,6 @@
 #!/bin/bash
 
-make re
+make bonus
 
 MAPS=$(find . -type f -name "*.fdf" | cut -c3-)
 

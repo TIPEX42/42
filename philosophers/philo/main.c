@@ -14,16 +14,50 @@
 
 void	philo_sleep(t_philo *philo, uint64_t time)
 {
-	uint64_t	t;
+	t_timestamp	ts;
 
-	t = 0;
-	while (t < time)
+	set_timestamp(&ts);
+	while (!time_elapsed_since(ts, time))
 	{
-		usleep(1000);
 		if (philo->is_dead)
 			return ;
-		t += 1000;
 	}
+}
+
+void	simulate(t_philo *philos, size_t n)
+{
+	size_t			i;
+	size_t			alive;
+	struct timeval	time;
+
+	alive = n;
+	while (alive)
+	{
+		i = 0;
+		while (i < n)
+		{
+			if (time_elapsed_since(philos[i].ts_eat, philos[i].tmax_since_eat) &&
+				!philos[i].is_dead && !philos[i].done)
+			{
+				gettimeofday(&time, NULL);
+				philos[i].is_dead = 1;
+				printf("%ld %d died\n", time.tv_sec * 1000 + time.tv_usec / 1000, philos[i].id);
+				alive--;
+			}
+			if (philos[i].done)
+				alive--;
+			i++;
+		}
+	}
+	i = 0;
+	while (i < n)
+	{
+		pthread_join(philos[i].thread, NULL);
+		pthread_detach(philos[i].thread);
+		pthread_mutex_destroy(&philos[i].lfork->m);
+		i++;
+	}
+	destroy_forks(philos->lfork, n);
 }
 
 int	main(int argc, char **argv)
@@ -32,12 +66,12 @@ int	main(int argc, char **argv)
 
 	if (!check_args(argc, argv))
 	{
-		ft_printf("Invalid arguments\n");
+		printf("Invalid arguments\n");
 		return (1);
 	}
 	if (ft_atoi(argv[1]) == 0)
 		return (0);
-	philos = init_philos(ft_atoi(argv[1]), argv);
+	philos = init_philos(ft_atoi(argv[1]), argv, argc);
 	if (philos == NULL)
 		return (1);
 	simulate(philos, ft_atoi(argv[1]));

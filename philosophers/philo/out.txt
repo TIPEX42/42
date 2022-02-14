@@ -1,0 +1,169 @@
+4162724165 1 has taken a fork
+4162724165 1 has taken a fork
+4162724165 1 is eating
+4162724165 4 is sleeping
+4162724165 5 has taken a fork
+4162724165 2 is sleeping
+4162724165 3 has taken a fork
+4162724165 3 has taken a fork
+4162724165 3 is eating
+4162724418 2 is thinking
+4162724418 3 is sleeping
+4162724419 4 is thinking
+4162724419 2 has taken a fork
+4162724419 2 has taken a fork
+4162724419 2 is eating
+4162724419 1 is sleeping
+4162724419 5 has taken a fork
+4162724419 5 is eating
+4162724419 4 has taken a fork
+4162724670 1 is thinking
+4162724670 4 has taken a fork
+4162724670 4 is eating
+4162724670 2 is sleeping
+4162724670 1 has taken a fork
+4162724670 1 has taken a fork
+4162724670 3 is thinking
+4162724670 3 has taken a fork
+4162724670 5 is sleeping
+4162724670 1 is eating
+4162724920 2 is thinking
+4162724920 2 has taken a fork
+4162724920 1 is sleeping
+4162724920 5 is thinking
+4162724920 5 has taken a fork
+4162724920 5 has taken a fork
+4162724920 5 is eating
+4162724920 3 has taken a fork
+4162724920 3 is eating
+4162724920 4 is sleeping
+4162725171 3 is sleeping
+4162725171 1 is thinking
+4162725172 1 has taken a fork
+4162725171 4 is thinking
+4162725172 4 has taken a fork
+4162725172 4 has taken a fork
+4162725172 4 is eating
+4162725171 5 is sleeping
+4162725171 2 has taken a fork
+4162725171 2 is eating
+4162725422 4 is sleeping
+4162725422 5 is thinking
+4162725422 5 has taken a fork
+4162725422 2 is sleeping
+4162725422 1 has taken a fork
+4162725422 1 is eating
+4162725422 3 is thinking
+4162725423 3 has taken a fork
+4162725423 3 has taken a fork
+4162725423 3 is eating
+4162725673 4 is thinking
+4162725673 1 is sleeping
+4162725673 2 is thinking
+4162725673 2 has taken a fork
+4162725673 5 has taken a fork
+4162725673 5 is eating
+4162725674 3 is sleeping
+4162725674 4 has taken a fork
+4162725674 2 has taken a fork
+4162725674 2 is eating
+4162725923 1 is thinking
+4162725923 1 has taken a fork
+4162725923 4 has taken a fork
+4162725923 4 is eating
+4162725923 5 is sleeping
+4162725925 2 is sleeping
+4162725925 3 is thinking
+4162725925 3 has taken a fork
+4162725925 1 has taken a fork
+4162725925 1 is eating
+4162726175 5 is thinking
+4162726175 5 has taken a fork
+4162726175 3 has taken a fork
+4162726175 3 is eating
+4162726175 4 is sleeping
+4162726176 1 is sleeping
+4162726176 2 is thinking
+4162726176 2 has taken a fork
+4162726176 5 has taken a fork
+4162726176 5 is eating
+4162726425 4 is thinking
+4162726425 4 has taken a fork
+4162726425 2 has taken a fork
+4162726425 2 is eating
+4162726425 3 is sleeping
+4162726426 5 is sleeping
+4162726426 1 is thinking
+4162726426 1 has taken a fork
+4162726426 4 has taken a fork
+4162726426 4 is eating
+4162726676 3 is thinking
+4162726676 3 has taken a fork
+4162726676 2 is sleeping
+4162726676 1 has taken a fork
+4162726676 1 is eating
+4162726677 5 is thinking
+4162726677 5 has taken a fork
+4162726677 3 has taken a fork
+4162726677 3 is eating
+4162726677 4 is sleeping
+4162726926 2 is thinking
+4162726926 2 has taken a fork
+4162726926 5 has taken a fork
+4162726926 5 is eating
+4162726926 1 is sleeping
+4162726927 4 is thinking
+4162726927 4 has taken a fork
+4162726927 2 has taken a fork
+4162726927 2 is eating
+4162726927 3 is sleeping
+4162727173 1 is thinking
+4162727173 1 has taken a fork
+4162727173 4 has taken a fork
+4162727173 4 is eating
+4162727173 5 is sleeping
+4162727174 3 is thinking
+4162727174 3 has taken a fork
+4162727174 1 has taken a fork
+4162727174 1 is eating
+4162727174 2 is sleeping
+4162727386 4 is sleeping
+4162727386 3 has taken a fork
+4162727386 3 is eating
+4162727388 5 is thinking
+4162727388 5 has taken a fork
+4162727388 2 is thinking
+4162727389 1 is sleeping
+4162727389 2 has taken a fork
+4162727389 5 has taken a fork
+4162727389 5 is eating
+4162727597 4 is thinking
+4162727600 3 is sleeping
+4162727600 4 has taken a fork
+4162727600 2 has taken a fork
+4162727600 2 is eating
+4162727600 5 is sleeping
+4162727600 4 has taken a fork
+4162727600 4 is eating
+4162727600 1 is thinking
+4162727600 1 has taken a fork
+4162727813 3 is thinking
+4162727813 3 has taken a fork
+4162727813 2 is sleeping
+4162727813 1 has taken a fork
+4162727813 1 is eating
+4162727814 5 is thinking
+4162727814 4 is sleeping
+4162727814 5 has taken a fork
+4162727814 3 has taken a fork
+4162727814 3 is eating
+4162728026 2 is thinking
+4162728026 4 is thinking
+4162728028 2 has taken a fork
+4162728028 5 has taken a fork
+4162728028 5 is eating
+4162728029 4 has taken a fork
+4162728029 2 has taken a fork
+4162728029 2 is eating
+4162728252 4 has taken a fork
+4162728252 4 is eating
