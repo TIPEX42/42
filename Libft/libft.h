@@ -20,11 +20,19 @@
 # include <unistd.h>
 # include <limits.h>
 
+# define FT_FALSE 0
+# define FT_TRUE 1
+
 # define BUFFER_SIZE 1024
 
 # define PI 3.141592653589793
 # define TWO_PI 6.28318530718
 # define HALF_PI 1.57079632679
+
+# define FT_ANY 0
+# define FT_EACH 1
+# define FT_UNIQUE 2
+# define FT_GROUPS 3
 
 typedef struct s_list
 {
@@ -90,14 +98,15 @@ int			ft_isalnum(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_isspace(int c);
+int			ft_valid_args(size_t argc, char **argv, char *format);
 
 //C style Strings Manipulation
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
-void		ft_triml(char *str);
-void		ft_trimr(char *str);
-void		ft_trim(char *str);
+char		*ft_triml(char *str);
+char		*ft_trimr(char *str);
+char		*ft_trim(char *str);
 int			ft_atoi(const char *str);
 long		ft_atol_base(char *str, char *base);
 long		ft_atol(const char *str);
@@ -116,6 +125,7 @@ void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t		ft_str_count(char *str, char c, int mode);
 
 //Stringview
 t_StringV	sv_create(const char *str);
