@@ -1,10 +1,11 @@
 NAME				=		libft.a
 NAMED				=		libftd.a
 CC					=		gcc
-CFLAGS				=		-Wall -Werror -Wextra -o2
+CFLAGS				=		-Wall -Werror -Wextra -O2
 CFLAGSD				=		$(CFLAGS) $(FSANITIZE)
 FSANITIZE			=		-fsanitize=address
 DEPS				=		libft.h
+PCH					=		libft.h.gch
 
 #=========================
 #===========SRCS==========
@@ -93,51 +94,51 @@ OBJSD				=		$(addprefix $(OBJSDIRD), $(notdir $(SRCS:.c=d.o)))
 $(OBJSDIR)%.o:		$(LINKLISTDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(DARRAYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(IODIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(PRINTFDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MEMORYDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(CSTRINGSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STRINGVIEWDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(BASICMATHDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(VECTORSDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(MATRIXDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(STANDARDDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 $(OBJSDIR)%.o:		$(GCDIR)%.c $(DEPS)
 					@echo "Compiling $<"
 					@mkdir -p $(OBJSDIR)
-					@$(CC) -c $< $(CFLAGS) -o $@
+					@$(CC) -c $< -include libft.h $(CFLAGS) -o $@
 
 #DEBUG
 $(OBJSDIRD)%d.o:	$(LINKLISTDIR)%.c $(DEPS)
@@ -195,12 +196,16 @@ all:				$(NAME)
 debug:				$(OBJSD) Makefile
 					@ar -rcs $(NAMED) $(OBJSD)
 
-$(NAME):			$(OBJS) Makefile
+$(NAME):			$(PCH) $(OBJS) Makefile
 					@ar -rcs $(NAME) $(OBJS)
+
+$(PCH):				libft.h
+					@$(CC) libft.h $(CFLAGS)
 
 clean:
 					@rm -f $(OBJSDIR)*.o
 					@rm -f $(OBJSDIRD)*.o
+					@rm -f $(PCH)
 
 fclean: clean
 					@rm -f $(NAME)
