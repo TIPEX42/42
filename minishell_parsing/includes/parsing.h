@@ -74,6 +74,10 @@ t_gc			*get_gc();
 //NEW
 int				error_return(char *msg, int code);
 int				split_input_into_commands(char *input, t_command_batch *batch);
+int				get_redirections(char *input, t_command_batch *batch);
+
+int				is_operator_char(char c);
+char			*skip_spaces(char *str);
 
 //parsing.c
 t_command_batch	parse_input(char *input);
@@ -90,7 +94,6 @@ int				get_token_type(char *token, t_lexer *lexer, int handle_op);
 
 //tokenizer.c
 t_lexer			tokenize_input(char *input);
-int				skip_spaces(t_parser *parser);
 
 //lexer.c
 int				get_last_token_type(t_lexer *lexer);

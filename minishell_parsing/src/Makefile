@@ -1,6 +1,7 @@
 NAME		=	parsing
 
-SRCS		=	main.c parsing.c command_split.c minishell_error.c
+SRCS		=	main.c parsing.c command_split.c minishell_error.c get_redirections.c get_redirections_helper.c			\
+				parsing_helper.c
 
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
