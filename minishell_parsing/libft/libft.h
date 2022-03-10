@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Libft.h                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cybattis <cybattis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/01/25 17:54:41 by                  ###   ########.fr       */
+/*   Updated: 2022/03/07 12:26:32 by cybattis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # define FT_FALSE 0
 # define FT_TRUE 1
 
+# ifdef __linux__
+#  include <stdint.h>
+#  define OPEN_MAX FOPEN_MAX
+# endif
+
 # define BUFFER_SIZE 1024
 
 # define PI 3.141592653589793
@@ -33,6 +38,11 @@
 # define FT_EACH 1
 # define FT_UNIQUE 2
 # define FT_GROUPS 3
+
+# define FREE_NONE 0
+# define FREE_FIRST 1
+# define FREE_SECOND 2
+# define FREE_BOTH 	3
 
 typedef struct s_list
 {
@@ -101,6 +111,7 @@ int			ft_isspace(int c);
 int			ft_valid_args(size_t argc, char **argv, char *format);
 
 //C style Strings Manipulation
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_toupper(int c);
 int			ft_tolower(int c);
@@ -111,26 +122,28 @@ int			ft_atoi(const char *str);
 long		ft_atol_base(char *str, char *base);
 long		ft_atol(const char *str);
 char		*ft_strdup(const char *s1);
+char		*ft_strappend(char *str, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin(char *s1, char *s2, int to_free);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		**ft_split(char const *s, char c);
-int			ft_split_size(char **tab);
-void		ft_split_free(char **tab);
+int			ft_split_size(char **t);
+void		ft_split_free(char **t);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_str_count(char *str, char c, int mode);
+size_t		ft_word_size(char *str);
 
 //Stringview
 t_StringV	sv_create(const char *str);
-t_StringV	sv_copy(const t_StringV other);
-void		sv_delete(const t_StringV stringV);
+t_StringV	sv_copy(t_StringV other);
+void		sv_delete(t_StringV stringV);
 
 //Basic IO
 int			ft_putchar_fd(char c, int fd);
@@ -143,6 +156,8 @@ int			ft_printf(const char *str, ...);
 
 //Standard
 void		ft_error_exit(char *message);
+char		ft_randc(void);
+uint32_t	ft_randi(uint32_t min, uint32_t max);
 
 //Memory Management
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -262,10 +277,23 @@ typedef struct s_gc
 	void	*param;
 }			t_gc;
 
-int			gc_grow(t_gc *gc);
 void		gc_clean(t_gc *gc);
 void		gc_free(t_gc *gc, void *ptr);
 void		gc_init(t_gc *gc, int (*callback)(), void *param);
 void		*gc_calloc(t_gc *gc, size_t count, size_t size);
+char		*gc_strdup(t_gc *gc, const char *s1);
+char		*gc_strappend(t_gc *gc, char *str, char c);
+char		*gc_strjoin(t_gc *gc, char *s1, char *s2, int to_free);
+char		*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len);
+char		**gc_split(t_gc *gc, char const *s, char c);
+char		*gc_get_next_line(t_gc *gc, int fd);
+void		gc_split_free(t_gc *gc, char **t);
+char		**gc_strarray_init(t_gc *gc);
+char		**gc_strarray_from(t_gc *gc, char **other, size_t size);
+void		gc_strarray_free(t_gc *gc, char **array);
+char		**gc_strarray_append(t_gc *gc, char **array, char *str);
+char		*gc_strarray_asstr(t_gc *gc, char **array);
+size_t		gc_strarray_size(char **array);
+char		*gc_itoa(t_gc *gc, int n);
 
 #endif

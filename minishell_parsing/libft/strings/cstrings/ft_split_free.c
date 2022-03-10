@@ -1,49 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_trim.c                                          :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 17:49:56 by                   #+#    #+#             */
-/*   Updated: 2022/01/25 17:54:18 by                  ###   ########.fr       */
+/*   Created: 2022/01/08 11:19:03 by                   #+#    #+#             */
+/*   Updated: 2022/01/08 11:19:50 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_trimr(char *str)
+void	ft_split_free(char **tab)
 {
 	int	i;
 
-	if (!str)
-		return (NULL);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i--;
-	}
-	return (str);
-}
-
-char	*ft_triml(char *str)
-{
-	size_t	i;
-
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (str[i] && ft_isspace(str[i]))
+	while (tab[i])
 	{
-		str[i] = 0;
+		free(tab[i]);
 		i++;
 	}
-	return (&str[i]);
-}
-
-char	*ft_trim(char *str)
-{
-	ft_trimr(str);
-	return (ft_triml(str));
+	free(tab[i]);
+	free(tab);
 }

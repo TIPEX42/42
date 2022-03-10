@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_trim.c                                          :+:      :+:    :+:   */
+/*   ft_str_count.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,40 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_trimr(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (NULL);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && ft_isspace(str[i]))
-	{
-		str[i] = 0;
-		i--;
-	}
-	return (str);
-}
-
-char	*ft_triml(char *str)
+size_t	ft_str_count(char *str, char c, int mode)
 {
 	size_t	i;
+	size_t	count;
 
-	if (!str)
-		return (NULL);
+	if (!(mode == FT_EACH || mode == FT_UNIQUE || mode == FT_GROUPS))
+		return (0);
 	i = 0;
-	while (str[i] && ft_isspace(str[i]))
+	count = 0;
+	while (str[i])
 	{
-		str[i] = 0;
+		if (str[i] == c)
+		{
+			count++;
+			if (mode != FT_EACH && str[i + 1] == c)
+			{
+				if (mode == FT_UNIQUE)
+					count--;
+				while (str[i + 1] == c)
+					i++;
+			}
+		}
 		i++;
 	}
-	return (&str[i]);
-}
-
-char	*ft_trim(char *str)
-{
-	ft_trimr(str);
-	return (ft_triml(str));
+	return (count);
 }
