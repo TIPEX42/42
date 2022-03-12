@@ -56,7 +56,7 @@ static char	*get_redir_file(char *str)
 	char	*file;
 
 	str = skip_spaces(str);
-	file = get_next_word(str);
+	file = get_next_word(str); //TODO: changer ca: https://stackoverflow.com/questions/2462385/getting-an-ambiguous-redirect-error, il faut creer une fonction speciale
 }
 
 static size_t	get_redir_count(char *str)

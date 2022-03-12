@@ -86,7 +86,7 @@ int					is_operator_char(char c);
 int					is_envchar(char c);
 char				*skip_spaces(char *str);
 
-char				*get_next_word(char *str);
+t_err_or_charptr	get_next_word(char *str);
 
 t_err_or_charptr	get_double_quotes(t_parser *parser);
 t_err_or_charptr	get_single_quotes(t_parser *parser);
