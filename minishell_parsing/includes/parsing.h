@@ -69,25 +69,31 @@ typedef struct s_lexer
 	size_t		count;
 }				t_lexer;
 
+typedef struct s_err_or_charptr
+{
+	char		*error;
+	char		*result;
+}				t_err_or_charptr;
+
 t_gc			*get_gc();
 
 //NEW
-int				error_return(char *msg, int code);
-int				split_input_into_commands(char *input, t_command_batch *batch);
-int				get_redirections(char *input, t_command_batch *batch);
+int					error_return(char *msg, int code);
+int					split_input_into_commands(char *input, t_command_batch *batch);
+int					get_redirections(char *input, t_command_batch *batch);
 
-int				is_operator_char(char c);
-int				is_envchar(char c);
-char			*skip_spaces(char *str);
+int					is_operator_char(char c);
+int					is_envchar(char c);
+char				*skip_spaces(char *str);
 
-char			*get_next_word(char *str);
+char				*get_next_word(char *str);
 
-char			*get_double_quotes(t_parser *parser);
-char			*get_single_quotes(t_parser *parser);
+t_err_or_charptr	get_double_quotes(t_parser *parser);
+t_err_or_charptr	get_single_quotes(t_parser *parser);
 
-char			*get_env_var_first_word(t_parser *parser);
-char			*get_env_var_raw(t_parser *parser);
-char			*get_env_var_name(t_parser *parser);
+char				*get_env_var_first_word(t_parser *parser);
+char				*get_env_var_raw(t_parser *parser);
+char				*get_env_var_name(t_parser *parser);
 
 //parsing.c
 t_command_batch	parse_input(char *input);

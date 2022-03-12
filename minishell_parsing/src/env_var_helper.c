@@ -11,6 +11,8 @@ char	*get_env_var_name(t_parser *parser)
 	if (!is_envchar(parser->str[parser->i]))
 		return handle_question_mark(parser);
 	name = gc_strdup(get_gc(), "");
+	if (ft_isdigit(parser->str[parser->i]))
+		return (name);
 	while (is_envchar(parser->str[parser->i]))
 	{
 		name = gc_strappend(get_gc(), name, parser->str[parser->i]);
@@ -21,7 +23,7 @@ char	*get_env_var_name(t_parser *parser)
 
 int	is_envchar(char c)
 {
-	if (ft_isalnum(c) || c == '_')
+	if (ft_isalpha(c) || c == '_')
 		return (1);
 	return (0);
 }

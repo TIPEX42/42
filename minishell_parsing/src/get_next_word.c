@@ -1,23 +1,32 @@
 #include "libft.h"
 #include "parsing.h"
 
+t_err_or_charptr	append_chars(char **word, t_parser *parser);
+
 char	*get_next_word(char *str)
 {
-	size_t		i;
-	t_parser	parser;
+	t_err_or_charptr	result;
+	t_parser			parser;
+	char				*word;
 
-	i = 0;
-	parser.str = gc_strdup(get_gc(), "");
-	while (str[i])
+	parser.i = 0;
+	parser.str = str;
+	word = gc_strdup(get_gc(), "");
+	while (parser.str[parser.i])
 	{
-		if (str[i] == '"')
-			parser.str = gc_strjoin(get_gc(), parser.str, get_double_quotes(&parser), FREE_BOTH);
-		else if (str[i] == '\'')
-			parser.str = gc_strjoin(get_gc(), parser.str, get_single_quotes(&parser), FREE_BOTH);
-		else if (str[i] == '$')
-			parser.str = gc_strjoin(get_gc(), parser.str, get_env_var_first_word(&parser), FREE_BOTH);
-		else
-			parser.str = gc_strappend(get_gc(), parser.str, parser.str[parser.i++]);
+		result = append_chars(&word, &parser);
+		if (result.error)
+		{
+			gc_free(get_gc(), word);
+		}
 	}
 	return (parser.str);
+}
+
+t_err_or_charptr	append_chars(char **word, t_parser *parser)
+{
+	t_err_or_charptr	result;
+
+	result.result = NULL;
+	result.error = NULL;
 }
