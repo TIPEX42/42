@@ -77,6 +77,7 @@ int				split_input_into_commands(char *input, t_command_batch *batch);
 int				get_redirections(char *input, t_command_batch *batch);
 
 int				is_operator_char(char c);
+int				is_envchar(char c);
 char			*skip_spaces(char *str);
 
 char			*get_next_word(char *str);
@@ -86,6 +87,7 @@ char			*get_single_quotes(t_parser *parser);
 
 char			*get_env_var_first_word(t_parser *parser);
 char			*get_env_var_raw(t_parser *parser);
+char			*get_env_var_name(t_parser *parser);
 
 //parsing.c
 t_command_batch	parse_input(char *input);
