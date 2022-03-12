@@ -1,7 +1,8 @@
 NAME		=	parsing
 
 SRCS		=	main.c parsing.c command_split.c minishell_error.c get_redirections.c get_redirections_helper.c			\
-				parsing_helper.c
+				parsing_helper.c get_next_word.c get_single_quotes.c get_double_quotes.c get_env_var_first_word.c		\
+				get_env_var_raw.c
 
 OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 

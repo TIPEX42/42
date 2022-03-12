@@ -79,6 +79,14 @@ int				get_redirections(char *input, t_command_batch *batch);
 int				is_operator_char(char c);
 char			*skip_spaces(char *str);
 
+char			*get_next_word(char *str);
+
+char			*get_double_quotes(t_parser *parser);
+char			*get_single_quotes(t_parser *parser);
+
+char			*get_env_var_first_word(t_parser *parser);
+char			*get_env_var_raw(t_parser *parser);
+
 //parsing.c
 t_command_batch	parse_input(char *input);
 

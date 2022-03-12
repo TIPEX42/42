@@ -53,9 +53,10 @@ static int	setup_redirections(char *str, t_command *command)
 static char	*get_redir_file(char *str)
 {
 	size_t	i;
+	char	*file;
 
 	str = skip_spaces(str);
-
+	file = get_next_word(str);
 }
 
 static size_t	get_redir_count(char *str)
