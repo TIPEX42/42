@@ -1,7 +1,7 @@
 #include "libft.h"
 #include "parsing.h"
 
-void	check_for_error(t_parser *parser, t_err_or_charptr *result);
+static void	check_for_error(t_parser *parser, t_err_or_charptr *result);
 
 t_err_or_charptr	get_double_quotes(t_parser *parser)
 {
@@ -20,7 +20,7 @@ t_err_or_charptr	get_double_quotes(t_parser *parser)
 	return (result);
 }
 
-void	check_for_error(t_parser *parser, t_err_or_charptr *result)
+static void	check_for_error(t_parser *parser, t_err_or_charptr *result)
 {
 	if (parser->str[parser->i])
 		parser->i++;

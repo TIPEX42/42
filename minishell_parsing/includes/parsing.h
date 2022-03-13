@@ -28,6 +28,9 @@
 # define TOKEN_REDIR_HEREDOC 7
 # define TOKEN_FILE 8
 
+# define PATH_FILE 1
+# define PATH_DIRECTORY 2
+
 typedef struct s_redir
 {
 	int			type;
@@ -85,8 +88,9 @@ int					get_redirections(char *input, t_command_batch *batch);
 int					is_operator_char(char c);
 int					is_envchar(char c);
 char				*skip_spaces(char *str);
+int					contains_open_spaces(char *str);
 
-t_err_or_charptr	get_next_word(char *str);
+t_err_or_charptr	get_next_word(char *str, int expand_vars);
 
 t_err_or_charptr	get_double_quotes(t_parser *parser);
 t_err_or_charptr	get_single_quotes(t_parser *parser);
@@ -94,6 +98,14 @@ t_err_or_charptr	get_single_quotes(t_parser *parser);
 char				*get_env_var_first_word(t_parser *parser);
 char				*get_env_var_raw(t_parser *parser);
 char				*get_env_var_name(t_parser *parser);
+
+char				*error_ambiguous_redirection(char *str);
+char				*parsing_error(char *str);
+
+int					is_valid_path(char *str);
+int					contains_file(char *str);
+int					is_absolute_path(char *str);
+void				make_absolute_path(char **str);
 
 //parsing.c
 t_command_batch	parse_input(char *input);
