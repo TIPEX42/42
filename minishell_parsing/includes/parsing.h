@@ -101,6 +101,7 @@ char				*get_env_var_name(t_parser *parser);
 
 char				*error_ambiguous_redirection(char *str);
 char				*parsing_error(char *str);
+char				*file_error(char *str, char *file);
 
 int					is_valid_path(char *str);
 int					contains_file(char *str);

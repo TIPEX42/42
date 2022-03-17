@@ -17,9 +17,8 @@ int	get_redirections(char *input, t_command_batch *batch)
 	printf("Input: %s\n", input);
 	while (command_index < batch->count)
 	{
-		if (!setup_redirections(input, &batch->commands[command_index]))
-			return (0);
-		input = ft_strchr(input, '|');
+		setup_redirections(input, &batch->commands[command_index]);
+		input = ft_strchr(input, '|') + 1;
 		command_index++;
 	}
 	return (1);
@@ -28,6 +27,7 @@ int	get_redirections(char *input, t_command_batch *batch)
 static int	setup_redirections(char *str, t_command *command)
 {
 	size_t	i;
+	size_t	j;
 	size_t	redir_count;
 
 	redir_count = get_redir_count(str);
@@ -36,19 +36,16 @@ static int	setup_redirections(char *str, t_command *command)
 		command->is_redirecting = 1;
 	command->redirections = gc_calloc(get_gc(), redir_count + 1, sizeof (t_redir));
 	i = 0;
-	while (str[i])
+	j = 0;
+	while (str[i] && str[i] != '|')
 	{
-		printf("REDIR\n");
-		printf("%zu\n", i);
 		if (is_redirection(&str[i]))
 		{
-			printf("found a redir\n");
-			command->redirections[i].type = get_redir_type(&str[i]);
+			command->redirections[j].type = get_redir_type(&str[i]);
 			while (str[i] == '>' || str[i] == '<')
 				i++;
-			command->redirections[i].file = get_redir_file(&str[i]);
-			if (!command->redirections[i].file)
-				return (0);
+			command->redirections[j].file = get_redir_file(&str[i]);
+			j++;
 		}
 		while (str[i] == '>' || str[i] == '<')
 			i++;
@@ -74,13 +71,13 @@ static char	*get_redir_file(char *str)
 		return (parsing_error("minishell: :No such file or directory"));
 	if (!is_absolute_path(file.result))
 		make_absolute_path(&file.result);
-	filename = ft_strrchr(file.result, '/') + 1;
-	filename[-2] = 0;
-	if (!is_valid_path(file.result))
-		return (parsing_error("minishell: :No such file or directory"));
 	if (is_valid_path(file.result) == PATH_DIRECTORY)
-		return (parsing_error("minishell: :Is a directory"));
-	filename[-2] = '/';
+		return (file_error("Is a directory", file.result));
+	filename = ft_strrchr(file.result, '/') + 1;
+	filename[-1] = 0;
+	if (!is_valid_path(file.result))
+		return (file_error("No such file or directory", file.result));
+	filename[-1] = '/';
 	return (file.result);
 }
 
@@ -91,7 +88,7 @@ static size_t	get_redir_count(char *str)
 
 	i = 0;
 	count = 0;
-	while (str[i])
+	while (str[i] && str[i] != '|')
 	{
 		if (is_redirection(&str[i]))
 			count++;

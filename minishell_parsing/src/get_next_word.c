@@ -43,6 +43,9 @@ static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars)
 				|| is_operator_char(parser->str[parser->i]))
 		result.result = NULL;
 	else
+	{
 		result.result = gc_substr(get_gc(), parser->str, parser->i, 1);
+		parser->i++;
+	}
 	return (result);
 }

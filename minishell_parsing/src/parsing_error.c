@@ -14,3 +14,9 @@ char	*parsing_error(char *str)
 	printf("%s\n", str);
 	return (NULL);
 }
+
+char	*file_error(char *str, char *file)
+{
+	printf("minishell: %s: %s\n", file, str);
+	return (NULL);
+}
