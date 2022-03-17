@@ -8,11 +8,14 @@ t_command_batch	parse_input(char *input)
 	t_parser		*parsers;
 
 	ft_memset(&command_batch, 0, sizeof (t_command_batch));
+	//TODO: Maybe check for unfinished quotes here ?
 	if (!split_input_into_commands(input, &command_batch))
 		return (command_batch);
 	if (!get_redirections(input, &command_batch))
 		return (command_batch);
-	//parsers = strip_out_operators(input);
+	parsers = strip_out_operators(input, &command_batch);
+	for (int i = 0; i < command_batch.count; i++)
+		printf("parser[%d]: %s\n", i, parsers[i].str);
 	//tokenize_all(lexers, parsers, command_batch.count);
 	//populate_command_batch(&command_batch, lexers);
 	return (command_batch);

@@ -1,8 +1,6 @@
 #include "libft.h"
 #include "parsing.h"
 
-static int	is_redirection_char(char c);
-
 int	get_redir_type(char *str)
 {
 	size_t	size;
@@ -36,7 +34,7 @@ int	is_redirection(char *str)
 	return (0);
 }
 
-static int	is_redirection_char(char c)
+int	is_redirection_char(char c)
 {
 	if (c == '>' || c == '<')
 		return (1);

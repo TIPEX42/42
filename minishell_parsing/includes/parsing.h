@@ -87,7 +87,9 @@ int					get_redirections(char *input, t_command_batch *batch);
 
 int					is_operator_char(char c);
 int					is_envchar(char c);
+int					is_redirection_char(char c);
 char				*skip_spaces(char *str);
+size_t				skip_quotes(char *str);
 int					contains_open_spaces(char *str);
 
 t_err_or_charptr	get_next_word(char *str, int expand_vars);
@@ -107,6 +109,8 @@ int					is_valid_path(char *str);
 int					contains_file(char *str);
 int					is_absolute_path(char *str);
 void				make_absolute_path(char **str);
+
+t_parser			*strip_out_operators(char *input, t_command_batch *batch);
 
 //parsing.c
 t_command_batch	parse_input(char *input);

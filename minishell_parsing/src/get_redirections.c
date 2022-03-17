@@ -29,7 +29,6 @@ static int	setup_redirections(char *str, t_command *command)
 	size_t	redir_count;
 
 	redir_count = get_redir_count(str);
-	printf("redir count:%zu\n", redir_count);
 	if (redir_count)
 		command->is_redirecting = 1;
 	command->redirections = gc_calloc(get_gc(), redir_count + 1, sizeof (t_redir));
@@ -55,7 +54,6 @@ static int	setup_redirections(char *str, t_command *command)
 
 static char	*get_redir_file(char *str)
 {
-	size_t				i;
 	t_err_or_charptr	file;
 	char				*filename;
 
@@ -89,12 +87,11 @@ static size_t	get_redir_count(char *str)
 	while (str[i] && str[i] != '|')
 	{
 		if (is_redirection(&str[i]))
-		{
-			printf("is_redirection at %zu\n", i);
 			count++;
-		}
 		while (str[i] == '>' || str[i] == '<')
 			i++;
+		if (str[i] == '\'' || str[i] == '"')
+			i += skip_quotes(&str[i]);
 		if (str[i])
 			i++;
 	}

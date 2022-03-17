@@ -14,6 +14,22 @@ char	*skip_spaces(char *str)
 	return (str);
 }
 
+size_t	skip_quotes(char *str)
+{
+	size_t	i;
+	char	quote;
+
+	quote = *str;
+	if (!(quote == '\'' || quote == '"'))
+		return (0);
+	i = 1;
+	while (str[i] && str[i] != quote)
+		i++;
+	if (str[i] == quote)
+		i++;
+	return (i);
+}
+
 int	contains_open_spaces(char *str)
 {
 	char	quote;
