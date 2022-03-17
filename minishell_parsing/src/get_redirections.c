@@ -13,8 +13,6 @@ int	get_redirections(char *input, t_command_batch *batch)
 	size_t	command_index;
 
 	command_index = 0;
-	printf("batch count :%d\n", (int)batch->count);
-	printf("Input: %s\n", input);
 	while (command_index < batch->count)
 	{
 		setup_redirections(input, &batch->commands[command_index]);
@@ -91,7 +89,10 @@ static size_t	get_redir_count(char *str)
 	while (str[i] && str[i] != '|')
 	{
 		if (is_redirection(&str[i]))
+		{
+			printf("is_redirection at %zu\n", i);
 			count++;
+		}
 		while (str[i] == '>' || str[i] == '<')
 			i++;
 		if (str[i])

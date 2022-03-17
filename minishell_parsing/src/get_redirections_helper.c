@@ -28,8 +28,10 @@ int	is_redirection(char *str)
 	size = 0;
 	while (is_redirection_char(str[size]))
 		size++;
-	if (ft_strncmp(str, "<", size) || ft_strncmp(str, "<<", size)
-		|| ft_strncmp(str, ">", size) || ft_strncmp(str, ">>", size))
+	if (!size)
+		return (0);
+	if (!ft_strncmp(str, "<", size) || !ft_strncmp(str, "<<", size)
+		|| !ft_strncmp(str, ">", size) || !ft_strncmp(str, ">>", size))
 		return (1);
 	return (0);
 }
