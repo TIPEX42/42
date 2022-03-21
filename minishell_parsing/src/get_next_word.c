@@ -3,7 +3,6 @@
 
 static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars);
 
-//TODO: chop at operators
 t_err_or_charptr	get_next_word(char *str, int expand_vars)
 {
 	t_err_or_charptr	result;
@@ -28,6 +27,28 @@ t_err_or_charptr	get_next_word(char *str, int expand_vars)
 	return ((t_err_or_charptr){NULL, word});
 }
 
+t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars)
+{
+	t_err_or_charptr	result;
+	char				*word;
+
+	word = gc_strdup(get_gc(), "");
+	while (parser->str[parser->i])
+	{
+		result = get_next_chars(parser, expand_vars);
+		if (result.error)
+		{
+			gc_free(get_gc(), word);
+			return (result);
+		}
+		if (!result.result)
+			break ;
+		word = gc_strjoin(get_gc(), word, result.result, FREE_BOTH);
+	}
+	return ((t_err_or_charptr){NULL, word});
+}
+
+//TODO: handle spaces inside of env vars
 static t_err_or_charptr	get_next_chars(t_parser *parser, int expand_vars)
 {
 	t_err_or_charptr	result;

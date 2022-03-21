@@ -81,6 +81,9 @@ typedef struct s_err_or_charptr
 t_gc			*get_gc();
 
 //NEW
+char				*token_to_str(int token);
+t_command_batch		parse_input(char *input);
+
 int					error_return(char *msg, int code);
 int					split_input_into_commands(char *input, t_command_batch *batch);
 int					get_redirections(char *input, t_command_batch *batch);
@@ -93,6 +96,7 @@ size_t				skip_quotes(char *str);
 int					contains_open_spaces(char *str);
 
 t_err_or_charptr	get_next_word(char *str, int expand_vars);
+t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars);
 
 t_err_or_charptr	get_double_quotes(t_parser *parser);
 t_err_or_charptr	get_single_quotes(t_parser *parser);
@@ -112,46 +116,13 @@ void				make_absolute_path(char **str);
 
 t_parser			*strip_out_operators(char *input, t_command_batch *batch);
 
-//parsing.c
-t_command_batch	parse_input(char *input);
+void				tokenize_all(t_lexer **lexers, t_parser *parsers, size_t count);
 
-//get_token.c
-t_token			consume_single_quotes(t_parser *parser, t_lexer *lexer);
-t_token			consume_double_quotes(t_parser *parser, t_lexer *lexer);
-t_token			consume_word(t_parser *parser, t_lexer *lexer);
+int					get_token_type(char *token, t_lexer *lexer);
 
-//token_type.c
-int				is_operator(char c);
-int				is_redir_token(int token);
-int				get_token_type(char *token, t_lexer *lexer, int handle_op);
+void				lexer_add_token(t_lexer *lexer, t_token token);
+void				lexer_add_end(t_lexer *lexer);
 
-//tokenizer.c
-t_lexer			tokenize_input(char *input);
-
-//lexer.c
-int				get_last_token_type(t_lexer *lexer);
-void			lexer_add_token(t_token token, t_lexer *lexer);
-void			lexer_add_end(t_lexer *lexer);
-void			lexer_destroy(t_lexer *lexer);
-
-//handle_env.c
-int				is_envchar(char c);
-void			handle_dollar_sign(t_parser *parser, t_lexer *lexer,
-					int chop_tokens, t_token *current);
-
-//parsing_error.c
-int				check_parsing_errors(t_lexer lexer);
-
-//command_batch.c
-void			create_command_batch(t_lexer lexer, t_command_batch *batch);
-
-//command_batch_helper.c
-size_t			get_redirs_count(t_token *tokens);
-size_t			get_arg_count(t_token *tokens);
-int				is_builtin_command(char *str);
-
-//Debug
-void			lexer_print(t_lexer *lexer);
-char			*token_type_to_str(int token_type);
+void				populate_command_batch(t_command_batch *batch, t_lexer *lexers, size_t count);
 
 #endif

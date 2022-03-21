@@ -25,7 +25,7 @@ t_lexer	tokenize_input(char *input)
 	parser.i = 0;
 	parser.str = input;
 	while (get_last_token_type(&lexer) != TOKEN_END)
-		get_next_token(&parser, &lexer);
+		add_next_token(&parser, &lexer);
 	return (lexer);
 }
 

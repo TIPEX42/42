@@ -8,3 +8,7 @@
 
 *.o
 *.d
+*.a
+*.dylib
+*.so
+*.out

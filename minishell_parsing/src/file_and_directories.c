@@ -26,7 +26,6 @@ int	is_absolute_path(char *str)
 void	make_absolute_path(char **str)
 {
 	char	pwd[MAXPATHLEN];
-	char	*result;
 
 	getcwd(pwd, MAXPATHLEN);
 	*str = gc_strjoin(get_gc(), "/", *str, FREE_SECOND);

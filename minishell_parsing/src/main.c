@@ -32,6 +32,8 @@ char	*token_to_str(int token)
 			return ("TOKEN_PIPE");
 		case TOKEN_FILE:
 			return ("TOKEN_FILE");
+		case TOKEN_END:
+			return ("TOKEN_END");
 		default:
 			return ("UNKNOWN_TOKEN_TYPE");
 	}
