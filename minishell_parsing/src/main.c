@@ -39,6 +39,8 @@ char	*token_to_str(int token)
 	}
 }
 
+
+
 int main(int argc, char **argv)
 {
 	gc_init(get_gc(), NULL, NULL);
