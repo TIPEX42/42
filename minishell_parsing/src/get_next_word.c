@@ -35,7 +35,6 @@ t_err_or_charptr	get_next_word_parser(t_parser *parser, int expand_vars)
 	word = gc_strdup(get_gc(), "");
 	while (parser->str[parser->i])
 	{
-		printf("get_next_word_parser(): word: [%s]\n", word);
 		result = get_next_chars(parser, expand_vars);
 		if (result.error)
 		{

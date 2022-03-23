@@ -16,9 +16,7 @@ t_command_batch	parse_input(char *input)
 	if (!get_redirections(input, &command_batch))
 		return (command_batch);
 	parsers = strip_out_operators(input, &command_batch);
-	printf("la\n");
 	tokenize_all(&lexers, parsers, command_batch.count);
 	populate_command_batch(&command_batch, lexers, command_batch.count);
-	printf("ici\n");
 	return (command_batch);
 }

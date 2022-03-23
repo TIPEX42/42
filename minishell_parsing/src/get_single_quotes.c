@@ -10,6 +10,7 @@ t_err_or_charptr	get_single_quotes(t_parser *parser)
 
 	parser->i++;
 	start = parser->i;
+	result.error = NULL;
 	while (parser->str[parser->i] && parser->str[parser->i] != '\'')
 		parser->i++;
 	result.result = gc_substr(get_gc(), parser->str, start, parser->i - start);

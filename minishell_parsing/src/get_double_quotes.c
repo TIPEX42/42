@@ -9,6 +9,7 @@ t_err_or_charptr	get_double_quotes(t_parser *parser)
 
 	parser->i++;
 	result.result = gc_strdup(get_gc(), "");
+	result.error = NULL;
 	while (parser->str[parser->i] && parser->str[parser->i] != '"')
 	{
 		if (parser->str[parser->i] == '$')

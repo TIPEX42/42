@@ -51,8 +51,8 @@ int main(int argc, char **argv)
 	gc_init(get_gc(), NULL, NULL);
 	t_command_batch	batch = {0};
 
+	printf("%s\n", argv[1]);
 	batch = parse_input(argv[1]);
-
 
 	for (int i = 0; i < batch.count; i++)
 	{
