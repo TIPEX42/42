@@ -1,2 +1,0 @@
-//TODO: make argv of commands not end with an empty arg, instead stor the count of args
-//TODO: numbers sem to not be counted as allowed in env var name
