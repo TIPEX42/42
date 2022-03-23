@@ -61,20 +61,11 @@ static t_parser	populate_parser(char *str, t_redir *redirs)
 
 static char	*skip_redir_file(char *str, t_redir *redirs)
 {
-	size_t	i;
-	size_t	file_len;
+	t_err_or_charptr	result;
 
-	i = 0;
-	while (redirs[i].type)
-	{
-		file_len = ft_strlen(ft_strrchr(redirs[i].file, '/') + 1);
-		if (ft_strncmp(str, ft_strrchr(redirs[i].file, '/') + 1, file_len) == 0)
-		{
-			str += file_len;
-			break;
-		}
-		i++;
-	}
+	result = get_next_word(str, 1);
+	str += ft_strlen(result.result);
+	gc_free(get_gc(), result.result);
 	return (str);
 }
 
