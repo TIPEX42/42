@@ -3,55 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   gc_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:47 by                   #+#    #+#             */
-/*   Updated: 2022/01/20 15:52:11 by                  ###   ########.fr       */
+/*   Updated: 2022/04/08 19:14:52 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	gc_free(t_gc *gc, void *ptr)
+void	gc_free(void *ptr)
 {
+	t_gc	*allocator;
 	size_t	i;
 
-	if (!gc || gc->capacity == 0)
+	allocator = gc(GC_GET, NULL);
+	if (allocator->capacity == 0)
 		return ;
 	i = 0;
-	while (i < gc->capacity && gc->pointers[i] != ptr)
+	while (i < allocator->capacity && allocator->pointers[i] != ptr)
 		i++;
-	if (i >= gc->capacity || gc->pointers[i] == NULL)
+	if (i >= allocator->capacity || allocator->pointers[i] == NULL)
 		return ;
 	else
-		gc->pointers[i] = NULL;
-	if (i < gc->first_free)
-		gc->first_free = i;
-	gc->ptrs_count--;
+		allocator->pointers[i] = NULL;
+	if (i < allocator->first_free)
+		allocator->first_free = i;
+	allocator->ptrs_count--;
 	free(ptr);
 }
 
-void	gc_destroy(t_gc *gc, void **ptr)
+void	gc_destroy(void **ptr)
 {
+	t_gc	*allocator;
+
+	allocator = gc(GC_GET, NULL);
 	if (!ptr)
 		return ;
-	gc_free(gc, *ptr);
+	gc_free(*ptr);
 	*ptr = NULL;
 }
 
-void	gc_clean(t_gc *gc)
+void	gc_clean()
 {
+	t_gc	*allocator;
 	size_t	i;
 
-	if (!gc || gc->capacity == 0)
+	allocator = gc(GC_GET, NULL);
+	if (allocator->capacity == 0)
 		return ;
 	i = 0;
-	while (i < gc->capacity)
+	while (i < allocator->capacity)
 	{
-		if (gc->pointers[i])
-			free(gc->pointers[i]);
+		if (allocator->pointers[i])
+			free(allocator->pointers[i]);
 		i++;
 	}
-	free(gc->pointers);
-	gc->capacity = 0;
+	free(allocator->pointers);
+	allocator->capacity = 0;
 }

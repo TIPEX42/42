@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:52:10 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/09 16:16:13 by njennes          ###   ########lyon.fr   */
+/*   Updated: 2022/04/08 19:19:14 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ft_chop(char *str, char c)
 	}
 }
 
-static int	ft_get_words(t_gc *gc, char *str, int count, char **tab)
+static int	ft_get_words(char *str, int count, char **tab)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ static int	ft_get_words(t_gc *gc, char *str, int count, char **tab)
 	{
 		while (!*str)
 			str++;
-		tab[i] = gc_strdup(gc, str);
+		tab[i] = gc_strdup(str);
 		str += ft_strlen(str);
 		i++;
 	}
@@ -58,18 +58,17 @@ static int	ft_get_words(t_gc *gc, char *str, int count, char **tab)
 	return (1);
 }
 
-char	**gc_split(t_gc *gc, char const *s, char c)
+char	**gc_split(char const *s, char c)
 {
 	char	*sdup;
 	char	**tab;
 
 	if (!s)
 		return (NULL);
-	tab = gc_calloc(gc, ft_count_words(s, c) + 1, sizeof(char *));
-	sdup = gc_strdup(gc, s);
+	tab = gc_calloc(ft_count_words(s, c) + 1, sizeof(char *));
+	sdup = gc_strdup(s);
 	ft_chop(sdup, c);
-	if (!ft_get_words(gc, sdup, ft_count_words(s, c), tab))
-		return (NULL);
-	gc_free(gc, sdup);
+	ft_get_words(sdup, ft_count_words(s, c), tab);
+	gc_free(sdup);
 	return (tab);
 }

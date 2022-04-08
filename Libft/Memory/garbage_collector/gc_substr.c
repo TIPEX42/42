@@ -19,15 +19,15 @@ static int	ft_min(int a, int b)
 	return (a);
 }
 
-char	*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len)
+char	*gc_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*new;
 
 	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
-		return (gc_strdup(gc, ""));
-	new = gc_calloc(gc, ft_min(ft_strlen(s) - start, len) + 1, sizeof(char));
+		return (gc_strdup(""));
+	new = gc_calloc(ft_min(ft_strlen(s) - start, len) + 1, sizeof(char));
 	ft_strlcpy(new, &s[start], ft_min(ft_strlen(s) - start, len) + 1);
 	return (new);
 }

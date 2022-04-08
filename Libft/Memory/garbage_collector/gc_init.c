@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:48:09 by                   #+#    #+#             */
-/*   Updated: 2022/01/20 15:52:41 by                  ###   ########.fr       */
+/*   Updated: 2022/04/08 19:17:53 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ void	gc_init(t_gc *gc, int (*callback)(void *), void *param)
 		gc->capacity = 0;
 }
 
-int	gc_getfootprint(t_gc *gc)
+int	gc_getfootprint()
 {
 	int		footprint;
 	size_t	i;
+	t_gc	*allocator;
 
+	allocator = gc(GC_GET, NULL);
 	i = 0;
 	footprint = 0;
-	while (i < gc->capacity)
+	while (i < allocator->capacity)
 	{
-		if (gc->pointers[i])
+		if (allocator->pointers[i])
 			footprint++;
 		i++;
 	}

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_strarray_free.c                                 :+:      :+:    :+:   */
+/*   gc_gc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 14:26:44 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/05 14:37:24 by njennes          ###   ########lyon.fr   */
+/*   Created: 2022/04/08 18:58:07 by njennes           #+#    #+#             */
+/*   Updated: 2022/04/08 19:11:18 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-void	gc_strarray_free(char **array)
+t_gc	*gc(int mode, void *param)
 {
-	size_t	i;
-	size_t	size;
+	static t_gc	allocator = {0};
 
-	if (!array)
-		return ;
-	size = gc_strarray_size(array);
-	i = 0;
-	while (i < size)
-	{
-		gc_free(array[i]);
-		i++;
-	}
-	gc_free(array[i]);
-	gc_free(array);
+	if (!allocator.pointers)
+		gc_init(&allocator, NULL, NULL);
+	if (mode == GC_SET_CALLBACK)
+		allocator.callback = param;
+	if (mode == GC_SET_CALLBACK_PARAM)
+		allocator.param = param;
+	if (mode == GC_GET)
+		return (&allocator);
+	return (NULL);
 }
