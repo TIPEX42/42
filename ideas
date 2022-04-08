@@ -1,0 +1,54 @@
+Garbage Collector:
+
+-Make debug easier with debug allocations that keep track of where (in which function) the allocation has been performed
+->Maybe use macros for that
+
+-Make temporary allocations that will be freed by a call to gc_free_temp()
+
+-Make scope based allocations:
+-	All functions that are scope based will be prefixed by s, eg: gc_scalloc()
+-	Can support multiple scopes:
+
+Function1()
+{
+	gc_scope_start();
+	...
+	Function2();
+	...
+	gc_scope_end();
+}
+
+Function2()
+{
+	gc_scope_start();
+	...
+	gc_scope_end(); ->this should only free object allocated during this function's lifetime
+}
+
+-Make group based allocations:
+-	All functions that are group based will be prefixed by g, eg: gc_gcalloc()
+-	All functions that are group based will need an group identifier (char *)
+-	When calling gc_gfree("[group]"), all allocations done with gc_* will be freed
+-	Example:
+
+gc_gcalloc("obj", 10, sizeof(t_obj))
+gc_gstrdup("obj", "hey")
+gc_gfree("obj")
+
+-Create a gc_print_warnings()
+-	Prints message if a scope wasn't ended
+-	Prints message if groups weren't freed
+-	Prints message if an groups allocation was freed with gc_free()
+
+-Add gc_own(void *ptr) which will alloc to add a pointer allocated outside of the gc to be handled by it
+-	When owned, a ptr should not be free()'d
+
+-Make allocations tied o others
+-	When a pointer is gc_free()'d, all pointers tied to it will be gc_free()'d
+-	Syntax: prefixed with o: gc_ocalloc(parent_ptr, count, size)
+
+-Optimize allocation numbers by providing a way to change the minimum allocated space in one time
+-	The goal is to make: char *str = gc_strdup("hey"); str = gc_strappend(str, " comment ca va?"); only one allocation
+
+-Add a gc_falloc() - fast allocations for internal gc's functions 
+-	Literally gc_calloc without the memset()
