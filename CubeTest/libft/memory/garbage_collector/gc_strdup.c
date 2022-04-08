@@ -12,13 +12,13 @@
 
 #include "libft.h"
 
-char	*gc_strdup(t_gc *gc, const char *s1)
+char	*gc_strdup(const char *s1)
 {
 	char	*newstr;
 
 	if (!s1)
 		return (NULL);
-	newstr = gc_calloc(gc, ft_strlen(s1) + 1, sizeof(char));
+	newstr = gc_calloc(ft_strlen(s1) + 1, sizeof(char));
 	ft_strlcpy(newstr, s1, ft_strlen(s1) + 1);
 	return (newstr);
 }

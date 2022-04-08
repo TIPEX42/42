@@ -32,7 +32,7 @@ static void	copy_into_str(char **array, size_t arr_size, char *str)
 	str[j - 1] = 0;
 }
 
-char	*gc_strarray_asstr(t_gc *gc, char **array)
+char	*gc_strarray_asstr(char **array)
 {
 	size_t	i;
 	size_t	arr_size;
@@ -40,7 +40,7 @@ char	*gc_strarray_asstr(t_gc *gc, char **array)
 	char	*str;
 
 	if (!array || gc_strarray_size(array) == 0)
-		return (gc_strdup(gc, ""));
+		return (gc_strdup(""));
 	arr_size = gc_strarray_size(array);
 	total_size = 0;
 	i = 0;
@@ -49,7 +49,7 @@ char	*gc_strarray_asstr(t_gc *gc, char **array)
 		total_size += ft_strlen(array[i]) + 1;
 		i++;
 	}
-	str = gc_calloc(gc, total_size, sizeof (char));
+	str = gc_calloc(total_size, sizeof (char));
 	copy_into_str(array, arr_size, str);
 	return (str);
 }

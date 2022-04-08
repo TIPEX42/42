@@ -12,16 +12,16 @@
 
 #include "libft.h"
 
-void	gc_split_free(t_gc *gc, char **tab)
+void	gc_split_free(char **tab)
 {
 	int	i;
 
 	i = 0;
 	while (tab[i])
 	{
-		gc_free(gc, tab[i]);
+		gc_free(tab[i]);
 		i++;
 	}
-	gc_free(gc, tab[i]);
-	gc_free(gc, tab);
+	gc_free(tab[i]);
+	gc_free(tab);
 }

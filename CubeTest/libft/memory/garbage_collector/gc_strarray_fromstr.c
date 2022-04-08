@@ -12,13 +12,13 @@
 
 #include "libft.h"
 
-char	**gc_strarray_fromstr(t_gc *gc, char *str)
+char	**gc_strarray_fromstr(char *str)
 {
 	char	**array;
 
-	array = gc_strarray_init(gc);
+	array = gc_strarray_init();
 	if (!str)
 		return (array);
-	array = gc_strarray_append(gc, array, str);
+	array = gc_strarray_append(array, str);
 	return (array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:05:46 by                   #+#    #+#             */
-/*   Updated: 2022/01/20 15:51:55 by                  ###   ########.fr       */
+/*   Updated: 2022/04/08 19:11:36 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,29 @@ static void	insert_ptr(t_gc *gc, void *ptr)
 	gc->ptrs_count++;
 }
 
-void	*gc_calloc(t_gc *gc, size_t count, size_t size)
+void	*gc_calloc(size_t count, size_t size)
 {
+	t_gc	*allocator;
 	void	*ptr;
 
-	if (!gc)
-		return (NULL);
+	allocator = gc(GC_GET, NULL);
 	ptr = ft_calloc(count, size);
 	if (!ptr)
 	{
-		if (gc->callback)
-			gc->callback(gc->param);
+		if (allocator->callback)
+			allocator->callback(allocator->param);
 		return (NULL);
 	}
-	if (gc->ptrs_count >= gc->capacity)
+	if (allocator->ptrs_count >= allocator->capacity)
 	{
-		if (!gc_grow(gc))
+		if (!gc_grow(allocator))
 		{
 			free(ptr);
-			if (gc->callback)
-				gc->callback(gc->param);
+			if (allocator->callback)
+				allocator->callback(allocator->param);
 			return (NULL);
 		}
 	}
-	insert_ptr(gc, ptr);
+	insert_ptr(allocator, ptr);
 	return (ptr);
 }

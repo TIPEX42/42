@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cybattis <cybattis@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:34:44 by njennes           #+#    #+#             */
-/*   Updated: 2022/03/29 15:31:57 by cybattis         ###   ########.fr       */
+/*   Updated: 2022/04/08 19:09:18 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 # define FREE_FIRST 1
 # define FREE_SECOND 2
 # define FREE_BOTH 	3
+
+# define GC_GET 1
+# define GC_SET_CALLBACK 2
+# define GC_SET_CALLBACK_PARAM 3
 
 typedef struct s_list
 {
@@ -287,26 +291,27 @@ typedef struct s_gc
 	void	*param;
 }			t_gc;
 
-int			gc_getfootprint(t_gc *gc);
-void		gc_clean(t_gc *gc);
-void		gc_free(t_gc *gc, void *ptr);
-void		gc_destroy(t_gc *gc, void **ptr);
+t_gc		*gc(int mode, void *param);
+int			gc_getfootprint();
+void		gc_clean();
+void		gc_free(void *ptr);
+void		gc_destroy(void **ptr);
 void		gc_init(t_gc *gc, int (*callback)(), void *param);
-void		*gc_calloc(t_gc *gc, size_t count, size_t size);
-char		*gc_strdup(t_gc *gc, const char *s1);
-char		*gc_strappend(t_gc *gc, char *str, char c);
-char		*gc_strjoin(t_gc *gc, char *s1, char *s2, int to_free);
-char		*gc_substr(t_gc *gc, char const *s, unsigned int start, size_t len);
-char		**gc_split(t_gc *gc, char const *s, char c);
-char		*gc_get_next_line(t_gc *gc, int fd);
-void		gc_split_free(t_gc *gc, char **t);
-char		**gc_strarray_init(t_gc *gc);
-char		**gc_strarray_from(t_gc *gc, char **other, size_t size);
-char		**gc_strarray_fromstr(t_gc *gc, char *str);
-void		gc_strarray_free(t_gc *gc, char **array);
-char		**gc_strarray_append(t_gc *gc, char **array, char *str);
-char		*gc_strarray_asstr(t_gc *gc, char **array);
+void		*gc_calloc(size_t count, size_t size);
+char		*gc_strdup(const char *s1);
+char		*gc_strappend(char *str, char c);
+char		*gc_strjoin(char *s1, char *s2, int to_free);
+char		*gc_substr(char const *s, unsigned int start, size_t len);
+char		**gc_split(char const *s, char c);
+char		*gc_get_next_line(int fd);
+void		gc_split_free(char **t);
+char		**gc_strarray_init();
+char		**gc_strarray_from(char **other, size_t size);
+char		**gc_strarray_fromstr(char *str);
+void		gc_strarray_free(char **array);
+char		**gc_strarray_append(char **array, char *str);
+char		*gc_strarray_asstr(char **array);
 size_t		gc_strarray_size(char **array);
-char		*gc_itoa(t_gc *gc, int n);
+char		*gc_itoa(int n);
 
 #endif

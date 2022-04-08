@@ -12,7 +12,7 @@
 
 #include "../../libft.h"
 
-void	gc_strarray_free(t_gc *gc, char **array)
+void	gc_strarray_free(char **array)
 {
 	size_t	i;
 	size_t	size;
@@ -23,9 +23,9 @@ void	gc_strarray_free(t_gc *gc, char **array)
 	i = 0;
 	while (i < size)
 	{
-		gc_free(gc, array[i]);
+		gc_free(array[i]);
 		i++;
 	}
-	gc_free(gc, array[i]);
-	gc_free(gc, array);
+	gc_free(array[i]);
+	gc_free(array);
 }

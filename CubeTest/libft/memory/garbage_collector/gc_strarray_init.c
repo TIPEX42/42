@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-char	**gc_strarray_init(t_gc *gc)
+char	**gc_strarray_init()
 {
 	char	**array;
 
-	array = gc_calloc(gc, 1, sizeof (char *));
+	array = gc_calloc(1, sizeof (char *));
 	return (array);
 }

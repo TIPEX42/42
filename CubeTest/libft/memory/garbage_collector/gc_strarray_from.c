@@ -12,19 +12,19 @@
 
 #include "libft.h"
 
-char	**gc_strarray_from(t_gc *gc, char **other, size_t size)
+char	**gc_strarray_from(char **other, size_t size)
 {
 	size_t	i;
 	char	**array;
 
 	if (!other)
-		return (gc_strarray_init(gc));
-	array = gc_calloc(gc, size + 1, sizeof (char *));
+		return (gc_strarray_init());
+	array = gc_calloc(size + 1, sizeof (char *));
 	ft_memmove(array, other, size * sizeof (char *));
 	i = 0;
 	while (i < size)
 	{
-		array[i] = gc_strdup(gc, other[i]);
+		array[i] = gc_strdup(other[i]);
 		i++;
 	}
 	return (array);
