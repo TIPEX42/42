@@ -3,51 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 18:08:08 by                  ###   ########.fr       */
+/*   Updated: 2022/05/06 19:42:00 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_sleep(t_philo *philo, uint64_t time)
-{
-	t_timestamp	ts;
+static void	init_data(t_data *data, int running);
 
-	set_timestamp(&ts);
-	while (!time_elapsed_since(ts, time))
-	{
-		if (philo->is_dead)
-			return ;
-	}
-}
-
-void	simulate(t_philo *philos, size_t n)
+void	simulate(t_data *data, t_philo *philos, size_t n)
 {
 	size_t			i;
-	size_t			alive;
 	struct timeval	time;
 
-	alive = n;
-	while (alive)
+	while (!get_death_switch(data) && get_philo_alive(data) > 0)
 	{
 		i = 0;
-		while (i < n)
+		gettimeofday(&time, NULL);
+		lock_philo_eat(&philos[i]);
+		if (time_diff(philos[i].ts_eat, time) > philos[i].tmax_since_eat
+			&& !is_philo_done(&philos[i]))
 		{
-			if (time_elapsed_since(philos[i].ts_eat, philos[i].tmax_since_eat) &&
-				!philos[i].is_dead && !philos[i].done)
-			{
-				gettimeofday(&time, NULL);
-				philos[i].is_dead = 1;
-				printf("%ld %d died\n", time.tv_sec * 1000 + time.tv_usec / 1000, philos[i].id);
-				alive--;
-			}
-			if (philos[i].done)
-				alive--;
-			i++;
+			unlock_philo_eat(&philos[i]);
+			set_death_switch(philos[i].data, 1);
+			printf("%lld %d died\n",
+					time_diff(philos[i].data->start_ts, time) / 1000,
+					philos[i].id);
+			break ;
 		}
+		else
+			unlock_philo_eat(&philos[i]);
+		i++;
+		if (i == n)
+			i = 0;
 	}
 	i = 0;
 	while (i < n)
@@ -55,14 +46,17 @@ void	simulate(t_philo *philos, size_t n)
 		pthread_join(philos[i].thread, NULL);
 		pthread_detach(philos[i].thread);
 		pthread_mutex_destroy(&philos[i].lfork->m);
+		pthread_mutex_destroy(&philos[i].eat_mutex.m);
 		i++;
 	}
 	destroy_forks(philos->lfork, n);
+	destroy_data(data);
 }
 
 int	main(int argc, char **argv)
 {
 	t_philo	*philos;
+	t_data	data;
 
 	if (!check_args(argc, argv))
 	{
@@ -71,10 +65,37 @@ int	main(int argc, char **argv)
 	}
 	if (ft_atoi(argv[1]) == 0)
 		return (0);
-	philos = init_philos(ft_atoi(argv[1]), argv, argc);
+	init_data(&data, ft_atoi(argv[1]));
+	philos = init_philos(ft_atoi(argv[1]), argv, argc, &data);
 	if (philos == NULL)
 		return (1);
-	simulate(philos, ft_atoi(argv[1]));
+	simulate(&data, philos, ft_atoi(argv[1]));
 	free(philos);
 	return (0);
+}
+
+void	set_death_switch(t_data *data, int status)
+{
+	pthread_mutex_lock(&data->ds_mutex.m);
+	data->death_switch = status;
+	pthread_mutex_unlock(&data->ds_mutex.m);
+}
+
+int	get_death_switch(t_data *data)
+{
+	int	status;
+
+	pthread_mutex_lock(&data->ds_mutex.m);
+	status = data->death_switch;
+	pthread_mutex_unlock(&data->ds_mutex.m);
+	return (status);
+}
+
+static void	init_data(t_data *data, int running)
+{
+	gettimeofday(&data->start_ts, NULL);
+	data->death_switch = 0;
+	data->running = running;
+	init_mutex(&data->ds_mutex);
+	init_mutex(&data->running_mutex);
 }

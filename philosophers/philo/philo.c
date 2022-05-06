@@ -3,59 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/01/06 18:08:08 by                  ###   ########.fr       */
+/*   Updated: 2022/05/06 19:30:23 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_try_start_eating(t_philo *philo)
+int	philo_try_start_eating(t_philo *philo)
 {
-	struct timeval time;
+	int	sleep_ret;
 
-	pthread_mutex_lock(&philo->lfork->m);
-	gettimeofday(&time, NULL);
-	printf("%ld %d has taken a fork\n", time.tv_sec * 1000 + time.tv_usec / 1000, philo->id);
+	lock_lfork(philo);
 	if (!philo->rfork)
 	{
 		pthread_mutex_unlock(&philo->lfork->m);
 		pthread_exit(EXIT_SUCCESS);
 	}
-	pthread_mutex_lock(&philo->rfork->m);
-	gettimeofday(&time, NULL);
-	printf("%ld %d has taken a fork\n", time.tv_sec * 1000 + time.tv_usec / 1000, philo->id);
-	printf("%ld %d is eating\n", time.tv_sec * 1000 + time.tv_usec / 1000, philo->id);
-	set_timestamp(&philo->ts_eat);
-	philo_sleep(philo, philo->tt_eat);
-	pthread_mutex_unlock(&philo->rfork->m);
-	pthread_mutex_unlock(&philo->lfork->m);
+	lock_rfork(philo);
+	if (!philo_print(philo, "is eating"))
+	{
+		unlock_forks(philo);
+		return (0);
+	}
+	lock_philo_eat(philo);
+	gettimeofday(&philo->ts_eat, NULL);
+	unlock_philo_eat(philo);
+	sleep_ret = my_eat(philo, philo->tt_eat);
+	unlock_forks(philo);
+	if (!sleep_ret)
+		return (0);
 	philo->eats++;
 	if (philo->eats == philo->max_eats)
 	{
-		philo->done = 1;
-		pthread_exit(EXIT_SUCCESS);
+		set_philo_done(philo);
+		return (0);
 	}
+	return (1);
 }
 
-void	philo_try_start_sleeping(t_philo *philo)
+int	philo_try_start_sleeping(t_philo *philo)
 {
-	struct timeval	time;
-
-	set_timestamp(&philo->ts_sleep);
-	gettimeofday(&time, NULL);
-	printf("%ld %d is sleeping\n", time.tv_sec * 1000 + time.tv_usec / 1000, philo->id);
-	philo_sleep(philo, philo->tt_sleep);
+	if (!philo_print(philo, "is sleeping"))
+		return (0);
+	return (my_sleep(philo, philo->tt_sleep));
 }
 
-void	philo_try_start_thinking(t_philo *philo)
+int	philo_try_start_thinking(t_philo *philo)
 {
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	printf("%ld %d is thinking\n", time.tv_sec * 1000 + time.tv_usec / 1000, philo->id);
+	return (philo_print(philo, "is thinking"));
 }
 
 void	*philo_live(void *ptr)
@@ -64,19 +62,15 @@ void	*philo_live(void *ptr)
 
 	philo = (t_philo *)ptr;
 	if (philo->id % 2 == 0)
+		my_sleep(philo, 3000);
+	while (!is_philo_done(philo))
 	{
-		philo_sleep(philo, 10000);
-		philo_try_start_eating(philo);
+		if (!philo_try_start_eating(philo))
+			return (NULL);
+		if (!philo_try_start_sleeping(philo))
+			return (NULL);
+		if (!philo_try_start_thinking(philo))
+			return (NULL);
 	}
-	while (!philo->is_dead)
-	{
-		philo_try_start_eating(philo);
-		if (philo->is_dead)
-			pthread_exit(EXIT_SUCCESS);
-		philo_try_start_sleeping(philo);
-		if (philo->is_dead)
-			pthread_exit(EXIT_SUCCESS);
-		philo_try_start_thinking(philo);
-	}
-	pthread_exit(EXIT_SUCCESS);
+	return (NULL);
 }

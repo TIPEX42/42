@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_char.c                                    :+:      :+:    :+:   */
+/*   philo_mutex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 14:41:18 by njennes           #+#    #+#             */
-/*   Updated: 2021/11/24 15:06:40 by njennes          ###   ########lyon.fr   */
+/*   Created: 2022/05/06 16:02:28 by njennes           #+#    #+#             */
+/*   Updated: 2022/05/06 19:32:53 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_print_char(va_list *parameters_infos, int *chars_printed)
+void	lock_philo_eat(t_philo *philo)
 {
-	char	c;
+	pthread_mutex_lock(&philo->eat_mutex.m);
+}
 
-	c = (char)va_arg(*parameters_infos, int);
-	write(1, &c, 1);
-	(*chars_printed)++;
+void	unlock_philo_eat(t_philo *philo)
+{
+	pthread_mutex_unlock(&philo->eat_mutex.m);
 }

@@ -4,16 +4,6 @@ CFLAGS		=		-Wall -Werror -Wextra -O2 -MD
 LD_FLAGS	=
 
 SRCS		=							\
-					ft_printf.c			\
-					ft_print_char.c		\
-					ft_print_hex.c		\
-					ft_print_hex_big.c	\
-					ft_print_integer.c	\
-					ft_print_uinteger.c	\
-					ft_putnbr_base_fd.c	\
-					ft_print_ptr.c		\
-					ft_print_str.c		\
-					ft_putnbr_fd.c		\
 					main.c				\
 					ft_calloc.c			\
 					ft_strlen.c			\
@@ -21,8 +11,11 @@ SRCS		=							\
 					ft_isspace.c		\
 					ft_isdigit.c		\
 					init.c				\
-					timestamp.c			\
+					time.c				\
 					philo.c				\
+					philo_utils.c		\
+					philo_mutex.c		\
+					helper.c
 
 OBJDIR		=		objs/
 OBJS		=		$(addprefix $(OBJDIR), $(SRCS:.c=.o))
@@ -33,7 +26,7 @@ $(OBJDIR)%.o:		%.c
 					@mkdir -p $(OBJDIR)
 					@$(CC) -c $< $(CFLAGS) -o $@
 
-$(NAME):			$(OBJS)
+$(NAME):			$(OBJS) Makefile
 					@echo "Linking $(NAME)..."
 					@$(CC) $(OBJS) $(LD_FLAGS) -o $(NAME)
 
