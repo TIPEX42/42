@@ -6,13 +6,13 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/05/06 19:42:00 by njennes          ###   ########.fr       */
+/*   Updated: 2022/05/07 13:58:26 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_data(t_data *data, int running);
+void	close_philos_forks(t_data *data, t_philo *philos, size_t n);
 
 void	simulate(t_data *data, t_philo *philos, size_t n)
 {
@@ -30,8 +30,8 @@ void	simulate(t_data *data, t_philo *philos, size_t n)
 			unlock_philo_eat(&philos[i]);
 			set_death_switch(philos[i].data, 1);
 			printf("%lld %d died\n",
-					time_diff(philos[i].data->start_ts, time) / 1000,
-					philos[i].id);
+				time_diff(philos[i].data->start_ts, time) / 1000,
+				philos[i].id);
 			break ;
 		}
 		else
@@ -40,6 +40,13 @@ void	simulate(t_data *data, t_philo *philos, size_t n)
 		if (i == n)
 			i = 0;
 	}
+	close_philos_forks(data, philos, n);
+}
+
+void	close_philos_forks(t_data *data, t_philo *philos, size_t n)
+{
+	size_t	i;
+
 	i = 0;
 	while (i < n)
 	{
@@ -89,13 +96,4 @@ int	get_death_switch(t_data *data)
 	status = data->death_switch;
 	pthread_mutex_unlock(&data->ds_mutex.m);
 	return (status);
-}
-
-static void	init_data(t_data *data, int running)
-{
-	gettimeofday(&data->start_ts, NULL);
-	data->death_switch = 0;
-	data->running = running;
-	init_mutex(&data->ds_mutex);
-	init_mutex(&data->running_mutex);
 }

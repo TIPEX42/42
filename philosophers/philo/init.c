@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/05/06 16:26:29 by njennes          ###   ########.fr       */
+/*   Updated: 2022/05/07 13:52:55 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,33 +49,14 @@ t_philo	*init_philos(size_t n, char **argv, int args, t_data *data)
 	t_mutex			*forks;
 	struct timeval	time;
 
-	forks = init_forks(n);
-	if (!forks)
+	if (!init_forks_philos(&forks, &philos, n))
 		return (NULL);
-	philos = ft_calloc(n, sizeof(t_philo));
-	if (philos == NULL)
-	{
-		destroy_forks(forks, n);
-		return (NULL);
-	}
 	i = 0;
 	gettimeofday(&time, NULL);
 	while (i < n)
 	{
-		philos[i].tmax_since_eat = ft_atoi(argv[2]) * 1000;
-		philos[i].tt_eat = ft_atoi(argv[3]) * 1000;
-		philos[i].tt_sleep = ft_atoi(argv[4]) * 1000;
-		init_mutex(&philos[i].eat_mutex);
-		philos[i].lfork = &forks[i];
-		philos[i].data = data;
-		if (args == 6)
-			philos[i].max_eats = ft_atoi(argv[5]);
-		else
-			philos[i].max_eats = -1;
-		if (i > 0)
-			philos[i - 1].rfork = &forks[i];
-		if (i == n - 1 && i != 0)
-			philos[i].rfork = &forks[0];
+		init_philo(&philos[i], args, argv, data);
+		init_philo_2(philos, i, n, forks);
 		i++;
 	}
 	i = 0;

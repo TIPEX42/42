@@ -1,7 +1,7 @@
 NAME		=		philo
 CC			=		gcc
 CFLAGS		=		-Wall -Werror -Wextra -O2 -MD
-LD_FLAGS	=
+LDFLAGS		=
 
 SRCS		=							\
 					main.c				\
@@ -15,7 +15,8 @@ SRCS		=							\
 					philo.c				\
 					philo_utils.c		\
 					philo_mutex.c		\
-					helper.c
+					helper.c			\
+					init_helper.c
 
 OBJDIR		=		objs/
 OBJS		=		$(addprefix $(OBJDIR), $(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/05/06 19:40:34 by njennes          ###   ########.fr       */
+/*   Updated: 2022/05/07 13:56:11 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	lock_philo_eat(t_philo *philo);
 void	unlock_philo_eat(t_philo *philo);
 
 int		is_philo_done(t_philo *philo);
-void	set_philo_done(t_philo *philo);
+int		set_philo_done(t_philo *philo);
 int		get_philo_alive(t_data *data);
 
 int		ft_printf(const char *str, ...);
@@ -87,7 +87,11 @@ t_philo	*init_philos(size_t n, char **argv, int args, t_data *data);
 void	destroy_forks(t_mutex *forks, size_t n);
 void	destroy_data(t_data *data);
 t_mutex	*init_forks(size_t n);
+int		init_forks_philos(t_mutex **forks, t_philo **philos, size_t n);
+void	init_philo(t_philo *philo, int argc, char **argv, t_data *data);
+void	init_philo_2(t_philo *philos, size_t i, size_t n, t_mutex *forks);
 void	init_mutex(t_mutex *mutex);
+void	init_data(t_data *data, int running);
 
 int64_t	time_diff(struct timeval start, struct timeval end);
 int		my_sleep(t_philo *philo, int64_t time);

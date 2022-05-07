@@ -6,13 +6,13 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:33:16 by njennes           #+#    #+#             */
-/*   Updated: 2022/05/06 19:40:12 by njennes          ###   ########.fr       */
+/*   Updated: 2022/05/07 13:56:03 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_philo_done(t_philo *philo)
+int	set_philo_done(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->running_mutex.m);
 	philo->data->running--;
@@ -20,6 +20,7 @@ void	set_philo_done(t_philo *philo)
 	pthread_mutex_lock(&philo->done_mutex.m);
 	philo->done = 1;
 	pthread_mutex_unlock(&philo->done_mutex.m);
+	return (0);
 }
 
 int	is_philo_done(t_philo *philo)

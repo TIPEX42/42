@@ -6,7 +6,7 @@
 /*   By: njennes <njennes@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:26:19 by                   #+#    #+#             */
-/*   Updated: 2022/05/06 19:30:23 by njennes          ###   ########.fr       */
+/*   Updated: 2022/05/07 13:56:03 by njennes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	philo_try_start_eating(t_philo *philo)
 	if (!philo->rfork)
 	{
 		pthread_mutex_unlock(&philo->lfork->m);
-		pthread_exit(EXIT_SUCCESS);
+		return (0);
 	}
 	lock_rfork(philo);
 	if (!philo_print(philo, "is eating"))
@@ -37,10 +37,7 @@ int	philo_try_start_eating(t_philo *philo)
 		return (0);
 	philo->eats++;
 	if (philo->eats == philo->max_eats)
-	{
-		set_philo_done(philo);
-		return (0);
-	}
+		return (set_philo_done(philo));
 	return (1);
 }
 

@@ -38,7 +38,7 @@ int	my_eat(t_philo *philo, int64_t time)
 			unlock_forks(philo);
 			return (0);
 		}
-		usleep(100);
+		usleep(200);
 		gettimeofday(&current, NULL);
 		elapsed = time_diff(start, current);
 		if (elapsed >= time - 100 && time - elapsed > 0)
